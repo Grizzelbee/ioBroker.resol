@@ -45,6 +45,61 @@ class MyVbus extends utils.Adapter {
         this.on('unload', this.onUnload.bind(this));
     }
 
+    async configIsValid(config) {
+        let isValid = true;
+        function testSerialformat(self) {
+            if (!config.connectionIdentifier.match(serialformat)) {
+                self.log.warn('Serialformat is invalid! Please fix.');
+                isValid = false;
+            }
+        }
+        function testIPFormat(self) {
+            if (!config.connectionIdentifier.match(ipformat)) {
+                self.log.warn('IP-Format is invalid!');
+                isValid = false;
+            }
+        }
+        function testFQDNFormat(self) {
+            if (!config.connectionIdentifier.match(fqdnformat)) {
+                self.log.warn('FQDN-Format is invalid!');
+                isValid = false;
+            }
+        }
+        function testVBusIOFormat(self) {
+            if (!config.connectionIdentifier.match(vbusioformat)) {
+                self.log.warn('VBusIO-Format is invalid!');
+                isValid = false;
+            }
+        }
+        function testPassword(self) {
+            if ('' === config.vbusPassword) {
+                this.log.warn('Password is missing!');
+                isValid = false;    
+            }
+        }
+        if (config.connectionDevice==='serial') {
+            testSerialformat(this);
+            // testPassword(this); // needs serial a password?
+        } else  if (config.connectionDevice==='lan' || config.connectionDevice==='langw' ) {
+            if ( !(config.connectionIdentifier.match(ipformat) || config.connectionIdentifier.match(fqdnformat)) ) {
+                testIPFormat(this);
+                testFQDNFormat(this);
+                testPassword(this);
+                this.log.warn('Config for LAN/LANGW is invalid! Please fix at least one of the connection identifiers.');
+            }
+        } else  if (config.connectionDevice==='dl2' || config.connectionDevice==='dl3' ) {
+            if ( !(config.connectionIdentifier.match(ipformat) || config.connectionIdentifier.match(fqdnformat) || config.connectionIdentifier.match(vbusioformat)) ) {
+                testIPFormat(this);
+                testFQDNFormat(this);
+                testVBusIOFormat(this);
+                testPassword(this);
+                this.log.warn('Config for KM2/DL2/DL3 is invalid! Please fix at least one of the connection identifiers.');
+            }
+        }
+        return isValid;
+    }
+
+
     async main() {
         let relayActive = 'Relay X active';
         let language    = 'en';
@@ -372,7 +427,7 @@ class MyVbus extends utils.Adapter {
         try {
             // Terminate adapter after first start because configuration is not yet received
             // Adapter is restarted automatically when config page is closed
-            if (this.config.connectionDevice  !== '') {
+            if (this.configIsValid(this.config)) {
                 await this.main();
             } else {
                 this.setState('info.connection', false);
