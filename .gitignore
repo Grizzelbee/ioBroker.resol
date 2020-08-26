@@ -4,12 +4,12 @@
 node_modules
 nbproject
 .vscode
-
 # npm package files
 iobroker.*.tgz
-
+# windows system file
 Thumbs.db
-
 # i18n intermediate files
 admin/i18n/flat.txt
 admin/i18n/*/flat.txt
+# Backup from corelDraq
+admin/Sicherungskopie*
