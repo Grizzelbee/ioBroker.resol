@@ -131,7 +131,7 @@
         "license": "MIT",
         "platform": "Javascript/Node.js",
         "main": "main.js",
-        "icon": "myvbus.png",
+        "icon": "myvbus.svg",
         "enabled": true,
         "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.myvbus/master/admin/myvbus.png",
         "readme": "https://github.com/iobroker-community-adapters/ioBroker.myvbus/blob/master/README.md",

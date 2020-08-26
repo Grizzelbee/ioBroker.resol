@@ -1,6 +1,6 @@
 # ioBroker.myvbus
 
-![Logo](admin/myvbus.png)
+![Logo](admin/myvbus.svg)
 
 ![Number of Installations (latest)](http://iobroker.live/badges/myvbus-installed.svg)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.myvbus.svg)](https://www.npmjs.com/package/iobroker.myvbus)
