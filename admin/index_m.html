@@ -111,34 +111,36 @@
         <div class="row">
             <div class="input-field col s12 m4">
                 <select class="value" id="connectionDevice">
-                    <option value="serial" class="translate">VBus/USB</option>
-                    <option value="langw" class="translate">Serial/LANGW</option>
                     <option value="lan" class="translate" selected >VBus/LAN</option>
-                    <option value="dl2" class="translate">DL2/KM2</option>
+                    <option value="dl2" class="translate">KM2/DL2</option>
                     <option value="dl3" class="translate">DL3</option>
+                    <option value="inet" class="trnaslate">vbus.net</option>
+                    <option value="serial" class="translate">Serial/USB</option>
+                    <option value="langw" class="translate">Serial to LAN-Gateway</option>
                 </select>
-                <label for="connectionDevice" class="translate">Connection Device</label>
-                <span class="translate">Select VBus Connection Device Type</span>
+                <label for="connectionDevice" class="translate">Lbl_ConnectionDevice</label>
+                <span class="translate">Desc_ConnectionDevice</span>
             </div>
             <div class="input-field col s12 m4">
                 <input class="value" id="connectionIdentifier" type="text">
-                <label for="connectionIdentifier" class="translate">Connection Identifier</label>
-                <span class="translate">Host address (IP or FQDN) for local LAN and for VBus.net or Serial Port Id for VBus/USB access</span>
+                <label for="connectionIdentifier" class="translate">Lbl_DeviceAddress</label>
+                <span class="translate">Desc_DeviceAddress</span>
             </div>
             <div class="input-field col s12 m4">
                 <input class="value" id="connectionPort" type="text">
-                <label for="connectionPort" class="translate">Connection Port</label>
-                <span class="translate">Default: 7053</span>
+                <label for="connectionPort" class="translate">Lbl_ConnectionPort</label>
+                <span class="translate">Desc_ConnectionPort</span>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12 m4">
                 <input class="value" id="vbusPassword" type="password" maxlength="15">
-                <label for="vbusPassword" class="translate">VBus Password</label>
-                <span class="translate">Default: vbus</span>
+                <label for="vbusPassword" class="translate">Lbl_DevicePassword</label>
+                <span class="translate">Desc_DevicePassword</span>
             </div>
             <div class="input-field col s12 m4">
                 <select class="value" id="vbusChannel">
+                    <option value=1 class="translate" selected>None</option>
                     <option value=1 class="translate">DL3 Channel 1</option>
                     <option value=2 class="translate">DL3 Channel 2</option>
                     <option value=3 class="translate">DL3 Channel 3</option>
@@ -147,20 +149,20 @@
                     <option value=6 class="translate">DL3 Channel 6</option>
                     <option value=0 class="translate">DL3 Channel 0</option>
                 </select>
-                <label for="vbusChannel" class="translate">DL3 Channel</label>
-                <span class="translate">Required for DL3 only</span>
+                <label for="vbusChannel" class="translate">Lbl_DL3Channel</label>
+                <span class="translate">Desc_DL3Channel</span>
             </div>
             <div class="input-field col s12 m4">
                 <input class="value" id="vbusViaTag" type="text">
-                <label for="vbusViaTag" class="translate">Via tag</label>
-                <span class="translate">Required only for VBus.net access via DLx/KMx</span>
+                <label for="vbusViaTag" class="translate">Lbl_Via-tag</label>
+                <span class="translate">Desc_Via-tag</span>
             </div>
         </div>
         <div class="row">
             <div class="col s6 m4 input-field">
                 <input type="text" class="value" id="vbusInterval" />
-                <label for="vbusInterval" class="translate">VBus Interval</label>
-                <span class="translate"></span>
+                <label for="vbusInterval" class="translate">Lbl_Pollintervall</label>
+                <span class="translate">Desc_Pollintervall</span>
             </div>
         </div>
     </div>
