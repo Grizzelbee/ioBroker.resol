@@ -1,9 +1,9 @@
 {
     "common": {
-        "name": "myvbus",
-        "version": "0.1.0",
+        "name": "resol",
+        "version": "0.2.0",
         "news": {
-            "0.1.0": {
+            "0.2.0": {
                 "en": "Bugfixes and a few new features",
                 "de": "Bugfixes und ein paar neue Funktionen",
                 "ru": "Исправления и несколько новых функций",
@@ -15,91 +15,31 @@
                 "pl": "Poprawki błędów i kilka nowych funkcji",
                 "zh-cn": "错误修正和一些新功能"
             },
-            "0.0.6": {
-                "en": "alpha 6 release",
-                "de": "Alpha 6 Release",
-                "ru": "альфа 6 релиз",
-                "pt": "liberação alfa 6",
-                "nl": "alpha 6 release",
-                "fr": "version alpha 6",
-                "it": "versione alpha 6",
-                "es": "lanzamiento alpha 6",
-                "pl": "wydanie alfa 6",
-                "zh-cn": "alpha 6发布"
-            },
-            "0.0.5": {
-                "en": "alpha 5 release",
-                "de": "Alpha 5 Release",
-                "ru": "альфа 5 релиз",
-                "pt": "liberação alfa 4",
-                "nl": "alpha 5 release",
-                "fr": "version alpha 5",
-                "it": "versione alpha 5",
-                "es": "lanzamiento alpha 5",
-                "pl": "wydanie alfa 5",
-                "zh-cn": "alpha 5发布"
-            },
-            "0.0.4": {
-                "en": "alpha 4 release",
-                "de": "Alpha 4 Release",
-                "ru": "альфа 4 релиз",
-                "pt": "liberação alfa 4",
-                "nl": "alpha 4 release",
-                "fr": "version alpha 4",
-                "it": "versione alpha 4",
-                "es": "lanzamiento alpha 4",
-                "pl": "wydanie alfa 4",
-                "zh-cn": "alpha 4发布"
-            },
-            "0.0.3": {
-                "en": "alpha 3 release",
-                "de": "Alpha 3 Release",
-                "ru": "альфа 3 релиз",
-                "pt": "liberação alfa 3",
-                "nl": "alpha 3 release",
-                "fr": "version alpha 3",
-                "it": "versione alpha 3",
-                "es": "lanzamiento alpha 3",
-                "pl": "wydanie alfa 3",
-                "zh-cn": "alpha 3发布"
-            },
-            "0.0.2": {
-                "en": "alpha 2 release",
-                "de": "Alpha 2 Release",
-                "ru": "альфа 2 релиз",
-                "pt": "liberação alfa 2",
-                "nl": "alpha 2 release",
-                "fr": "version alpha 2",
-                "it": "versione alpha 2",
-                "es": "lanzamiento alpha 2",
-                "pl": "wydanie alfa 2",
-                "zh-cn": "alpha 2发布"
-            },
-            "0.0.1": {
-                "en": "initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "Начальная версия",
-                "pt": "lançamento inicial",
-                "nl": "Eerste uitgave",
-                "fr": "Première version",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Pierwsze wydanie",
-                "zh-cn": "首次出版"
+            "0.1.0": {
+                "en": "Bugfixes and a few new features",
+                "de": "Bugfixes und ein paar neue Funktionen",
+                "ru": "Исправления и несколько новых функций",
+                "pt": "Correções de bugs e alguns novos recursos",
+                "nl": "Bugfixes en een paar nieuwe functies",
+                "fr": "Corrections de bugs et quelques nouvelles fonctionnalités",
+                "it": "Bugfix e alcune nuove funzionalità",
+                "es": "Corrección de errores y algunas características nuevas.",
+                "pl": "Poprawki błędów i kilka nowych funkcji",
+                "zh-cn": "错误修正和一些新功能"
             }
         },
-        "title": "MyVBus",
+        "title": "Resol VBus",
         "titleLang": {
-            "en": "Resol VBUS Adapter",
-            "de": "Resol VBUS Adapter",
-            "ru": "Resol VBUS адаптер",
-            "pt": "Adaptador Resol VBUS",
-            "nl": "Resol VBUS-adapter",
-            "fr": "Resol VBUS Adapter",
-            "it": "Resol VBUS Adapter",
-            "es": "Adaptador Resol VBUS",
-            "pl": "Adapter Resol VBUS",
-            "zh-cn": "Resol VBUS适配器"
+            "en": "Connect your Resol VBus Devices to ioBroker",
+            "de": "Verbinden Sie Ihre Resol VBus-Geräte mit ioBroker",
+            "ru": "Подключите свои устройства Resol VBus к ioBroker",
+            "pt": "Conecte seus dispositivos Resol VBus ao ioBroker",
+            "nl": "Verbind uw Resol VBus-apparaten met ioBroker",
+            "fr": "Connectez vos appareils Resol VBus à ioBroker",
+            "it": "Collega i tuoi dispositivi Resol VBus a ioBroker",
+            "es": "Conecte sus dispositivos Resol VBus a ioBroker",
+            "pl": "Podłącz urządzenia Resol VBus do ioBroker",
+            "zh-cn": "将您的Resol VBus设备连接到ioBroker"
         },
         "desc": {
             "en": "This adapter connects ioBroker to various VBus-based Resol devices",
@@ -114,15 +54,15 @@
             "zh-cn": "该适配器将ioBroker连接到各种基于VBus的Resol设备"
         },
         "authors": [
-            "pdbjjens <jjensen@t-online.de>"
+            "grizzelbee <hanjo@hingsen.de>"
         ],
         "contributors": [
             "DutchmanNL",
-            "grizzelbee <hanjo@hingsen.de>"
+            "pdbjjens <jjensen@t-online.de>"
         ],
         "keywords": [
             "ioBroker",
-            "myvbus",
+            "resol",
             "Smart Home",
             "home automation",
             "VBus",
@@ -131,16 +71,15 @@
         "license": "MIT",
         "platform": "Javascript/Node.js",
         "main": "main.js",
-        "icon": "myvbus.svg",
+        "icon": "resol.svg",
         "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.myvbus/master/admin/myvbus.png",
-        "readme": "https://github.com/iobroker-community-adapters/ioBroker.myvbus/blob/master/README.md",
+        "extIcon": "https://raw.githubusercontent.com/grizzelbee/ioBroker.resol/master/admin/resol.png",
+        "readme": "https://github.com/grizzelbee/ioBroker.resol/blob/master/README.md",
         "loglevel": "info",
         "mode": "daemon",
         "type": "climate-control",
         "compact": true,
         "materialize": true,
-        "materializeTab": true,
         "supportCustoms": false,
         "connectionType": "local",
         "dataSource": "push",
@@ -155,11 +94,10 @@
         "connectionIdentifier": "",
         "connectionPort": 7053,
         "vbusPassword": "",
-        "vbusChannel": 1,
+        "vbusChannel": 7,
         "vbusDataOnly": false,
         "vbusViaTag": "",
-        "vbusInterval": 30,
-        "forceReInit": true
+        "vbusInterval": 30
     },
     "objects": [],
     "instanceObjects": [

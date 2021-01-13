@@ -1,24 +1,14 @@
-# ioBroker.myvbus
+# ioBroker.resol
 
-![Logo](admin/myvbus.svg)
+![Logo](admin/resol.svg)
 
-![Number of Installations (latest)](http://iobroker.live/badges/myvbus-installed.svg)
-[![Downloads](https://img.shields.io/npm/dm/iobroker.myvbus.svg)](https://www.npmjs.com/package/iobroker.myvbus)
-![Number of Installations (stable)](http://iobroker.live/badges/myvbus-stable.svg)
-[![NPM version](https://img.shields.io/npm/v/iobroker.myvbus.svg)](https://www.npmjs.com/package/iobroker.myvbus)
-[![Dependency Status](https://img.shields.io/david/iobroker-community-adapters/iobroker.myvbus.svg)](https://david-dm.org/iobroker-community-adapters/iobroker.myvbus)
-[![Known Vulnerabilities](https://snyk.io/test/github/iobroker-community-adapters/ioBroker.myvbus/badge.svg)](https://snyk.io/test/github/iobroker-community-adapters/ioBroker.myvbus)
-[![NPM](https://nodei.co/npm/iobroker.myvbus.png?downloads=true)](https://nodei.co/npm/iobroker.myvbus/)
-
-**Tests:** [![Travis-CI](http://img.shields.io/travis/iobroker-community-adapters/ioBroker.myvbus/master.svg)](https://travis-ci.org/iobroker-community-adapters/ioBroker.myvbus)
-  
+ 
 ## ioBroker Adapter for Resol VBus
 
-This adapter connects ioBroker to various VBus-based devices using resol-vbus, a JavaScript library for the acquisition of RESOL VBus data, provided by Daniel Wippermann.
+This adapter connects various VBus-based devices to ioBroker supporting various connection types. 
 
-<https://github.com/danielwippermann/resol-vbus>
-
-<https://www.npmjs.com/package/resol-vbus>
+It's using resol-vbus, a JavaScript library provided by Daniel Wippermann.
+Please visit <https://github.com/danielwippermann/resol-vbus> and <https://www.npmjs.com/package/resol-vbus> if you're interested in a deeper dive. 
 
 ## Features
 
@@ -40,17 +30,60 @@ This adapter connects ioBroker to various VBus-based devices using resol-vbus, a
   * DL3 channel: Only relevant for DL3 (values 1-6, channel 0 can not be read out)
   * Update interval: Time between updates of the measured values (default 30s)
 * The correct settings for the DL3, DL2, KM2 access via VBus.net are:
-  * Connection type: DL3 or DL2 or KM2
-  * Connection identifier: vbus.net (or vbus.io) - both without http:// and Via identifier!
+  * Connection type: vbus.net
+  * Connection identifier: leave blank
   * Connection port: Default setting 7053 should not be changed
   * VBus password: YourVBusPassword (default: vbus)
   * DL3 channel: Only relevant for DL3 (values: 1-6, channel 0 cannot be read out)
-  * Via identifier: YourViaIdentifier (e.g. d1234567890) - without http:// before or .vbus.io behind
+  * Via identifier: Your Via-tag (e.g. d1234567890.vbus.io) - without http:// before
   * Update interval: Time between the update of the measured values (default 30s)
 
+### Examples:
+#### Connection via USB/Serial
+
+| Operating System | Connectiondevice | Device-address | Port | DL3-Channel | Via-Tag |   
+|------------------|------------------|----------------|------|-------------|---------|
+| Windows          | USB/Serial       | COMx           |      | None        |         |
+| Linux            |                  | /dev/tty.usbserial/ | | None        |          |
+
+#### Connection via LAN 
+This includes: 
+  * LAN
+  * KM2 Devices
+  * DL2 Devices 
+  * DL3 Devices (Selection of Channel is important, Channel 0 is not supported)
+  * Serial to LAN Gateways
+
+|  | Connectiondevice | Device-address | Port | DL3-Channel | Via-Tag |   
+|------------------|------------------|----------------|------|-------------|---------|
+|           | select your Device from List | IP-Address of your Device | TCP Port | DL3 Channel to use, when applicable | leave blank |
+| Example | KM2 | 192.168.178.xxx | 7053 (Default) | None | | 
+| Example | DL2 | 192.168.178.xxx | 7053 (Default) | None | | 
+| Example | DL3 | 192.168.178.xxx | 7053 (Default) | Channel x | | 
+
+#### Connection via vbus.net by Resol
+You'll find your personal per device Via-tag on the vbus.net homepage under: My VBus.net - My devices.
+Best is to copy/paste it from there - **without http://**
+ 
+|    | Connectiondevice | Device-address | Port | DL3-Channel | Via-Tag |   
+|------------------|------------------|----------------|------|-------------|---------|
+|           | select vbus.net from List | leave blank | TCP Port | None | your Via-tag from resol vbus.net |
+| Example KM2 / DL2 | vbus.net |  | 7053 (Default) | None | d01234567890.vbus.net | 
+| Example KM2 / DL2| vbus.net |  | 7053 (Default) | None | d01234567890.vbus.io | 
+| Example Dl3| vbus.net |  | 7053 (Default) | Channel x | d01234567890.vbus.io | 
+ 
 ## Changelog
 
-### 0.1.0
+### 0.2.0 (2020-09-29)
+* (grizzelbee) New: New Icon
+* (grizzelbee) Upd: Update resol-Bus lib to V0.21.0 
+* (grizzelbee) Upd: Security-Update to lodash lib 
+* (grizzelbee) Upd: Reorganized configuration to get it more intuitive  
+* (grizzelbee) Upd: Config-page translated via gulp
+* (grizzelbee) New: Changed way to configure access via vbus.net to be more intuitive
+* (grizzelbee) New: Extended documentation
+
+### 0.1.0 (2020-03-29)
 * (grizzelbee) Fix: config page shows current settings now (not default anymore) **May raise the need to reenter the password!**
 * (grizzelbee) Fix: "Connected" state is updated correctly now if connection is disrupted.
 * (grizzelbee) New: Added Badge for latest(npm) version to readme
@@ -86,11 +119,11 @@ RESOL, VBus, VBus.net, DeltaSol and others are trademarks or registered trademar
 
 All other trademarks are the property of their respective owners.
 
+
+
 ## License
 
 MIT License
-
-Copyright (c) 2020 Jens-Peter Jensen <jjensen@t-online.de>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -109,3 +142,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Copyright (c) 2020 Hanjo Hingsen <hanjo@hingsen.de>
