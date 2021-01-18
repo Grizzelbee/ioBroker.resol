@@ -72,16 +72,25 @@ Best is to copy/paste it from there - **without http://**
 | Example KM2 / DL2| vbus.net |  | 7053 (Default) | None | d01234567890.vbus.io | 
 | Example Dl3| vbus.net |  | 7053 (Default) | Channel x | d01234567890.vbus.io | 
  
+
+## Todo
+* Make use of adapter internal decrypt function (req. at least js-controller >= 3.0)
+* Log connection losts as info
+* add snyk
+* add 
+  
+
 ## Changelog
 
-### 0.2.0 (2020-09-29)
+### 0.2.0 (2021-01-18)
 * (grizzelbee) New: New Icon
 * (grizzelbee) Upd: Update resol-Bus lib to V0.21.0 
 * (grizzelbee) Upd: Security-Update to lodash lib 
 * (grizzelbee) Upd: Reorganized configuration to get it more intuitive  
 * (grizzelbee) Upd: Config-page translated via gulp
-* (grizzelbee) New: Changed way to configure access via vbus.net to be more intuitive
+* (grizzelbee) New: Changed the way to configure access via vbus.net to be more intuitive
 * (grizzelbee) New: Extended documentation
+* (grizzelbee) Fix: Adapter doesn't crash on connection losts anymore
 
 ### 0.1.0 (2020-03-29)
 * (grizzelbee) Fix: config page shows current settings now (not default anymore) **May raise the need to reenter the password!**
