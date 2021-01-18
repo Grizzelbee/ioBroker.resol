@@ -82,7 +82,7 @@ Best is to copy/paste it from there - **without http://**
 
 ## Changelog
 
-### 0.2.0 (2020-09-29)
+### 0.2.0 (2021-01-18)
 * (grizzelbee) New: New Icon
 * (grizzelbee) Upd: Update resol-Bus lib to V0.21.0 
 * (grizzelbee) Upd: Security-Update to lodash lib 
