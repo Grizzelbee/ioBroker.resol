@@ -121,6 +121,27 @@
                 "def": false
             },
             "native": {}
+        },
+		{
+            "_id": "write",
+            "type": "channel",
+            "common": {
+                "name": "Write"
+            },
+            "native": {}
+        },
+        {
+            "_id": "write.JSON",
+            "type": "state",
+            "common": {
+                "role": "value",
+                "name": "VBus device write",
+                "type": "string",
+                "read": true,
+                "write": true,
+                "def": false
+            },
+            "native": {}
         }
     ]
 }
