@@ -36,10 +36,19 @@ class resol extends utils.Adapter {
         super({...options, name: adapterName});
 
         this.on('ready', this.onReady.bind(this));
-        //this.on('objectChange', this.onObjectChange.bind(this));
-        //this.on('stateChange', this.onStateChange.bind(this));
+        // this.on('objectChange', this.onObjectChange.bind(this));
+        this.on('stateChange', this.onStateChange.bind(this));
         // this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
+    }
+
+    async onStateChange(id, state) {
+        // Warning, state can be null if it was deleted
+        if (state && !state.ack) {
+            // @gargano: Hier wissen wir, dass der State "state" des Objekts "id" geändert wurde und das es eine manuelle Änderung (!state.ack) war.
+            this.log.debug('Change on Object: ' + JSON.stringify(id));
+            this.log.debug('State of Object: ' + JSON.stringify(state));
+        }
     }
 
     async configIsValid(config) {
@@ -398,15 +407,14 @@ class resol extends utils.Adapter {
     }
 
     //  Create or extend object
-    createOrExtendObject(id, objData, value, callback) {
+    createOrExtendObject(id, objData, value) {
         const self = this;
         this.getObject(id, function (err, oldObj) {
             if (!err && oldObj) {
-                self.extendObject(id, objData, callback);
+                self.extendObject(id, objData, () => {self.setState(id, value, true);});
             } else {
-                self.setObjectNotExists(id, objData, callback);
+                self.setObjectNotExists(id, objData, () => {self.setState(id, value, true);});
             }
-            self.setState(id, value, true);
         });
     }
 
