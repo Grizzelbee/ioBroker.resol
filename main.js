@@ -162,7 +162,7 @@ class resol extends utils.Adapter {
                 case 'lan':
                     ctx.connection = new vbus.TcpConnection({
                         host: this.config.connectionIdentifier,
-                        port: this.config.onnectionPort,
+                        port: this.config.connectionPort,
                         password: this.config.vbusPassword
                     });
                     this.log.info('TCP Connection to [' + this.config.connectionIdentifier + '] selected');
