@@ -15,6 +15,13 @@ const utils = require('@iobroker/adapter-core');
 const vbus = require('resol-vbus');
 const _ = require('lodash');
 
+
+
+
+const minimist = require('minimist');
+const i18n = new vbus.I18N('en');
+
+
 const ctx = {
     headerSet: vbus.HeaderSet(),
     hsc: vbus.HeaderSetConsolidator(),
@@ -28,6 +35,8 @@ const fqdnformat = /^(?!:\/\/)(?=.{1,255}$)((.{1,63}\.){1,127}(?![0-9]*$)[a-z0-9
 const serialformat = /^(COM|com)[0-9][0-9]?$|^\/dev\/tty.*$/;
 const vbusioformat = /d[0-9]{10}.[vV][bB][uU][sS].[iInN][oOeE][tT]?/;
 
+var myDeviceAddress;
+
 class resol extends utils.Adapter {
     /**
      * @param {Partial<ioBroker.AdapterOptions>} [options={}]
@@ -36,22 +45,82 @@ class resol extends utils.Adapter {
         super({...options, name: adapterName});
 
         this.on('ready', this.onReady.bind(this));
-        // this.on('objectChange', this.onObjectChange.bind(this));
+     //   this.on('objectChange', this.onObjectChange.bind(this));
         this.on('stateChange', this.onStateChange.bind(this));
         // this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
     }
 
+    //--- vbus write
+
+    async runShot(context) {
+        try {
+ 
+            this.log.debug('Waiting for free bus...');
+            const datagram = await context.connection.waitForFreeBus();
+            context.masterAddress = datagram.sourceAddress;
+            this.log.debug('Found master with address 0x' + context.masterAddress.toString(16));
+            context.deviceAddress = context.masterAddress;
+        
+            const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
+            context.optimizer = optimizer;
+            if (!optimizer) {
+                this.log.debug('WARNING: Unable to create optimizer for master with address 0x'+context.deviceAddress.toString(16));
+            }
+            context.customizer = new vbus.ConnectionCustomizer({
+                deviceAddress: context.deviceAddress,
+                connection: context.connection,
+                optimizer: context.optimizer,
+            });
+    
+            let savedConfig;
+            if (context.saveConfig !== undefined) {
+                const saveConfig = context.saveConfig;
+                const oldConfig = context.oldConfig;
+                
+                const options = {
+                    optimize: false,
+                };
+                this.log.debug('Start Optimizer');
+                savedConfig = await context.customizer.saveConfiguration(saveConfig, oldConfig, options);
+            } else {
+                this.log.debug('Optimizer savedConfig = loadedConfig ',loadedConfig);
+            }
+            this.log.debug('Save config '+ JSON.stringify(savedConfig));
+            let jsonConfig = savedConfig.reduce((memo, value) => {
+                if (!value.ignored) {
+                    memo [value.valueId] = value.value;
+                }
+                return memo;
+            }, {});
+    
+            jsonConfig = JSON.stringify(jsonConfig);
+           
+        } catch (e) {
+            this.log.debug ('Error '+e);
+        } finally {
+            this.log.debug('Finishing...');
+        }
+    }
+    //--- end vbus write
+
     async onStateChange(id, state) {
         // Warning, state can be null if it was deleted
+        this.log.debug('Change on Object: ' + JSON.stringify(id));
         if (state && !state.ack) {
             // @gargano: Hier wissen wir, dass der State "state" des Objekts "id" geändert wurde und das es eine manuelle Änderung (!state.ack) war.
-            this.log.debug('Change on Object: ' + JSON.stringify(id));
+          //  this.log.debug('Change on Object: ' + JSON.stringify(id));
             this.log.debug('State of Object: ' + JSON.stringify(state));
+            this.log.debug('State :'+ state.val);
+            let value=JSON.parse(state.val);
+            let context ={connection:ctx.connection,deviceAddress:myDeviceAddress,saveConfig:value};
+            await this.runShot (context);
         }
     }
 
+	
     async configIsValid(config) {
+		this.log.debug('configIsValid Function ');
         this.log.debug('Entering Function [configIsValid]');
         // Log the current config given to the function
         this.log.debug(`Connection Type: ${this.config.connectionDevice}`);
@@ -279,6 +348,7 @@ class resol extends utils.Adapter {
 
                 this.log.debug('received data: ' + JSON.stringify(data));
                 if (data[1]){
+                    myDeviceAddress=data[1].deviceId;
                     // create device
                     this.createOrExtendObject(data[1].deviceId, {
                         type: 'device',
@@ -299,7 +369,7 @@ class resol extends utils.Adapter {
                 }
                 // iterate over all data to create datapoints
                 _.forEach(data, (item) => {
-                    this.log.debug('received item-data: ' + JSON.stringify(item));
+                   // this.log.debug('received item-data: ' + JSON.stringify(item));
                     const deviceId = item.deviceId.replace(/_/g, '');
                     const channelId = deviceId + '.' + item.addressId;
                     const objectId = channelId + '.' + item.id.replace(/_/g, '');
@@ -388,6 +458,33 @@ class resol extends utils.Adapter {
 
     // Is called when databases are connected and adapter received configuration.
     async onReady() {
+		this.log.debug('onReady');
+		
+		/*
+		For every state in the system there has to be also an object of type state
+		Here a simple template for a boolean variable named "testVariable"
+		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
+	*/	
+		await this.setObjectNotExistsAsync("JSON", {
+			type: "state",
+			common: {
+				name: "JSON",
+				type: "string",
+				role: "value",
+				read: true,
+				write: true,
+			},
+			native: {},
+		});
+
+		// In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
+		this.subscribeStates("JSON");
+		// You can also add a subscription for multiple states. The following line watches all states starting with "lights."
+		// this.subscribeStates("lights.*");
+		// Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
+		// this.subscribeStates("*");
+		
+		
         try {
             // Terminate adapter after first start because configuration is not yet received
             // Adapter is restarted automatically when config page is closed
