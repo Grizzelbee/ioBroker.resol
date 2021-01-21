@@ -106,10 +106,9 @@ class resol extends utils.Adapter {
 
     async onStateChange(id, state) {
         // Warning, state can be null if it was deleted
-        this.log.debug('Change on Object: ' + JSON.stringify(id));
         if (state && !state.ack) {
             // @gargano: Hier wissen wir, dass der State "state" des Objekts "id" geändert wurde und das es eine manuelle Änderung (!state.ack) war.
-          //  this.log.debug('Change on Object: ' + JSON.stringify(id));
+            this.log.debug('Change on Object: ' + JSON.stringify(id));  
             this.log.debug('State of Object: ' + JSON.stringify(state));
             this.log.debug('State :'+ state.val);
             let value=JSON.parse(state.val);
@@ -369,7 +368,7 @@ class resol extends utils.Adapter {
                 }
                 // iterate over all data to create datapoints
                 _.forEach(data, (item) => {
-                   // this.log.debug('received item-data: ' + JSON.stringify(item));
+                    this.log.debug('received item-data: ' + JSON.stringify(item));
                     const deviceId = item.deviceId.replace(/_/g, '');
                     const channelId = deviceId + '.' + item.addressId;
                     const objectId = channelId + '.' + item.id.replace(/_/g, '');
