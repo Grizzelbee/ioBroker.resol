@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "resol",
-        "version": "0.2.0.3",
+        "version": "0.2.1",
         "news": {
             "0.2.0": {
                 "en": "Bugfixes and a few new features",
