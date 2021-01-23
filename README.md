@@ -76,6 +76,7 @@ Best is to copy/paste it from there - **without http://**
 #### Sending commands to resol device
 
 Edit the file of your controller you will find in the installed directory 'lib\resol-setup'
+
 {"dp": [{"dpName":"Pumpe1","type":"number","min":0,"max":2},
 	    {"dpName":"Pumpe2","type":"number","min":0,"max":2},
 		{"dpName":"AutoRueckkuehl","type":"number","min":0,"max":1}
