@@ -72,7 +72,24 @@ Best is to copy/paste it from there - **without http://**
 | Example KM2 / DL2| vbus.net |  | 7053 (Default) | None | d01234567890.vbus.io | 
 | Example Dl3| vbus.net |  | 7053 (Default) | Channel x | d01234567890.vbus.io | 
  
+ 
+#### Sending commands to resol device
 
+Edit the file of your controller you will find in the installed directory 'lib\resol-setup'
+{"dp": [{"dpName":"Pumpe1","type":"number","min":0,"max":2},
+	    {"dpName":"Pumpe2","type":"number","min":0,"max":2},
+		{"dpName":"AutoRueckkuehl","type":"number","min":0,"max":1}
+	   ],
+"fct": [{"name":"Pumpe1","cmd":"Handbetrieb1","val":"val"},
+		{"name":"Pumpe2","cmd":"Handbetrieb2","val":"val"},
+		{"name":"AutoRueckkuehl","cmds":[{"cmd":"ORueckkuehlung","val":"val"},{"cmd":"OHolyCool","val":"val"}]}
+	   ]}
+ 
+The items "dp" will be created after installing the adapter
+The items "fct", "name" there is the link of the dpName. 
+Example : If you change the value in the object "Pumpe1" then the adapter sends the command "Handbetrieb1" with the value to the resol device.
+Also more than one command are possible. E.g. "AutoRueckkuehl"
+ 
 ## Todo
 * Make use of adapter internal decrypt function (req. at least js-controller >= 3.0)
 * Log connection losts as info
