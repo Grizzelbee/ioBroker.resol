@@ -15,12 +15,10 @@ const utils = require('@iobroker/adapter-core');
 const vbus = require('resol-vbus');
 const _ = require('lodash');
 
-
-
-
 const minimist = require('minimist');
 const i18n = new vbus.I18N('en');
-
+const fs = require('fs');
+var path = require('path');
 
 const ctx = {
     headerSet: vbus.HeaderSet(),
@@ -36,6 +34,25 @@ const serialformat = /^(COM|com)[0-9][0-9]?$|^\/dev\/tty.*$/;
 const vbusioformat = /d[0-9]{10}.[vV][bB][uU][sS].[iInN][oOeE][tT]?/;
 
 var myDeviceAddress;
+var myDeviceID;
+var SetupResolItems;
+/* structure for SetupResolItems
+{"dp": [{"dpName":"Pumpe1","type":"number","min":0,"max":2},
+        {"dpName":"Pumpe2","type":"number","min":0,"max":2},
+        {"dpName":"Rueckkuehl","type":"number","min":0,"max":1}
+       ],
+"fct": [{"name":"Pumpe1","cmd":"Handbetrieb1","val":"val"},
+        {"name":"Pumpe2","cmd":"Handbetrieb2","val":"val"},
+        {"name":"Rueckkuehl","cmds":[{"cmd":"ORueckkuehlung","val":"val"},{"cmd":"OHolyCool","val":"val"}]}
+       ]}
+*/
+
+//const distPath ='/opt/iobroker/node_modules/iobroker.resol/lib/resol-setup/';//'lib/resol-setup/';
+const distPath ='./lib/resol-setup/';
+
+const SetupFileResolTypes = distPath+'Setup-Resol-Types.js';
+
+
 
 class resol extends utils.Adapter {
     /**
@@ -50,7 +67,7 @@ class resol extends utils.Adapter {
         // this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
     }
-
+    
     //--- vbus write
 
     async runShot(context) {
@@ -104,6 +121,144 @@ class resol extends utils.Adapter {
     }
     //--- end vbus write
 
+    async loadJsonFile (filename) {
+        let pathToFile = path.resolve(__dirname,filename);  
+        const data = await new Promise((resolve, reject) => {
+            fs.readFile(pathToFile, (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+        return data;
+    };
+
+    async getJSONByResolId (resolId) {
+        try {
+        var result;
+        this.log.debug ('ID : '+resolId);
+        let SetupResolTypes = await this.loadJsonFile(SetupFileResolTypes);
+        let JSetupResolTypes = JSON.parse(SetupResolTypes);  
+        this.log.debug('JSetupResolTypes : '+JSON.stringify(JSetupResolTypes));
+    
+        JSetupResolTypes.forEach(item => {
+            if (resolId===item.id) {
+                result=item;
+            } 
+        });
+
+        if (!result) this.log.debug('No item found');
+        this.log.debug('Result : '+JSON.stringify(result));
+        } catch (e) {
+            this.log.debug ('Error '+e);
+        } finally {
+            this.log.debug('Finishing getJSONByResolId...');
+        }
+        return result;
+    }
+
+    // generate all dp readed from file
+    async generateDP (resolAddr,resolId) {
+        try {
+            this.createOrExtendObject(resolId + '.write', {
+                type: 'channel',
+                common: {
+                    name: 'write'
+                },
+                native: {}
+            }, '');       
+
+            let SetupResolType = await this.getJSONByResolId (resolAddr);
+            let SetupResolFile = SetupResolType.setup;
+            let TSetupResolItems = await this.loadJsonFile(distPath+SetupResolFile+'.js');
+            SetupResolItems = JSON.parse(TSetupResolItems);
+            this.log.debug(JSON.stringify(SetupResolItems)); 
+            this.log.debug('Adress/ID '+resolAddr+' : '+resolId); 
+            SetupResolItems.dp.forEach(item => {
+                this.log.debug(JSON.stringify(item)); 
+                // create dp 
+                this.createOrExtendObject(resolId + '.write.'+item.dpName , {
+                    type: 'state',
+                    common: {
+                        name: item.dpName,
+                        type: item.type,
+                        min : item.min,
+                        max : item.max,
+                        role: "value",
+                        read: true,
+                        write: true,
+                    },
+                    native: {}
+                }, '');
+                this.subscribeStates(resolId + '.write.'+item.dpName);
+            });
+         
+        } catch (e) {
+            this.log.debug ('Error '+e);
+        } finally {
+            this.log.debug('Finishing generateDP...');
+        } 
+        
+    }
+
+
+    getDpFunction (dpName,Value) {
+        try {
+            let myDpNameArray = dpName.split('.');
+            let len = myDpNameArray.length;
+            // if the JSON was triggered
+            if (len === 3) {
+                if (myDpNameArray[len-1]=='JSON') {
+                    return (Value);
+                }
+            } 
+
+            let myDpName=myDpNameArray[len-1];
+            let myfctItem;
+            this.log.debug(JSON.stringify(SetupResolItems));
+            SetupResolItems.fct.forEach(item => {
+                this.log.debug(JSON.stringify(item)); 
+                if (myDpName===item.name) {
+                    myfctItem=item;
+                }
+            });  
+            // throw if error
+            if (!myfctItem) return;
+            let JsonValue;
+            // easy way, only 1 cmd : {"valueId": "Handbetrieb1", "value": 0}
+            if (myfctItem.cmd) {
+                JsonValue =[];
+                let JsonItem ={};
+                JsonItem.valueId = myfctItem.cmd;
+                JsonItem.value = Value;
+                JsonValue.push (JsonItem);
+            }
+            // more then 1 cmd : [{"valueId": "ORueckkuehlung", "value": 0},{"valueId":"OHolyCool","value": 0}]
+            if (myfctItem.cmds) {
+                JsonValue =[];
+                myfctItem.cmds.forEach(item => {
+                    this.log.debug(JSON.stringify(item)); 
+                    let JsonItem ={};
+                    JsonItem.valueId = item.cmd;
+                    JsonItem.value = Value;
+                    JsonValue.push (JsonItem);
+                });  
+            
+            }
+            this.log.debug(JSON.stringify(JsonValue)); 
+            return JsonValue;
+        } catch (e) {
+            this.log.debug ('Error '+e);
+        } finally {
+            this.log.debug('Finishing Dpfunction...');
+        } 
+    }
+    
+
+
+
     async onStateChange(id, state) {
         // Warning, state can be null if it was deleted
         if (state && !state.ack) {
@@ -112,7 +267,9 @@ class resol extends utils.Adapter {
             this.log.debug('State of Object: ' + JSON.stringify(state));
             this.log.debug('State :'+ state.val);
             let value=JSON.parse(state.val);
-            let context ={connection:ctx.connection,deviceAddress:myDeviceAddress,saveConfig:value};
+            let myJSON =this.getDpFunction (id,value);
+            this.log.debug('myJSON: ' + JSON.stringify(myJSON));
+            let context ={connection:ctx.connection,deviceAddress:myDeviceAddress,saveConfig:myJSON};
             await this.runShot (context);
         }
     }
@@ -347,7 +504,6 @@ class resol extends utils.Adapter {
 
                 this.log.debug('received data: ' + JSON.stringify(data));
                 if (data[1]){
-                    myDeviceAddress=data[1].deviceId;
                     // create device
                     this.createOrExtendObject(data[1].deviceId, {
                         type: 'device',
@@ -365,10 +521,17 @@ class resol extends utils.Adapter {
                         },
                         native: {}
                     }, '');
+                    // create write dps
+                    if (!this.myDeviceAddress) {
+                        this.myDeviceAddress=data[1].addressId;
+                        this.log.debug('myDeviceAddress: ' + this.myDeviceAddress);
+                        this.myDeviceID=data[1].deviceId;
+                        this.generateDP (this.myDeviceAddress,this.myDeviceID);
+                    }
                 }
                 // iterate over all data to create datapoints
                 _.forEach(data, (item) => {
-                    this.log.debug('received item-data: ' + JSON.stringify(item));
+           //         this.log.debug('received item-data: ' + JSON.stringify(item));
                     const deviceId = item.deviceId.replace(/_/g, '');
                     const channelId = deviceId + '.' + item.addressId;
                     const objectId = channelId + '.' + item.id.replace(/_/g, '');
@@ -461,9 +624,8 @@ class resol extends utils.Adapter {
 		
 		/*
 		For every state in the system there has to be also an object of type state
-		Here a simple template for a boolean variable named "testVariable"
 		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
-	*/	
+	    */	
 		await this.setObjectNotExistsAsync("JSON", {
 			type: "state",
 			common: {
@@ -478,11 +640,7 @@ class resol extends utils.Adapter {
 
 		// In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
 		this.subscribeStates("JSON");
-		// You can also add a subscription for multiple states. The following line watches all states starting with "lights."
-		// this.subscribeStates("lights.*");
-		// Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
-		// this.subscribeStates("*");
-		
+			
 		
         try {
             // Terminate adapter after first start because configuration is not yet received
