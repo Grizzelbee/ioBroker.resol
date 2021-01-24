@@ -92,6 +92,39 @@ The items "fct", "name" there is the link of the dpName.
 Example : If you change the value in the object "Pumpe1" then the adapter sends the command "Handbetrieb1" with the value to the resol device.
 Also more than one command are possible. E.g. "AutoRueckkuehl"
  
+#### How to add a new command 
+
+e.g cooling for device resol cs plus
+
+Please notice the device id in the resol objects (8721)
+Open the selectorfile lib/resol-setup/Setup-Resol-Types.js and notice the line according to the device identifier
+{"id":8721,"setup":"setup-resol-deltasol-cs-plus","data":"resol-deltasol-cs-plus-110-data"},
+ 
+Open the file resol-deltasol-cs-plus-110-data.js in directory  resol-vbus/src/configuration-optimizers
+Search in this file for 'ORueckkuehlung'
+
+Open the file setup-resol-deltasol-cs-plus.js in directory lib/resol-setup/
+Add a line in "dp" {"dpName":"Rueckkuehlung","type":"number","min":0,"max":1}
+Add a line in "fct" {"name":"Rueckkuehlung","cmd":"ORueckkuehlung","val":"val"},
+
+The file should look like this
+
+{"dp": [{"dpName":"Pumpe1","type":"number","min":0,"max":2},
+	    {"dpName":"Pumpe2","type":"number","min":0,"max":2},
+		{"dpName":"Rueckkuehlung","type":"number","min":0,"max":1},
+		{"dpName":"AutoRueckkuehl","type":"number","min":0,"max":1}
+	   ],
+	   
+"fct": [{"name":"Pumpe1","cmd":"Handbetrieb1","val":"val"},
+		{"name":"Pumpe2","cmd":"Handbetrieb2","val":"val"},
+		{"name":"Rueckkuehlung","cmd":"ORueckkuehlung","val":"val"},
+		{"name":"AutoRueckkuehl","cmds":[{"cmd":"ORueckkuehlung","val":"val"},{"cmd":"OHolyCool","val":"val"}]}
+	   ]}
+	   
+Save the file and restart the adapter, you will find now a new object Rueckkuehlung.
+
+
+ 
 ## Todo
 * Make use of adapter internal decrypt function (req. at least js-controller >= 3.0)
 * Log connection losts as info
