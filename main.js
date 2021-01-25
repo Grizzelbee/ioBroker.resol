@@ -15,8 +15,6 @@ const utils = require('@iobroker/adapter-core');
 const vbus = require('resol-vbus');
 const _ = require('lodash');
 
-const minimist = require('minimist');
-const i18n = new vbus.I18N('en');
 const fs = require('fs');
 var path = require('path');
 
@@ -47,7 +45,6 @@ var SetupResolItems;
        ]}
 */
 
-//const distPath ='/opt/iobroker/node_modules/iobroker.resol/lib/resol-setup/';//'lib/resol-setup/';
 const distPath ='./lib/resol-setup/';
 
 const SetupFileResolTypes = distPath+'Setup-Resol-Types.js';
@@ -114,9 +111,9 @@ class resol extends utils.Adapter {
             jsonConfig = JSON.stringify(jsonConfig);
            
         } catch (e) {
-            this.log.debug ('Error '+e);
+            this.log.error ('Error '+e);
         } finally {
-            this.log.debug('Finishing...');
+            this.log.debug('Finishing runshot ...');
         }
     }
     //--- end vbus write
@@ -150,9 +147,9 @@ class resol extends utils.Adapter {
         });
 
         if (!result) this.log.debug('No item found');
-        this.log.debug('Result : '+JSON.stringify(result));
+        this.log.debug(' getJSONByResolId result : '+JSON.stringify(result));
         } catch (e) {
-            this.log.debug ('Error '+e);
+            this.log.error ('Error '+e);
         } finally {
             this.log.debug('Finishing getJSONByResolId...');
         }
@@ -174,10 +171,10 @@ class resol extends utils.Adapter {
             let SetupResolFile = SetupResolType.setup;
             let TSetupResolItems = await this.loadJsonFile(distPath+SetupResolFile+'.js');
             SetupResolItems = JSON.parse(TSetupResolItems);
-            this.log.debug(JSON.stringify(SetupResolItems)); 
+            this.log.debug('SetupResolItems '+JSON.stringify(SetupResolItems)); 
             this.log.debug('Adress/ID '+resolAddr+' : '+resolId); 
             SetupResolItems.dp.forEach(item => {
-                this.log.debug(JSON.stringify(item)); 
+                this.log.debug('generateDP->item '+JSON.stringify(item)); 
                 // create dp 
                 this.createOrExtendObject(resolId + '.write.'+item.dpName , {
                     type: 'state',
@@ -196,7 +193,7 @@ class resol extends utils.Adapter {
             });
          
         } catch (e) {
-            this.log.debug ('Error '+e);
+            this.log.error ('Error '+e);
         } finally {
             this.log.debug('Finishing generateDP...');
         } 
@@ -217,15 +214,18 @@ class resol extends utils.Adapter {
 
             let myDpName=myDpNameArray[len-1];
             let myfctItem;
-            this.log.debug(JSON.stringify(SetupResolItems));
+            this.log.debug(JSON.stringify('getDpFunction SetupResolItems '+SetupResolItems));
             SetupResolItems.fct.forEach(item => {
-                this.log.debug(JSON.stringify(item)); 
+                this.log.debug('getDpFunction SetupResolItems->item '+JSON.stringify(item)); 
                 if (myDpName===item.name) {
                     myfctItem=item;
                 }
             });  
             // throw if error
-            if (!myfctItem) return;
+            if (!myfctItem) {
+                this.log.error ('getDpFunction : fctItem noct defined');
+                return;
+            }
             let JsonValue;
             // easy way, only 1 cmd : {"valueId": "Handbetrieb1", "value": 0}
             if (myfctItem.cmd) {
@@ -250,7 +250,7 @@ class resol extends utils.Adapter {
             this.log.debug(JSON.stringify(JsonValue)); 
             return JsonValue;
         } catch (e) {
-            this.log.debug ('Error '+e);
+            this.log.error ('Error '+e);
         } finally {
             this.log.debug('Finishing Dpfunction...');
         } 
@@ -269,7 +269,7 @@ class resol extends utils.Adapter {
             let value=JSON.parse(state.val);
             let myJSON =this.getDpFunction (id,value);
             this.log.debug('myJSON: ' + JSON.stringify(myJSON));
-            let context ={connection:ctx.connection,deviceAddress:myDeviceAddress,saveConfig:myJSON};
+            let context ={connection:ctx.connection,deviceAddress:this.myDeviceAddress,saveConfig:myJSON};
             await this.runShot (context);
         }
     }
