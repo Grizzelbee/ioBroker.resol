@@ -15,6 +15,9 @@ const utils = require('@iobroker/adapter-core');
 const vbus = require('resol-vbus');
 const _ = require('lodash');
 
+const fs = require('fs');
+var path = require('path');
+
 const ctx = {
     headerSet: vbus.HeaderSet(),
     hsc: vbus.HeaderSetConsolidator(),
@@ -28,6 +31,26 @@ const fqdnformat = /^(?!:\/\/)(?=.{1,255}$)((.{1,63}\.){1,127}(?![0-9]*$)[a-z0-9
 const serialformat = /^(COM|com)[0-9][0-9]?$|^\/dev\/tty.*$/;
 const vbusioformat = /d[0-9]{10}.[vV][bB][uU][sS].[iInN][oOeE][tT]?/;
 
+var myDeviceAddress;
+var myDeviceID;
+var SetupResolItems;
+/* structure for SetupResolItems
+{"dp": [{"dpName":"Pumpe1","type":"number","min":0,"max":2},
+        {"dpName":"Pumpe2","type":"number","min":0,"max":2},
+        {"dpName":"Rueckkuehl","type":"number","min":0,"max":1}
+       ],
+"fct": [{"name":"Pumpe1","cmd":"Handbetrieb1","val":"val"},
+        {"name":"Pumpe2","cmd":"Handbetrieb2","val":"val"},
+        {"name":"Rueckkuehl","cmds":[{"cmd":"ORueckkuehlung","val":"val"},{"cmd":"OHolyCool","val":"val"}]}
+       ]}
+*/
+
+const distPath ='./lib/resol-setup/';
+
+const SetupFileResolTypes = distPath+'Setup-Resol-Types.js';
+
+
+
 class resol extends utils.Adapter {
     /**
      * @param {Partial<ioBroker.AdapterOptions>} [options={}]
@@ -36,22 +59,224 @@ class resol extends utils.Adapter {
         super({...options, name: adapterName});
 
         this.on('ready', this.onReady.bind(this));
-        // this.on('objectChange', this.onObjectChange.bind(this));
+     //   this.on('objectChange', this.onObjectChange.bind(this));
         this.on('stateChange', this.onStateChange.bind(this));
         // this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
     }
+    
+    //--- vbus write
+
+    async runShot(context) {
+        try {
+ 
+            this.log.debug('Waiting for free bus...');
+            const datagram = await context.connection.waitForFreeBus();
+            context.masterAddress = datagram.sourceAddress;
+            this.log.debug('Found master with address 0x' + context.masterAddress.toString(16));
+            context.deviceAddress = context.masterAddress;
+        
+            const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
+            context.optimizer = optimizer;
+            if (!optimizer) {
+                this.log.debug('WARNING: Unable to create optimizer for master with address 0x'+context.deviceAddress.toString(16));
+            }
+            context.customizer = new vbus.ConnectionCustomizer({
+                deviceAddress: context.deviceAddress,
+                connection: context.connection,
+                optimizer: context.optimizer,
+            });
+    
+            let savedConfig;
+            if (context.saveConfig !== undefined) {
+                const saveConfig = context.saveConfig;
+                const oldConfig = context.oldConfig;
+                
+                const options = {
+                    optimize: false,
+                };
+                this.log.debug('Start Optimizer');
+                savedConfig = await context.customizer.saveConfiguration(saveConfig, oldConfig, options);
+            } else {
+                this.log.debug('Optimizer savedConfig = loadedConfig ',loadedConfig);
+            }
+            this.log.debug('Save config '+ JSON.stringify(savedConfig));
+            let jsonConfig = savedConfig.reduce((memo, value) => {
+                if (!value.ignored) {
+                    memo [value.valueId] = value.value;
+                }
+                return memo;
+            }, {});
+    
+            jsonConfig = JSON.stringify(jsonConfig);
+           
+        } catch (e) {
+            this.log.error ('Error '+e);
+        } finally {
+            this.log.debug('Finishing runshot ...');
+        }
+    }
+    //--- end vbus write
+
+    async loadJsonFile (filename) {
+        let pathToFile = path.resolve(__dirname,filename);  
+        const data = await new Promise((resolve, reject) => {
+            fs.readFile(pathToFile, (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+        return data;
+    };
+
+    async getJSONByResolId (resolId) {
+        try {
+        var result;
+        this.log.debug ('ID : '+resolId);
+        let SetupResolTypes = await this.loadJsonFile(SetupFileResolTypes);
+        let JSetupResolTypes = JSON.parse(SetupResolTypes);  
+        this.log.debug('JSetupResolTypes : '+JSON.stringify(JSetupResolTypes));
+    
+        JSetupResolTypes.forEach(item => {
+            if (resolId===item.id) {
+                result=item;
+            } 
+        });
+
+        if (!result) this.log.debug('No item found');
+        this.log.debug(' getJSONByResolId result : '+JSON.stringify(result));
+        } catch (e) {
+            this.log.error ('Error '+e);
+        } finally {
+            this.log.debug('Finishing getJSONByResolId...');
+        }
+        return result;
+    }
+
+    // generate all dp readed from file
+    async generateDP (resolAddr,resolId) {
+        try {
+            this.createOrExtendObject(resolId + '.write', {
+                type: 'channel',
+                common: {
+                    name: 'write'
+                },
+                native: {}
+            }, '');       
+
+            let SetupResolType = await this.getJSONByResolId (resolAddr);
+            let SetupResolFile = SetupResolType.setup;
+            let TSetupResolItems = await this.loadJsonFile(distPath+SetupResolFile+'.js');
+            SetupResolItems = JSON.parse(TSetupResolItems);
+            this.log.debug('SetupResolItems '+JSON.stringify(SetupResolItems)); 
+            this.log.debug('Adress/ID '+resolAddr+' : '+resolId); 
+            SetupResolItems.dp.forEach(item => {
+                this.log.debug('generateDP->item '+JSON.stringify(item)); 
+                // create dp 
+                this.createOrExtendObject(resolId + '.write.'+item.dpName , {
+                    type: 'state',
+                    common: {
+                        name: item.dpName,
+                        type: item.type,
+                        min : item.min,
+                        max : item.max,
+                        role: "value",
+                        read: true,
+                        write: true,
+                    },
+                    native: {}
+                }, '');
+                this.subscribeStates(resolId + '.write.'+item.dpName);
+            });
+         
+        } catch (e) {
+            this.log.error ('Error '+e);
+        } finally {
+            this.log.debug('Finishing generateDP...');
+        } 
+        
+    }
+
+
+    getDpFunction (dpName,Value) {
+        try {
+            let myDpNameArray = dpName.split('.');
+            let len = myDpNameArray.length;
+            // if the JSON was triggered
+            if (len === 3) {
+                if (myDpNameArray[len-1]=='JSON') {
+                    return (Value);
+                }
+            } 
+
+            let myDpName=myDpNameArray[len-1];
+            let myfctItem;
+            this.log.debug(JSON.stringify('getDpFunction SetupResolItems '+SetupResolItems));
+            SetupResolItems.fct.forEach(item => {
+                this.log.debug('getDpFunction SetupResolItems->item '+JSON.stringify(item)); 
+                if (myDpName===item.name) {
+                    myfctItem=item;
+                }
+            });  
+            // throw if error
+            if (!myfctItem) {
+                this.log.error ('getDpFunction : fctItem noct defined');
+                return;
+            }
+            let JsonValue;
+            // easy way, only 1 cmd : {"valueId": "Handbetrieb1", "value": 0}
+            if (myfctItem.cmd) {
+                JsonValue =[];
+                let JsonItem ={};
+                JsonItem.valueId = myfctItem.cmd;
+                JsonItem.value = Value;
+                JsonValue.push (JsonItem);
+            }
+            // more then 1 cmd : [{"valueId": "ORueckkuehlung", "value": 0},{"valueId":"OHolyCool","value": 0}]
+            if (myfctItem.cmds) {
+                JsonValue =[];
+                myfctItem.cmds.forEach(item => {
+                    this.log.debug(JSON.stringify(item)); 
+                    let JsonItem ={};
+                    JsonItem.valueId = item.cmd;
+                    JsonItem.value = Value;
+                    JsonValue.push (JsonItem);
+                });  
+            
+            }
+            this.log.debug(JSON.stringify(JsonValue)); 
+            return JsonValue;
+        } catch (e) {
+            this.log.error ('Error '+e);
+        } finally {
+            this.log.debug('Finishing Dpfunction...');
+        } 
+    }
+    
+
+
 
     async onStateChange(id, state) {
         // Warning, state can be null if it was deleted
         if (state && !state.ack) {
             // @gargano: Hier wissen wir, dass der State "state" des Objekts "id" geändert wurde und das es eine manuelle Änderung (!state.ack) war.
-            this.log.debug('Change on Object: ' + JSON.stringify(id));
+            this.log.debug('Change on Object: ' + JSON.stringify(id));  
             this.log.debug('State of Object: ' + JSON.stringify(state));
+            this.log.debug('State :'+ state.val);
+            let value=JSON.parse(state.val);
+            let myJSON =this.getDpFunction (id,value);
+            this.log.debug('myJSON: ' + JSON.stringify(myJSON));
+            let context ={connection:ctx.connection,deviceAddress:this.myDeviceAddress,saveConfig:myJSON};
+            await this.runShot (context);
         }
     }
 
+	
     async configIsValid(config) {
+		this.log.debug('configIsValid Function ');
         this.log.debug('Entering Function [configIsValid]');
         // Log the current config given to the function
         this.log.debug(`Connection Type: ${this.config.connectionDevice}`);
@@ -162,7 +387,7 @@ class resol extends utils.Adapter {
                 case 'lan':
                     ctx.connection = new vbus.TcpConnection({
                         host: this.config.connectionIdentifier,
-                        port: this.config.onnectionPort,
+                        port: this.config.connectionPort,
                         password: this.config.vbusPassword
                     });
                     this.log.info('TCP Connection to [' + this.config.connectionIdentifier + '] selected');
@@ -296,10 +521,17 @@ class resol extends utils.Adapter {
                         },
                         native: {}
                     }, '');
+                    // create write dps
+                    if (!this.myDeviceAddress) {
+                        this.myDeviceAddress=data[1].addressId;
+                        this.log.debug('myDeviceAddress: ' + this.myDeviceAddress);
+                        this.myDeviceID=data[1].deviceId;
+                        this.generateDP (this.myDeviceAddress,this.myDeviceID);
+                    }
                 }
                 // iterate over all data to create datapoints
                 _.forEach(data, (item) => {
-                    this.log.debug('received item-data: ' + JSON.stringify(item));
+           //         this.log.debug('received item-data: ' + JSON.stringify(item));
                     const deviceId = item.deviceId.replace(/_/g, '');
                     const channelId = deviceId + '.' + item.addressId;
                     const objectId = channelId + '.' + item.id.replace(/_/g, '');
@@ -388,6 +620,28 @@ class resol extends utils.Adapter {
 
     // Is called when databases are connected and adapter received configuration.
     async onReady() {
+		this.log.debug('onReady');
+		
+		/*
+		For every state in the system there has to be also an object of type state
+		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
+	    */	
+		await this.setObjectNotExistsAsync("JSON", {
+			type: "state",
+			common: {
+				name: "JSON",
+				type: "string",
+				role: "value",
+				read: true,
+				write: true,
+			},
+			native: {},
+		});
+
+		// In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
+		this.subscribeStates("JSON");
+			
+		
         try {
             // Terminate adapter after first start because configuration is not yet received
             // Adapter is restarted automatically when config page is closed
