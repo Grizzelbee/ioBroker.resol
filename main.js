@@ -27,11 +27,11 @@ const ctx = {
     hsc: vbus.HeaderSetConsolidator(),
     connection: vbus.Connection()
 };
-let SetupResolItems;
+let JsonControllerSetupItems;
 
 var myDeviceAddress;
 var myDeviceID;
-/* structure for SetupResolItems
+/* structure for JsonControllerSetupItems
 {"dp": [{"dpName":"Pumpe1","type":"number","min":0,"max":2},
         {"dpName":"Pumpe2","type":"number","min":0,"max":2},
         {"dpName":"Rueckkuehl","type":"number","min":0,"max":1}
@@ -154,40 +154,45 @@ class resol extends utils.Adapter {
                 native: {}
             }, '');
 
-            this.log.debug('Resol-Address/Resol-ID:  [' + resolAddr + '] : [' + resolId + ']');
+            this.log.debug('[generateDP]->Resol-Address/Resol-ID:  [' + resolAddr + '] : [' + resolId + ']');
             const SetupResolType = await this.getJSONByResolId (resolAddr);
-            this.log.debug('SetupResolType: ' + JSON.stringify(SetupResolType));
-            const SetupResolFile = SetupResolType.setup;
-            this.log.debug('SetupResolFile: ' + JSON.stringify(SetupResolFile));
-            const TSetupResolItems = await this.loadJsonFile(distPath + SetupResolFile + '.js');
-            this.log.debug('TSetupResolItems: ' + JSON.stringify(TSetupResolItems));
-            SetupResolItems = JSON.parse(TSetupResolItems);
-            this.log.debug('SetupResolItems: ' + JSON.stringify(SetupResolItems));
-            SetupResolItems.dp.forEach(item => {
-                this.log.debug('generateDP->item '+JSON.stringify(item));
-                // create dp
-                this.createOrExtendObject(resolId + '.Actions.' + item.dpName , {
-                    type: 'state',
-                    common: {
-                        name: item.dpName,
-                        type: item.type,
-                        min : item.min,
-                        max : item.max,
-                        states: item.states,
-                        role: 'state',
-                        read: true,
-                        write: true,
-                    },
-                    native: {}
-                }, '');
-                this.subscribeStates(resolId + '.Actions.' + item.dpName);
-            });
-        } catch (e) {
-            this.log.error ('[generateDP] Error: '+e);
+            this.log.debug('[generateDP]->SetupResolType: ' + JSON.stringify(SetupResolType));
+            const ControllerSetupFile = distPath + SetupResolType.setup + '.js';
+            this.log.debug('[generateDP] Loading Controller-config-file: ' + ControllerSetupFile);
+            await this.loadJsonFile(ControllerSetupFile)
+                .then(ControllerSetupItems => {
+                    this.log.debug('[generateDP] Controller-config-file content: ' + JSON.stringify(ControllerSetupItems));
+                    JsonControllerSetupItems = JSON.parse(String(ControllerSetupItems));
+                    this.log.debug('[generateDP]->JsonControllerSetupItems: ' + JSON.stringify(JsonControllerSetupItems));
+                    JsonControllerSetupItems.dp.forEach(item => {
+                        this.log.debug('[generateDP]->item ' + JSON.stringify(item));
+                        // create dp
+                        this.createOrExtendObject(resolId + '.Actions.' + item.dpName , {
+                            type: 'state',
+                            common: {
+                                name: item.name,
+                                type: item.type,
+                                min : item.min,
+                                max : item.max,
+                                states: item.states,
+                                role: 'indicator',
+                                read: true,
+                                write: true,
+                            },
+                            native: {}
+                        }, '');
+                        this.subscribeStates(resolId + '.Actions.' + item.dpName);
+                    });
+                })
+                .catch(err => {
+                    this.log.error ('[generateDP] Controller-config-file (' + ControllerSetupFile + ') load error: Please check if the file structure is valid.');
+                    this.log.error ('[generateDP] Controller-config-file load error: ' + err);
+                });
+        } catch (err) {
+            this.log.error ('[generateDP] Error: ' + err);
         } finally {
             this.log.debug('Finishing generateDP...');
         }
-
     }
 
 
@@ -203,9 +208,9 @@ class resol extends utils.Adapter {
             } 
             const myDpName=myDpNameArray[len-1];
             let myfctItem;
-            this.log.debug(JSON.stringify('getDpFunction SetupResolItems ' + SetupResolItems));
-            SetupResolItems.fct.forEach(item => {
-                this.log.debug('getDpFunction SetupResolItems->item ' + JSON.stringify(item));
+            this.log.debug(JSON.stringify('getDpFunction JsonControllerSetupItems ' + JsonControllerSetupItems));
+            JsonControllerSetupItems.fct.forEach(item => {
+                this.log.debug('getDpFunction JsonControllerSetupItems->item ' + JSON.stringify(item));
                 if (myDpName===item.name) {
                     myfctItem=item;
                 }
