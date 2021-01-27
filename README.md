@@ -127,13 +127,13 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
  
 ## Todo
 * Make use of adapter internal decrypt function (req. at least js-controller >= 3.0)
-* Log connection-losts as info
 * add sentry
   
 
 ## Changelog
 ### 0.3.0 (2021-01-xx)
 * (grizzelbee) Upd: Updated dependecies
+* (grizzelbee) New: Log connection-losts as info
 
 ### 0.2.1 (2021-01-23)
 * (gargano)    New: write function to resol device added
