@@ -79,7 +79,7 @@ class resol extends utils.Adapter {
             const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
             context.optimizer = optimizer;
             if (!optimizer) {
-                this.log.debug('WARNING: Unable to create optimizer for master with address 0x'+context.deviceAddress.toString(16));
+                throw new Error ('Unable to create optimizer for master with address 0x'+context.deviceAddress.toString(16));
             }
             context.customizer = new vbus.ConnectionCustomizer({
                 deviceAddress: context.deviceAddress,
@@ -257,6 +257,74 @@ class resol extends utils.Adapter {
     }
     
 
+    searchForFctItem (thisName) {
+        let result;
+        this.log.debug('thisName '+thisName); 
+        SetupResolItems.fct.forEach(item => {
+            if (item.name==thisName) {
+                this.log.debug('fct->item found'+JSON.stringify(item)); 
+                result=item;
+            }
+        });  
+        return result; 
+    }
+
+    searchForDpItem (thisName) {
+        let result;
+        this.log.debug('thisName '+thisName); 
+        SetupResolItems.fct.forEach(item => {
+            if (item.cmd==thisName) {
+                this.log.debug('dp->item found'+JSON.stringify(item)); 
+                result=item;
+            }
+        });  
+        return result; 
+    }
+
+    async loadMyConfig (context) {
+        try{
+            if (SetupResolItems) {          
+                this.log.debug('context.deviceAddress '+context.deviceAddress);
+                const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
+                context.optimizer = optimizer;
+                if (!optimizer) {
+                    throw new Error ('Unable to create optimizer for master with address 0x'+context.deviceAddress.toString(16));
+                }
+                context.customizer = new vbus.ConnectionCustomizer({
+                    deviceAddress: context.deviceAddress,
+                    connection: context.connection,
+                    optimizer: context.optimizer,
+                });
+    
+                let readConfig = [];
+
+                SetupResolItems.dp.forEach(item => {
+                    let fct=this.searchForFctItem(item.dpName);
+                    if (fct.cmd) {
+                        // generate readConfig                        
+                        let thisConfig = {valueId: fct.cmd}       
+                        readConfig.push(thisConfig);
+                    }
+                });
+                const options = {
+                    optimize: !readConfig
+                };
+                let loadedConfig = await context.customizer.loadConfiguration(readConfig, options);
+                this.log.debug('loadedConfig '+JSON.stringify(loadedConfig)); 
+
+                loadedConfig.forEach (item => {
+                    let fctItem=this.searchForDpItem(item.valueId);
+                    let thisDpName =  context.deviceID+'.write.'+fctItem.name;
+                    this.log.debug('thisDpName '+ thisDpName+':'+item.value);
+                    this.setState(thisDpName,item.value,true);
+                });
+            }
+        } catch (e) {
+            this.log.error (e);
+        } finally {
+            this.log.debug('Finishing Dpfunction...');
+        } 
+    }
 
 
     async onStateChange(id, state) {
@@ -528,6 +596,8 @@ class resol extends utils.Adapter {
                         this.myDeviceID=data[1].deviceId;
                         this.generateDP (this.myDeviceAddress,this.myDeviceID);
                     }
+                    let thisContext ={connection:ctx.connection,deviceAddress:this.myDeviceAddress,deviceID:this.myDeviceID};
+                    this.loadMyConfig (thisContext);
                 }
                 // iterate over all data to create datapoints
                 _.forEach(data, (item) => {
