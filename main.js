@@ -132,6 +132,10 @@ class resol extends utils.Adapter {
         return data;
     };
 
+    isNumber(n) { 
+        return /^-?[\d.]+(?:e-?\d+)?$/.test(n);  
+    }
+
     async getJSONByResolId (resolId) {
         try {
         var result;
@@ -318,11 +322,45 @@ class resol extends utils.Adapter {
                     this.log.debug('thisDpName '+ thisDpName+':'+item.value);
                     this.setState(thisDpName,item.value,true);
                 });
+
+                // read combined functions
+                readConfig = [];
+                for (const item of SetupResolItems.dp) {
+                    console.log('DP->item '+JSON.stringify(item)); 
+                    let fctItem=this.searchForFctItem(item.dpName);
+                    if (fctItem.cmds) {
+                        console.log('fct->item '+JSON.stringify(fctItem)); 
+                        fctItem.cmds.forEach (item => {
+                            let thisConfig = {valueId: item.cmd}       
+                            readConfig.push(thisConfig);
+                        });
+                        
+                        console.log('readConfig : '+JSON.stringify(readConfig));
+                        let loadedConfig = await context.customizer.loadConfiguration(readConfig, options);
+                        this.log.debug('loadedConfig '+JSON.stringify(loadedConfig)); 
+                       
+                        // check if all items are numbers
+                        let checkNumber = true;
+                        loadedConfig.forEach (item=> {
+                            if (!this.isNumber(item.value)) checkNumber = false;
+                        });
+                        if (checkNumber) {
+                            let thisValue=1;
+                            loadedConfig.forEach (item=> {
+                                thisValue&=item.value;
+                            });
+                            let thisDpName = context.deviceID+'.write.'+fctItem.name;
+                            this.log.debug('thisDpName '+ thisDpName+':'+thisValue);
+                            this.setState(thisDpName,thisValue,true);
+                        }
+                    }
+                };
+
             }
         } catch (e) {
             this.log.error (e);
         } finally {
-            this.log.debug('Finishing Dpfunction...');
+            this.log.debug('Finishing loadMyConfig...');
         } 
     }
 
