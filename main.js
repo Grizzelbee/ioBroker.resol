@@ -10,31 +10,31 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 const utils = require('@iobroker/adapter-core');
-
 // Load modules here, e.g.:
 const vbus = require('resol-vbus');
-const _ = require('lodash');
-
-const fs = require('fs');
-var path = require('path');
+const _    = require('lodash');
+const fs   = require('fs');
+const path = require('path');
+const adapterName  = require('./package.json').name.split('.').pop();
+const ipformat     = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+const fqdnformat   = /^(?!:\/\/)(?=.{1,255}$)((.{1,63}\.){1,127}(?![0-9]*$)[a-z0-9-]+\.?)$/;
+const serialformat = /^(COM|com)[0-9][0-9]?$|^\/dev\/tty.*$/;
+const vbusioformat = /d[0-9]{10}.[vV][bB][uU][sS].[iInN][oOeE][tT]?/;
+const distPath     = './lib/resol-setup/';
+const setupFileResolTypes = distPath + 'Setup-Resol-Types.js';
+const actionPath = '.Actions.';
 
 const ctx = {
     headerSet: vbus.HeaderSet(),
     hsc: vbus.HeaderSetConsolidator(),
     connection: vbus.Connection()
 };
-
-
-const adapterName = require('./package.json').name.split('.').pop();
-const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-const fqdnformat = /^(?!:\/\/)(?=.{1,255}$)((.{1,63}\.){1,127}(?![0-9]*$)[a-z0-9-]+\.?)$/;
-const serialformat = /^(COM|com)[0-9][0-9]?$|^\/dev\/tty.*$/;
-const vbusioformat = /d[0-9]{10}.[vV][bB][uU][sS].[iInN][oOeE][tT]?/;
+let jsoncontrollerSetupItems;
 
 var myDeviceAddress;
 var myDeviceID;
-var SetupResolItems;
-/* structure for SetupResolItems
+
+/* structure for jsoncontrollerSetupItems
 {"dp": [{"dpName":"Pumpe1","type":"number","min":0,"max":2},
         {"dpName":"Pumpe2","type":"number","min":0,"max":2},
         {"dpName":"Rueckkuehl","type":"number","min":0,"max":1}
@@ -45,9 +45,6 @@ var SetupResolItems;
        ]}
 */
 
-const distPath ='./lib/resol-setup/';
-
-const SetupFileResolTypes = distPath+'Setup-Resol-Types.js';
 
 
 
@@ -58,18 +55,16 @@ class resol extends utils.Adapter {
     constructor(options) {
         super({...options, name: adapterName});
 
-        this.on('ready', this.onReady.bind(this));
-     //   this.on('objectChange', this.onObjectChange.bind(this));
-        this.on('stateChange', this.onStateChange.bind(this));
+        // this.on('objectChange', this.onObjectChange.bind(this));
         // this.on('message', this.onMessage.bind(this));
+        this.on('stateChange', this.onStateChange.bind(this));
         this.on('unload', this.onUnload.bind(this));
+        this.on('ready', this.onReady.bind(this));
     }
     
     //--- vbus write
-
     async runShot(context) {
         try {
- 
             this.log.debug('Waiting for free bus...');
             const datagram = await context.connection.waitForFreeBus();
             context.masterAddress = datagram.sourceAddress;
@@ -79,7 +74,7 @@ class resol extends utils.Adapter {
             const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
             context.optimizer = optimizer;
             if (!optimizer) {
-                throw new Error ('Unable to create optimizer for master with address 0x'+context.deviceAddress.toString(16));
+               throw new Error ('Unable to create optimizer for master with address 0x'+context.deviceAddress.toString(16));
             }
             context.customizer = new vbus.ConnectionCustomizer({
                 deviceAddress: context.deviceAddress,
@@ -91,27 +86,23 @@ class resol extends utils.Adapter {
             if (context.saveConfig !== undefined) {
                 const saveConfig = context.saveConfig;
                 const oldConfig = context.oldConfig;
-                
                 const options = {
                     optimize: false,
                 };
                 this.log.debug('Start Optimizer');
                 savedConfig = await context.customizer.saveConfiguration(saveConfig, oldConfig, options);
             } else {
-                this.log.debug('Optimizer savedConfig = loadedConfig ',loadedConfig);
+                this.log.debug('Optimizer savedConfig = loadedConfig ', savedConfig);
             }
             this.log.debug('Save config '+ JSON.stringify(savedConfig));
-            let jsonConfig = savedConfig.reduce((memo, value) => {
+            savedConfig.reduce((memo, value) => {
                 if (!value.ignored) {
                     memo [value.valueId] = value.value;
                 }
                 return memo;
             }, {});
-    
-            jsonConfig = JSON.stringify(jsonConfig);
-           
         } catch (e) {
-            this.log.error ('Error '+e);
+            this.log.error ('[runShot] Error: ' + e);
         } finally {
             this.log.debug('Finishing runshot ...');
         }
@@ -119,8 +110,8 @@ class resol extends utils.Adapter {
     //--- end vbus write
 
     async loadJsonFile (filename) {
-        let pathToFile = path.resolve(__dirname,filename);  
-        const data = await new Promise((resolve, reject) => {
+        const pathToFile = path.resolve(__dirname,filename);
+        const fileContent = await new Promise((resolve, reject) => {
             fs.readFile(pathToFile, (err, data) => {
                 if (err) {
                     reject(err);
@@ -129,132 +120,138 @@ class resol extends utils.Adapter {
                 }
             });
         });
-        return data;
-    };
+        return fileContent;
+    }
 
     isNumber(n) { 
         return /^-?[\d.]+(?:e-?\d+)?$/.test(n);  
     }
 
-    async getJSONByResolId (resolId) {
-        try {
-        var result;
-        this.log.debug ('ID : '+resolId);
-        let SetupResolTypes = await this.loadJsonFile(SetupFileResolTypes);
-        let JSetupResolTypes = JSON.parse(SetupResolTypes);  
-        this.log.debug('JSetupResolTypes : '+JSON.stringify(JSetupResolTypes));
-    
-        JSetupResolTypes.forEach(item => {
-            if (resolId===item.id) {
-                result=item;
-            } 
-        });
 
-        if (!result) this.log.debug('No item found');
-        this.log.debug(' getJSONByResolId result : '+JSON.stringify(result));
-        } catch (e) {
-            this.log.error ('Error '+e);
-        } finally {
-            this.log.debug('Finishing getJSONByResolId...');
-        }
+    async getJSONByResolId (resolId) {
+        let result;
+        this.log.debug ('[getJSONByResolId] given ResolID : ' + resolId);
+        this.log.debug ('[getJSONByResolId] Reading File: [' + setupFileResolTypes + ']');
+        await this.loadJsonFile(setupFileResolTypes)
+            .then((setupResolTypes) => {
+                this.log.debug ('[getJSONByResolId] Successfully read File. Content: [' + setupResolTypes + ']');
+                const jsetupResolTypes = JSON.parse(setupResolTypes);
+                this.log.debug('jsetupResolTypes : ' + JSON.stringify(jsetupResolTypes));
+                jsetupResolTypes.forEach(item => {
+                    if (resolId === item.id) {
+                        result = item;
+                    }
+                });
+                if (!result) this.log.warn('[getJSONByResolId] Controller type not found in setup file.');
+                this.log.debug('[getJSONByResolId] result : ' + JSON.stringify(result));
+            })
+            .catch((err) => {
+                this.log.error('[getJSONByResolId] Error: ' + err);
+            });
         return result;
     }
 
-    // generate all dp readed from file
-    async generateDP (resolAddr,resolId) {
+    // generate all dp read from file
+    async generateDP(resolAddr, resolId) {
         try {
-            this.createOrExtendObject(resolId + '.write', {
+            this.createOrExtendObject(resolId + '.Actions', {
                 type: 'channel',
                 common: {
-                    name: 'write'
+                    name: 'These data fields trigger actions on your controller.'
                 },
                 native: {}
-            }, '');       
+            }, '');
 
-            let SetupResolType = await this.getJSONByResolId (resolAddr);
-            let SetupResolFile = SetupResolType.setup;
-            let TSetupResolItems = await this.loadJsonFile(distPath+SetupResolFile+'.js');
-            SetupResolItems = JSON.parse(TSetupResolItems);
-            this.log.debug('SetupResolItems '+JSON.stringify(SetupResolItems)); 
-            this.log.debug('Adress/ID '+resolAddr+' : '+resolId); 
-            SetupResolItems.dp.forEach(item => {
-                this.log.debug('generateDP->item '+JSON.stringify(item)); 
-                // create dp 
-                this.createOrExtendObject(resolId + '.write.'+item.dpName , {
-                    type: 'state',
-                    common: {
-                        name: item.dpName,
-                        type: item.type,
-                        min : item.min,
-                        max : item.max,
-                        role: "value",
-                        read: true,
-                        write: true,
-                    },
-                    native: {}
-                }, '');
-                this.subscribeStates(resolId + '.write.'+item.dpName);
-            });
-         
-        } catch (e) {
-            this.log.error ('Error '+e);
+            this.log.debug('[generateDP]->Resol-Address/Resol-ID:  [' + resolAddr + '] : [' + resolId + ']');
+            const setupResolType = await this.getJSONByResolId (resolAddr);
+            this.log.debug('[generateDP]->setupResolType: ' + JSON.stringify(setupResolType));
+            const controllerSetupFile = distPath + setupResolType.setup + '.js';
+            this.log.debug('[generateDP] Loading Controller-config-file: ' + controllerSetupFile);
+            await this.loadJsonFile(controllerSetupFile)
+                .then(controllerSetupItems => {
+                    this.log.debug('[generateDP] Controller-config-file content: ' + JSON.stringify(controllerSetupItems));
+                    jsoncontrollerSetupItems = JSON.parse(String(controllerSetupItems));
+                    this.log.debug('[generateDP]->jsoncontrollerSetupItems: ' + JSON.stringify(jsoncontrollerSetupItems));
+                    jsoncontrollerSetupItems.dp.forEach(item => {
+                        this.log.debug('[generateDP]->item ' + JSON.stringify(item));
+                        // create dp
+                        this.createOrExtendObject(resolId + actionPath + item.dpName , {
+                            type: 'state',
+                            common: {
+                                name: item.dpName,
+                                type: item.type,
+                                min : item.min,
+                                max : item.max,
+                                states: item.states,
+                                role: 'indicator',
+                                read: true,
+                                write: true,
+                            },
+                            native: {}
+                        }, '');
+                        this.subscribeStates(resolId + actionPath + item.dpName);
+                    });
+                })
+                .catch(err => {
+                    this.log.error ('[generateDP] Controller-config-file (' + controllerSetupFile + ') load error: Please check if the file structure is valid.');
+                    this.log.error ('[generateDP] Controller-config-file load error: ' + err);
+                });
+        } catch (err) {
+            this.log.error ('[generateDP] Error: ' + err);
         } finally {
             this.log.debug('Finishing generateDP...');
-        } 
-        
+        }
     }
 
 
     getDpFunction (dpName,Value) {
         try {
-            let myDpNameArray = dpName.split('.');
-            let len = myDpNameArray.length;
+            const myDpNameArray = dpName.split('.');
+            const len = myDpNameArray.length;
             // if the JSON was triggered
             if (len === 3) {
-                if (myDpNameArray[len-1]=='JSON') {
+                if (myDpNameArray[len-1]==='JSON') {
                     return (Value);
                 }
             } 
-
-            let myDpName=myDpNameArray[len-1];
+            const myDpName=myDpNameArray[len-1];
             let myfctItem;
-            this.log.debug(JSON.stringify('getDpFunction SetupResolItems '+SetupResolItems));
-            SetupResolItems.fct.forEach(item => {
-                this.log.debug('getDpFunction SetupResolItems->item '+JSON.stringify(item)); 
+            this.log.debug(JSON.stringify('getDpFunction jsoncontrollerSetupItems ' + jsoncontrollerSetupItems));
+            jsoncontrollerSetupItems.fct.forEach(item => {
+                this.log.debug('getDpFunction jsoncontrollerSetupItems->item ' + JSON.stringify(item));
                 if (myDpName===item.name) {
                     myfctItem=item;
                 }
             });  
             // throw if error
             if (!myfctItem) {
-                this.log.error ('getDpFunction : fctItem noct defined');
+                this.log.error ('[getDpFunction] : fctItem not defined!');
                 return;
             }
-            let JsonValue;
+            let jsonValue;
             // easy way, only 1 cmd : {"valueId": "Handbetrieb1", "value": 0}
             if (myfctItem.cmd) {
-                JsonValue =[];
-                let JsonItem ={};
-                JsonItem.valueId = myfctItem.cmd;
-                JsonItem.value = Value;
-                JsonValue.push (JsonItem);
+                jsonValue =[];
+                const jsonItem ={};
+                jsonItem.valueId = myfctItem.cmd;
+                jsonItem.value = Value;
+                jsonValue.push (jsonItem);
             }
             // more then 1 cmd : [{"valueId": "ORueckkuehlung", "value": 0},{"valueId":"OHolyCool","value": 0}]
             if (myfctItem.cmds) {
-                JsonValue =[];
+                jsonValue =[];
                 myfctItem.cmds.forEach(item => {
                     this.log.debug(JSON.stringify(item)); 
-                    let JsonItem ={};
-                    JsonItem.valueId = item.cmd;
-                    JsonItem.value = Value;
-                    JsonValue.push (JsonItem);
+                    const jsonItem ={};
+                    jsonItem.valueId = item.cmd;
+                    jsonItem.value = Value;
+                    jsonValue.push (jsonItem);
                 });  
-            
             }
-            this.log.debug(JSON.stringify(JsonValue)); 
-            return JsonValue;
+            this.log.debug(JSON.stringify(jsonValue)); 
+            return jsonValue;
         } catch (e) {
-            this.log.error ('Error '+e);
+            this.log.error ('[getDpFunction] Error: '+e);
         } finally {
             this.log.debug('Finishing Dpfunction...');
         } 
@@ -263,8 +260,7 @@ class resol extends utils.Adapter {
 
     searchForFctItem (thisName) {
         let result;
-        this.log.debug('thisName '+thisName); 
-        SetupResolItems.fct.forEach(item => {
+        jsoncontrollerSetupItems.fct.forEach(item => {
             if (item.name==thisName) {
                 this.log.debug('fct->item found'+JSON.stringify(item)); 
                 result=item;
@@ -275,8 +271,7 @@ class resol extends utils.Adapter {
 
     searchForDpItem (thisName) {
         let result;
-        this.log.debug('thisName '+thisName); 
-        SetupResolItems.fct.forEach(item => {
+        jsoncontrollerSetupItems.fct.forEach(item => {
             if (item.cmd==thisName) {
                 this.log.debug('dp->item found'+JSON.stringify(item)); 
                 result=item;
@@ -287,8 +282,7 @@ class resol extends utils.Adapter {
 
     async loadMyConfig (context) {
         try{
-            if (SetupResolItems) {          
-                this.log.debug('context.deviceAddress '+context.deviceAddress);
+            if (jsoncontrollerSetupItems) {          
                 const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
                 context.optimizer = optimizer;
                 if (!optimizer) {
@@ -302,7 +296,7 @@ class resol extends utils.Adapter {
     
                 let readConfig = [];
 
-                SetupResolItems.dp.forEach(item => {
+                jsoncontrollerSetupItems.dp.forEach(item => {
                     let fct=this.searchForFctItem(item.dpName);
                     if (fct.cmd) {
                         // generate readConfig                        
@@ -318,15 +312,13 @@ class resol extends utils.Adapter {
 
                 loadedConfig.forEach (item => {
                     let fctItem=this.searchForDpItem(item.valueId);
-                    let thisDpName =  context.deviceID+'.write.'+fctItem.name;
-                    this.log.debug('thisDpName '+ thisDpName+':'+item.value);
+                    let thisDpName =  context.deviceID + actionPath + fctItem.name;
                     this.setState(thisDpName,item.value,true);
                 });
 
                 // read combined functions
                 readConfig = [];
-                for (const item of SetupResolItems.dp) {
-                    console.log('DP->item '+JSON.stringify(item)); 
+                for (const item of jsoncontrollerSetupItems.dp) {
                     let fctItem=this.searchForFctItem(item.dpName);
                     if (fctItem.cmds) {
                         console.log('fct->item '+JSON.stringify(fctItem)); 
@@ -335,7 +327,6 @@ class resol extends utils.Adapter {
                             readConfig.push(thisConfig);
                         });
                         
-                        console.log('readConfig : '+JSON.stringify(readConfig));
                         let loadedConfig = await context.customizer.loadConfiguration(readConfig, options);
                         this.log.debug('loadedConfig '+JSON.stringify(loadedConfig)); 
                        
@@ -349,8 +340,7 @@ class resol extends utils.Adapter {
                             loadedConfig.forEach (item=> {
                                 thisValue&=item.value;
                             });
-                            let thisDpName = context.deviceID+'.write.'+fctItem.name;
-                            this.log.debug('thisDpName '+ thisDpName+':'+thisValue);
+                            let thisDpName = context.deviceID + actionPath + fctItem.name;
                             this.setState(thisDpName,thisValue,true);
                         }
                     }
@@ -368,21 +358,20 @@ class resol extends utils.Adapter {
     async onStateChange(id, state) {
         // Warning, state can be null if it was deleted
         if (state && !state.ack) {
-            // @gargano: Hier wissen wir, dass der State "state" des Objekts "id" geändert wurde und das es eine manuelle Änderung (!state.ack) war.
-            this.log.debug('Change on Object: ' + JSON.stringify(id));  
+            this.log.debug('Change on Object: ' + JSON.stringify(id));
             this.log.debug('State of Object: ' + JSON.stringify(state));
             this.log.debug('State :'+ state.val);
-            let value=JSON.parse(state.val);
-            let myJSON =this.getDpFunction (id,value);
+            const value = JSON.parse(state.val);
+            const myJSON = this.getDpFunction (id,value);
             this.log.debug('myJSON: ' + JSON.stringify(myJSON));
-            let context ={connection:ctx.connection,deviceAddress:this.myDeviceAddress,saveConfig:myJSON};
+            const context ={connection:ctx.connection, deviceAddress:this.myDeviceAddress, saveConfig:myJSON};
             await this.runShot (context);
         }
     }
 
 	
     async configIsValid(config) {
-		this.log.debug('configIsValid Function ');
+        this.log.debug('configIsValid Function ');
         this.log.debug('Entering Function [configIsValid]');
         // Log the current config given to the function
         this.log.debug(`Connection Type: ${this.config.connectionDevice}`);
@@ -392,7 +381,7 @@ class resol extends utils.Adapter {
         this.log.debug(`VBus Channel: ${this.config.vbusChannel}`);
         this.log.debug(`VBus Via Tag: ${this.config.vbusViaTag}`);
         this.log.debug(`VBus Interval: ${this.config.vbusInterval}`);
-        const promise = new Promise(
+        const result = new Promise(
             function(resolve, reject) {
                 // some helper functions
                 function testSerialformat(config) {
@@ -421,7 +410,7 @@ class resol extends utils.Adapter {
 
                 function testPort(config) {
                     if ('' === config.connectionPort || 0 === config.connectionPort) {
-                        reject('Invalid connection port given! Shold be > 0.');
+                        reject('Invalid connection port given! Should be > 0.');
                     }
                 }
                 // switch connectionDevice seleted by User
@@ -448,7 +437,7 @@ class resol extends utils.Adapter {
                 }
             }
         );
-        return promise;
+        return result;
     }
 
 
@@ -496,7 +485,7 @@ class resol extends utils.Adapter {
                         port: this.config.connectionPort,
                         password: this.config.vbusPassword
                     });
-                    this.log.info('TCP Connection to [' + this.config.connectionIdentifier + '] selected');
+                    this.log.info('TCP Connection via LAN to [' + this.config.connectionIdentifier + ':' + this.config.connectionPort + '] selected');
                     break;
 
                 case 'serial':
@@ -512,7 +501,7 @@ class resol extends utils.Adapter {
                         port: this.config.connectionPort,
                         rawVBusDataOnly: this.config.vbusDataOnly
                     });
-                    this.log.info('TCP Connection to [' + this.config.connectionIdentifier + '] selected');
+                    this.log.info('TCP Connection via LAN-gw to [' + this.config.connectionIdentifier + ':' + this.config.connectionPort + '] selected');
                     break;
 
                 case 'inet':
@@ -534,7 +523,7 @@ class resol extends utils.Adapter {
                         port: this.config.connectionPort,
                         password: this.config.vbusPassword
                     });
-                    this.log.info('TCP Connection to [' + this.config.connectionIdentifier + '] selected');
+                    this.log.info('TCP Connection to KM2/DL2 on [' + this.config.connectionIdentifier + ':' + this.config.connectionPort + '] selected');
                     break;
 
                 case 'dl3':
@@ -544,19 +533,20 @@ class resol extends utils.Adapter {
                         password: this.config.vbusPassword,
                         channel: this.config.vbusChannel
                     });
-                    this.log.info('TCP Connection to [' + this.config.connectionIdentifier + '] selected');
+                    this.log.info('TCP Connection to DL3 on [' + this.config.connectionIdentifier + ':' + this.config.connectionPort + '] selected');
             }
 
             // Connection state handler
             ctx.connection.on('connectionState', (connectionState) => {
-                this.log.debug('Connection state changed to ' + connectionState);
                 if (connectionState === 'CONNECTED') {
                     this.log.info('Connection established');
                     this.setStateAsync('info.connection', true, true);
                 } else {
+                    this.log.info('Connection state changed to ' + connectionState);
                     this.setStateAsync('info.connection', false, true);
                 }
             });
+
             ctx.headerSet = new vbus.HeaderSet();
             let hasSettled = false;
             let settledCountdown = 0;
@@ -627,19 +617,21 @@ class resol extends utils.Adapter {
                         },
                         native: {}
                     }, '');
+
+
                     // create write dps
                     if (!this.myDeviceAddress) {
                         this.myDeviceAddress=data[1].addressId;
                         this.log.debug('myDeviceAddress: ' + this.myDeviceAddress);
-                        this.myDeviceID=data[1].deviceId;
-                        this.generateDP (this.myDeviceAddress,this.myDeviceID);
+                        this.myDeviceID = data[1].deviceId;
+                        this.generateDP(this.myDeviceAddress, this.myDeviceID);
                     }
                     let thisContext ={connection:ctx.connection,deviceAddress:this.myDeviceAddress,deviceID:this.myDeviceID};
                     this.loadMyConfig (thisContext);
                 }
                 // iterate over all data to create datapoints
                 _.forEach(data, (item) => {
-           //         this.log.debug('received item-data: ' + JSON.stringify(item));
+                    // this.log.debug('received item-data: ' + JSON.stringify(item));
                     const deviceId = item.deviceId.replace(/_/g, '');
                     const channelId = deviceId + '.' + item.addressId;
                     const objectId = channelId + '.' + item.id.replace(/_/g, '');
@@ -728,28 +720,6 @@ class resol extends utils.Adapter {
 
     // Is called when databases are connected and adapter received configuration.
     async onReady() {
-		this.log.debug('onReady');
-		
-		/*
-		For every state in the system there has to be also an object of type state
-		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
-	    */	
-		await this.setObjectNotExistsAsync("JSON", {
-			type: "state",
-			common: {
-				name: "JSON",
-				type: "string",
-				role: "value",
-				read: true,
-				write: true,
-			},
-			native: {},
-		});
-
-		// In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
-		this.subscribeStates("JSON");
-			
-		
         try {
             // Terminate adapter after first start because configuration is not yet received
             // Adapter is restarted automatically when config page is closed
