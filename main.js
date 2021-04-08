@@ -23,29 +23,14 @@ const vbusioformat = /d[0-9]{10}.[vV][bB][uU][sS].[iInN][oOeE][tT]?/;
 const distPath     = './lib/resol-setup/';
 const setupFileResolTypes = distPath + 'Setup-Resol-Types.js';
 const actionPath = '.Actions.';
-
 const ctx = {
     headerSet: vbus.HeaderSet(),
     hsc: vbus.HeaderSetConsolidator(),
     connection: vbus.Connection()
 };
 let jsoncontrollerSetupItems;
-
 var myDeviceAddress;
 var myDeviceID;
-
-/* structure for jsoncontrollerSetupItems
-{"dp": [{"dpName":"Pumpe1","type":"number","min":0,"max":2},
-        {"dpName":"Pumpe2","type":"number","min":0,"max":2},
-        {"dpName":"Rueckkuehl","type":"number","min":0,"max":1}
-       ],
-"fct": [{"name":"Pumpe1","cmd":"Handbetrieb1","val":"val"},
-        {"name":"Pumpe2","cmd":"Handbetrieb2","val":"val"},
-        {"name":"Rueckkuehl","cmds":[{"cmd":"ORueckkuehlung","val":"val"},{"cmd":"OHolyCool","val":"val"}]}
-       ]}
-*/
-
-
 
 
 class resol extends utils.Adapter {
@@ -138,6 +123,7 @@ class resol extends utils.Adapter {
                 const jsetupResolTypes = JSON.parse(setupResolTypes);
                 this.log.debug('jsetupResolTypes : ' + JSON.stringify(jsetupResolTypes));
                 jsetupResolTypes.forEach(item => {
+
                     if (resolId === item.id) {
                         result = item;
                     }
@@ -617,8 +603,6 @@ class resol extends utils.Adapter {
                         },
                         native: {}
                     }, '');
-
-
                     // create write dps
                     if (!this.myDeviceAddress) {
                         this.myDeviceAddress=data[1].addressId;
