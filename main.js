@@ -29,8 +29,6 @@ const ctx = {
     connection: vbus.Connection()
 };
 let jsoncontrollerSetupItems;
-var myDeviceAddress;
-var myDeviceID;
 
 
 class resol extends utils.Adapter {
@@ -59,7 +57,7 @@ class resol extends utils.Adapter {
             const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
             context.optimizer = optimizer;
             if (!optimizer) {
-               throw new Error ('Unable to create optimizer for master with address 0x'+context.deviceAddress.toString(16));
+                throw new Error ('Unable to create optimizer for master with address 0x'+context.deviceAddress.toString(16));
             }
             context.customizer = new vbus.ConnectionCustomizer({
                 deviceAddress: context.deviceAddress,
@@ -283,37 +281,37 @@ class resol extends utils.Adapter {
                 let readConfig = [];
 
                 jsoncontrollerSetupItems.dp.forEach(item => {
-                    let fct=this.searchForFctItem(item.dpName);
+                    const fct = this.searchForFctItem(item.dpName);
                     if (fct.cmd) {
                         // generate readConfig                        
-                        let thisConfig = {valueId: fct.cmd}       
+                        const thisConfig = {valueId: fct.cmd};
                         readConfig.push(thisConfig);
                     }
                 });
                 const options = {
                     optimize: !readConfig
                 };
-                let loadedConfig = await context.customizer.loadConfiguration(readConfig, options);
+                const loadedConfig = await context.customizer.loadConfiguration(readConfig, options);
                 this.log.debug('loadedConfig '+JSON.stringify(loadedConfig)); 
 
                 loadedConfig.forEach (item => {
-                    let fctItem=this.searchForDpItem(item.valueId);
-                    let thisDpName =  context.deviceID + actionPath + fctItem.name;
+                    const fctItem=this.searchForDpItem(item.valueId);
+                    const thisDpName =  context.deviceID + actionPath + fctItem.name;
                     this.setState(thisDpName,item.value,true);
                 });
 
                 // read combined functions
                 readConfig = [];
                 for (const item of jsoncontrollerSetupItems.dp) {
-                    let fctItem=this.searchForFctItem(item.dpName);
+                    const fctItem=this.searchForFctItem(item.dpName);
                     if (fctItem.cmds) {
                         console.log('fct->item '+JSON.stringify(fctItem)); 
                         fctItem.cmds.forEach (item => {
-                            let thisConfig = {valueId: item.cmd}       
+                            const thisConfig = {valueId: item.cmd};
                             readConfig.push(thisConfig);
                         });
-                        
-                        let loadedConfig = await context.customizer.loadConfiguration(readConfig, options);
+
+                        const loadedConfig = await context.customizer.loadConfiguration(readConfig, options);
                         this.log.debug('loadedConfig '+JSON.stringify(loadedConfig)); 
                        
                         // check if all items are numbers
@@ -326,11 +324,11 @@ class resol extends utils.Adapter {
                             loadedConfig.forEach (item=> {
                                 thisValue&=item.value;
                             });
-                            let thisDpName = context.deviceID + actionPath + fctItem.name;
+                            const thisDpName = context.deviceID + actionPath + fctItem.name;
                             this.setState(thisDpName,thisValue,true);
                         }
                     }
-                };
+                }
 
             }
         } catch (e) {
@@ -610,7 +608,7 @@ class resol extends utils.Adapter {
                         this.myDeviceID = data[1].deviceId;
                         this.generateDP(this.myDeviceAddress, this.myDeviceID);
                     }
-                    let thisContext ={connection:ctx.connection,deviceAddress:this.myDeviceAddress,deviceID:this.myDeviceID};
+                    const thisContext ={connection:ctx.connection,deviceAddress:this.myDeviceAddress,deviceID:this.myDeviceID};
                     this.loadMyConfig (thisContext);
                 }
                 // iterate over all data to create datapoints
