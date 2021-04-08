@@ -21,28 +21,16 @@ const fqdnformat   = /^(?!:\/\/)(?=.{1,255}$)((.{1,63}\.){1,127}(?![0-9]*$)[a-z0
 const serialformat = /^(COM|com)[0-9][0-9]?$|^\/dev\/tty.*$/;
 const vbusioformat = /d[0-9]{10}.[vV][bB][uU][sS].[iInN][oOeE][tT]?/;
 const distPath     = './lib/resol-setup/';
-const SetupFileResolTypes = distPath + 'Setup-Resol-Types.js';
+const setupFileResolTypes = distPath + 'Setup-Resol-Types.js';
+const actionPath = '.Actions.';
 const ctx = {
     headerSet: vbus.HeaderSet(),
     hsc: vbus.HeaderSetConsolidator(),
     connection: vbus.Connection()
 };
-let JsonControllerSetupItems;
-
+let jsoncontrollerSetupItems;
 var myDeviceAddress;
 var myDeviceID;
-/* structure for JsonControllerSetupItems
-{"dp": [{"dpName":"Pumpe1","type":"number","min":0,"max":2},
-        {"dpName":"Pumpe2","type":"number","min":0,"max":2},
-        {"dpName":"Rueckkuehl","type":"number","min":0,"max":1}
-       ],
-"fct": [{"name":"Pumpe1","cmd":"Handbetrieb1","val":"val"},
-        {"name":"Pumpe2","cmd":"Handbetrieb2","val":"val"},
-        {"name":"Rueckkuehl","cmds":[{"cmd":"ORueckkuehlung","val":"val"},{"cmd":"OHolyCool","val":"val"}]}
-       ]}
-*/
-
-
 
 
 class resol extends utils.Adapter {
@@ -71,7 +59,7 @@ class resol extends utils.Adapter {
             const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
             context.optimizer = optimizer;
             if (!optimizer) {
-                this.log.debug('WARNING: Unable to create optimizer for master with address 0x' + context.deviceAddress.toString(16));
+               throw new Error ('Unable to create optimizer for master with address 0x'+context.deviceAddress.toString(16));
             }
             context.customizer = new vbus.ConnectionCustomizer({
                 deviceAddress: context.deviceAddress,
@@ -120,16 +108,22 @@ class resol extends utils.Adapter {
         return fileContent;
     }
 
+    isNumber(n) { 
+        return /^-?[\d.]+(?:e-?\d+)?$/.test(n);  
+    }
+
+
     async getJSONByResolId (resolId) {
         let result;
         this.log.debug ('[getJSONByResolId] given ResolID : ' + resolId);
-        this.log.debug ('[getJSONByResolId] Reading File: [' + SetupFileResolTypes + ']');
-        await this.loadJsonFile(SetupFileResolTypes)
-            .then((SetupResolTypes) => {
-                this.log.debug ('[getJSONByResolId] Successfully read File. Content: [' + SetupResolTypes + ']');
-                const JSetupResolTypes = JSON.parse(SetupResolTypes);
-                this.log.debug('JSetupResolTypes : ' + JSON.stringify(JSetupResolTypes));
-                JSetupResolTypes.forEach(item => {
+        this.log.debug ('[getJSONByResolId] Reading File: [' + setupFileResolTypes + ']');
+        await this.loadJsonFile(setupFileResolTypes)
+            .then((setupResolTypes) => {
+                this.log.debug ('[getJSONByResolId] Successfully read File. Content: [' + setupResolTypes + ']');
+                const jsetupResolTypes = JSON.parse(setupResolTypes);
+                this.log.debug('jsetupResolTypes : ' + JSON.stringify(jsetupResolTypes));
+                jsetupResolTypes.forEach(item => {
+
                     if (resolId === item.id) {
                         result = item;
                     }
@@ -155,22 +149,22 @@ class resol extends utils.Adapter {
             }, '');
 
             this.log.debug('[generateDP]->Resol-Address/Resol-ID:  [' + resolAddr + '] : [' + resolId + ']');
-            const SetupResolType = await this.getJSONByResolId (resolAddr);
-            this.log.debug('[generateDP]->SetupResolType: ' + JSON.stringify(SetupResolType));
-            const ControllerSetupFile = distPath + SetupResolType.setup + '.js';
-            this.log.debug('[generateDP] Loading Controller-config-file: ' + ControllerSetupFile);
-            await this.loadJsonFile(ControllerSetupFile)
-                .then(ControllerSetupItems => {
-                    this.log.debug('[generateDP] Controller-config-file content: ' + JSON.stringify(ControllerSetupItems));
-                    JsonControllerSetupItems = JSON.parse(String(ControllerSetupItems));
-                    this.log.debug('[generateDP]->JsonControllerSetupItems: ' + JSON.stringify(JsonControllerSetupItems));
-                    JsonControllerSetupItems.dp.forEach(item => {
+            const setupResolType = await this.getJSONByResolId (resolAddr);
+            this.log.debug('[generateDP]->setupResolType: ' + JSON.stringify(setupResolType));
+            const controllerSetupFile = distPath + setupResolType.setup + '.js';
+            this.log.debug('[generateDP] Loading Controller-config-file: ' + controllerSetupFile);
+            await this.loadJsonFile(controllerSetupFile)
+                .then(controllerSetupItems => {
+                    this.log.debug('[generateDP] Controller-config-file content: ' + JSON.stringify(controllerSetupItems));
+                    jsoncontrollerSetupItems = JSON.parse(String(controllerSetupItems));
+                    this.log.debug('[generateDP]->jsoncontrollerSetupItems: ' + JSON.stringify(jsoncontrollerSetupItems));
+                    jsoncontrollerSetupItems.dp.forEach(item => {
                         this.log.debug('[generateDP]->item ' + JSON.stringify(item));
                         // create dp
-                        this.createOrExtendObject(resolId + '.Actions.' + item.dpName , {
+                        this.createOrExtendObject(resolId + actionPath + item.dpName , {
                             type: 'state',
                             common: {
-                                name: item.name,
+                                name: item.dpName,
                                 type: item.type,
                                 min : item.min,
                                 max : item.max,
@@ -181,11 +175,11 @@ class resol extends utils.Adapter {
                             },
                             native: {}
                         }, '');
-                        this.subscribeStates(resolId + '.Actions.' + item.dpName);
+                        this.subscribeStates(resolId + actionPath + item.dpName);
                     });
                 })
                 .catch(err => {
-                    this.log.error ('[generateDP] Controller-config-file (' + ControllerSetupFile + ') load error: Please check if the file structure is valid.');
+                    this.log.error ('[generateDP] Controller-config-file (' + controllerSetupFile + ') load error: Please check if the file structure is valid.');
                     this.log.error ('[generateDP] Controller-config-file load error: ' + err);
                 });
         } catch (err) {
@@ -208,9 +202,9 @@ class resol extends utils.Adapter {
             } 
             const myDpName=myDpNameArray[len-1];
             let myfctItem;
-            this.log.debug(JSON.stringify('getDpFunction JsonControllerSetupItems ' + JsonControllerSetupItems));
-            JsonControllerSetupItems.fct.forEach(item => {
-                this.log.debug('getDpFunction JsonControllerSetupItems->item ' + JSON.stringify(item));
+            this.log.debug(JSON.stringify('getDpFunction jsoncontrollerSetupItems ' + jsoncontrollerSetupItems));
+            jsoncontrollerSetupItems.fct.forEach(item => {
+                this.log.debug('getDpFunction jsoncontrollerSetupItems->item ' + JSON.stringify(item));
                 if (myDpName===item.name) {
                     myfctItem=item;
                 }
@@ -220,28 +214,28 @@ class resol extends utils.Adapter {
                 this.log.error ('[getDpFunction] : fctItem not defined!');
                 return;
             }
-            let JsonValue;
+            let jsonValue;
             // easy way, only 1 cmd : {"valueId": "Handbetrieb1", "value": 0}
             if (myfctItem.cmd) {
-                JsonValue =[];
-                const JsonItem ={};
-                JsonItem.valueId = myfctItem.cmd;
-                JsonItem.value = Value;
-                JsonValue.push (JsonItem);
+                jsonValue =[];
+                const jsonItem ={};
+                jsonItem.valueId = myfctItem.cmd;
+                jsonItem.value = Value;
+                jsonValue.push (jsonItem);
             }
             // more then 1 cmd : [{"valueId": "ORueckkuehlung", "value": 0},{"valueId":"OHolyCool","value": 0}]
             if (myfctItem.cmds) {
-                JsonValue =[];
+                jsonValue =[];
                 myfctItem.cmds.forEach(item => {
                     this.log.debug(JSON.stringify(item)); 
-                    const JsonItem ={};
-                    JsonItem.valueId = item.cmd;
-                    JsonItem.value = Value;
-                    JsonValue.push (JsonItem);
+                    const jsonItem ={};
+                    jsonItem.valueId = item.cmd;
+                    jsonItem.value = Value;
+                    jsonValue.push (jsonItem);
                 });  
             }
-            this.log.debug(JSON.stringify(JsonValue)); 
-            return JsonValue;
+            this.log.debug(JSON.stringify(jsonValue)); 
+            return jsonValue;
         } catch (e) {
             this.log.error ('[getDpFunction] Error: '+e);
         } finally {
@@ -250,6 +244,101 @@ class resol extends utils.Adapter {
     }
     
 
+    searchForFctItem (thisName) {
+        let result;
+        jsoncontrollerSetupItems.fct.forEach(item => {
+            if (item.name==thisName) {
+                this.log.debug('fct->item found'+JSON.stringify(item)); 
+                result=item;
+            }
+        });  
+        return result; 
+    }
+
+    searchForDpItem (thisName) {
+        let result;
+        jsoncontrollerSetupItems.fct.forEach(item => {
+            if (item.cmd==thisName) {
+                this.log.debug('dp->item found'+JSON.stringify(item)); 
+                result=item;
+            }
+        });  
+        return result; 
+    }
+
+    async loadMyConfig (context) {
+        try{
+            if (jsoncontrollerSetupItems) {          
+                const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
+                context.optimizer = optimizer;
+                if (!optimizer) {
+                    throw new Error ('Unable to create optimizer for master with address 0x'+context.deviceAddress.toString(16));
+                }
+                context.customizer = new vbus.ConnectionCustomizer({
+                    deviceAddress: context.deviceAddress,
+                    connection: context.connection,
+                    optimizer: context.optimizer,
+                });
+    
+                let readConfig = [];
+
+                jsoncontrollerSetupItems.dp.forEach(item => {
+                    let fct=this.searchForFctItem(item.dpName);
+                    if (fct.cmd) {
+                        // generate readConfig                        
+                        let thisConfig = {valueId: fct.cmd}       
+                        readConfig.push(thisConfig);
+                    }
+                });
+                const options = {
+                    optimize: !readConfig
+                };
+                let loadedConfig = await context.customizer.loadConfiguration(readConfig, options);
+                this.log.debug('loadedConfig '+JSON.stringify(loadedConfig)); 
+
+                loadedConfig.forEach (item => {
+                    let fctItem=this.searchForDpItem(item.valueId);
+                    let thisDpName =  context.deviceID + actionPath + fctItem.name;
+                    this.setState(thisDpName,item.value,true);
+                });
+
+                // read combined functions
+                readConfig = [];
+                for (const item of jsoncontrollerSetupItems.dp) {
+                    let fctItem=this.searchForFctItem(item.dpName);
+                    if (fctItem.cmds) {
+                        console.log('fct->item '+JSON.stringify(fctItem)); 
+                        fctItem.cmds.forEach (item => {
+                            let thisConfig = {valueId: item.cmd}       
+                            readConfig.push(thisConfig);
+                        });
+                        
+                        let loadedConfig = await context.customizer.loadConfiguration(readConfig, options);
+                        this.log.debug('loadedConfig '+JSON.stringify(loadedConfig)); 
+                       
+                        // check if all items are numbers
+                        let checkNumber = true;
+                        loadedConfig.forEach (item=> {
+                            if (!this.isNumber(item.value)) checkNumber = false;
+                        });
+                        if (checkNumber) {
+                            let thisValue=1;
+                            loadedConfig.forEach (item=> {
+                                thisValue&=item.value;
+                            });
+                            let thisDpName = context.deviceID + actionPath + fctItem.name;
+                            this.setState(thisDpName,thisValue,true);
+                        }
+                    }
+                };
+
+            }
+        } catch (e) {
+            this.log.error (e);
+        } finally {
+            this.log.debug('Finishing loadMyConfig...');
+        } 
+    }
 
 
     async onStateChange(id, state) {
@@ -514,11 +603,6 @@ class resol extends utils.Adapter {
                         },
                         native: {}
                     }, '');
-
-
-
-
-
                     // create write dps
                     if (!this.myDeviceAddress) {
                         this.myDeviceAddress=data[1].addressId;
@@ -526,14 +610,8 @@ class resol extends utils.Adapter {
                         this.myDeviceID = data[1].deviceId;
                         this.generateDP(this.myDeviceAddress, this.myDeviceID);
                     }
-
-
-
-
-
-
-
-
+                    let thisContext ={connection:ctx.connection,deviceAddress:this.myDeviceAddress,deviceID:this.myDeviceID};
+                    this.loadMyConfig (thisContext);
                 }
                 // iterate over all data to create datapoints
                 _.forEach(data, (item) => {
