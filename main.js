@@ -147,7 +147,7 @@ class resol extends utils.Adapter {
 					type: 'string'
                 },
                 native: {}
-            }, null);
+            }, undefined);
 
             this.log.debug('[generateDP]->Resol-Address/Resol-ID:  [' + resolAddr + '] : [' + resolId + ']');
             const setupResolType = await this.getJSONByResolId (resolAddr);
@@ -175,10 +175,10 @@ class resol extends utils.Adapter {
                                 states: item.states,
                                 role: thisRole,
                                 read: true,
-                                write: true,
+                                write: true
                             },
                             native: {}
-                        }, null);
+                        }, undefined);
                         this.subscribeStates(resolId + actionPath + item.dpName);
                     });
                 })
@@ -598,7 +598,7 @@ class resol extends utils.Adapter {
 							type: 'string'
                         },
                         native: {}
-                    }, null);
+                    }, undefined);
 
                     // create channel
                     this.createOrExtendObject(data[1].deviceId + '.' + data[1].addressId, {
@@ -608,7 +608,7 @@ class resol extends utils.Adapter {
 							type: 'string'
                         },
                         native: {}
-                    }, null);
+                    }, undefined);
                     // create write dps
                     if (!this.myDeviceAddress) {
                         this.myDeviceAddress=data[1].addressId;
@@ -639,7 +639,7 @@ class resol extends utils.Adapter {
                     if ((item.rawValue === undefined) || (item.rawValue === null)) {
                         value = 0;
                     } else if (item.rootTypeId === 'Number') {
-                        value = +item.rawValue.toFixed(item.precision);
+                        value = parseFloat(item.rawValue.toFixed(item.precision));
                     } else if (item.rootTypeId === 'Time') {
                         value = spec.i18n.moment(item.rawValue * 60000).utc().format('HH:mm');
                     } else if (item.rootTypeId === 'Weektime') {
@@ -725,7 +725,7 @@ class resol extends utils.Adapter {
                 })
                 .catch(err => {
                     this.log.error(err);
-                    this.setState('info.connection', false);
+                    this.setStateAsync('info.connection', false);
                     this.terminate('Terminating Adapter until Configuration is completed', 11);
                 });
         } catch (error) {
@@ -739,11 +739,11 @@ class resol extends utils.Adapter {
         this.getObject(id, function (err, oldObj) {
             if (!err && oldObj) {
                 self.extendObject(id, objData, () => {
-					if (value) self.setState(id, value, true);
+					if (typeof value !== 'undefined') self.setState(id, value, true);
 				});
             } else {
                 self.setObjectNotExists(id, objData, () => {
-					if (value) self.setState(id, value, true);
+					if (typeof value !== 'undefined') self.setState(id, value, true);
 				});
             }
         });
