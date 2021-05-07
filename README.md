@@ -131,6 +131,11 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
   
 
 ## Changelog
+
+### 0.3.1 (2021-05-07)
+* (gargano)    Fix: wrong object types fixed according JS-Controller 3.x
+* (gargano)    Fix: prevent setState if value = undefined
+
 ### 0.3.0 (2021-01-xx)
 * (grizzelbee) Upd: Updated dependecies
 * (grizzelbee) New: Log connection-losts as info
