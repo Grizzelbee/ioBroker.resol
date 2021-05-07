@@ -29,6 +29,8 @@ const ctx = {
     connection: vbus.Connection()
 };
 let jsoncontrollerSetupItems;
+var myDeviceAddress;
+var myDeviceID;
 
 
 class resol extends utils.Adapter {
