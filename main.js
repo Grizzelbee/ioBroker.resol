@@ -29,6 +29,8 @@ const ctx = {
     connection: vbus.Connection()
 };
 let jsoncontrollerSetupItems;
+var myDeviceAddress;
+var myDeviceID;
 
 
 class resol extends utils.Adapter {
@@ -141,10 +143,11 @@ class resol extends utils.Adapter {
             this.createOrExtendObject(resolId + '.Actions', {
                 type: 'channel',
                 common: {
-                    name: 'These data fields trigger actions on your controller.'
+                    name: 'These data fields trigger actions on your controller.',
+					type: 'string'
                 },
                 native: {}
-            }, '');
+            }, undefined);
 
             this.log.debug('[generateDP]->Resol-Address/Resol-ID:  [' + resolAddr + '] : [' + resolId + ']');
             const setupResolType = await this.getJSONByResolId (resolAddr);
@@ -159,6 +162,9 @@ class resol extends utils.Adapter {
                     jsoncontrollerSetupItems.dp.forEach(item => {
                         this.log.debug('[generateDP]->item ' + JSON.stringify(item));
                         // create dp
+						let thisRole='value';
+						if (item.states) thisRole='indicator';
+						
                         this.createOrExtendObject(resolId + actionPath + item.dpName , {
                             type: 'state',
                             common: {
@@ -167,12 +173,12 @@ class resol extends utils.Adapter {
                                 min : item.min,
                                 max : item.max,
                                 states: item.states,
-                                role: 'indicator',
+                                role: thisRole,
                                 read: true,
-                                write: true,
+                                write: true
                             },
                             native: {}
-                        }, '');
+                        }, undefined);
                         this.subscribeStates(resolId + actionPath + item.dpName);
                     });
                 })
@@ -295,9 +301,9 @@ class resol extends utils.Adapter {
                 this.log.debug('loadedConfig '+JSON.stringify(loadedConfig)); 
 
                 loadedConfig.forEach (item => {
-                    const fctItem=this.searchForDpItem(item.valueId);
-                    const thisDpName =  context.deviceID + actionPath + fctItem.name;
-                    this.setState(thisDpName,item.value,true);
+                    let fctItem=this.searchForDpItem(item.valueId);
+                    let thisDpName =  context.deviceID + actionPath + fctItem.name;
+                    this.setStateAsync(thisDpName,item.value,true);
                 });
 
                 // read combined functions
@@ -324,8 +330,8 @@ class resol extends utils.Adapter {
                             loadedConfig.forEach (item=> {
                                 thisValue&=item.value;
                             });
-                            const thisDpName = context.deviceID + actionPath + fctItem.name;
-                            this.setState(thisDpName,thisValue,true);
+                            let thisDpName = context.deviceID + actionPath + fctItem.name;
+                            this.setStateAsync(thisDpName,thisValue,true);
                         }
                     }
                 }
@@ -588,19 +594,21 @@ class resol extends utils.Adapter {
                     this.createOrExtendObject(data[1].deviceId, {
                         type: 'device',
                         common: {
-                            name: data[1].deviceName
+                            name: data[1].deviceName,
+							type: 'string'
                         },
                         native: {}
-                    }, '');
+                    }, undefined);
 
                     // create channel
                     this.createOrExtendObject(data[1].deviceId + '.' + data[1].addressId, {
                         type: 'channel',
                         common: {
-                            name: data[1].deviceId + '.' + data[1].addressId
+                            name: data[1].deviceId + '.' + data[1].addressId,
+							type: 'string'
                         },
                         native: {}
-                    }, '');
+                    }, undefined);
                     // create write dps
                     if (!this.myDeviceAddress) {
                         this.myDeviceAddress=data[1].addressId;
@@ -631,7 +639,7 @@ class resol extends utils.Adapter {
                     if ((item.rawValue === undefined) || (item.rawValue === null)) {
                         value = 0;
                     } else if (item.rootTypeId === 'Number') {
-                        value = +item.rawValue.toFixed(item.precision);
+                        value = parseFloat(item.rawValue.toFixed(item.precision));
                     } else if (item.rootTypeId === 'Time') {
                         value = spec.i18n.moment(item.rawValue * 60000).utc().format('HH:mm');
                     } else if (item.rootTypeId === 'Weektime') {
@@ -643,13 +651,15 @@ class resol extends utils.Adapter {
                     switch (item.unitId) {
                         case 'DegreesCelsius':
                             common.min = -100;
-                            common.max = +300;
+                            common.max = +1000;
                             common.role = 'value.temperature';
+							common.type = 'number';
                             break;
                         case 'Percent':
                             common.min = 0;
                             common.max = 100;
                             common.role = 'level.volume';
+							common.type = 'number';
                             // create Relay X active state (as far as we know these are the only percent-unit states )
                             this.createOrExtendObject(objectId + '_1', {
                                 type: 'state',
@@ -665,15 +675,17 @@ class resol extends utils.Adapter {
                             break;
                         case 'Hours':
                             common.role = 'value';
+							common.type = 'number';
                             break;
                         case 'WattHours':
                             common.role = 'value.power.generation';
+							common.type = 'number';
                             break;
                         case 'None':
                             if (!isBitField) {
                                 if (isTimeField) {
                                     common.role = 'value';
-                                    common.type = 'string';
+                                    common.type = 'number';
                                 } else {
                                     common.role = 'value';
                                 }
@@ -685,6 +697,7 @@ class resol extends utils.Adapter {
                             break;
                         default:
                             common.role = 'value';
+							common.type = 'number';
                             break;
                     }
                     this.createOrExtendObject(objectId, {type: 'state', common}, value);
@@ -712,7 +725,7 @@ class resol extends utils.Adapter {
                 })
                 .catch(err => {
                     this.log.error(err);
-                    this.setState('info.connection', false);
+                    this.setStateAsync('info.connection', false);
                     this.terminate('Terminating Adapter until Configuration is completed', 11);
                 });
         } catch (error) {
@@ -725,9 +738,13 @@ class resol extends utils.Adapter {
         const self = this;
         this.getObject(id, function (err, oldObj) {
             if (!err && oldObj) {
-                self.extendObject(id, objData, () => {self.setState(id, value, true);});
+                self.extendObject(id, objData, () => {
+					if (typeof value !== 'undefined') self.setState(id, value, true);
+				});
             } else {
-                self.setObjectNotExists(id, objData, () => {self.setState(id, value, true);});
+                self.setObjectNotExists(id, objData, () => {
+					if (typeof value !== 'undefined') self.setState(id, value, true);
+				});
             }
         });
     }
