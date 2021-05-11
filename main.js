@@ -372,7 +372,7 @@ class resol extends utils.Adapter {
         this.log.debug(`VBus Channel: ${this.config.vbusChannel}`);
         this.log.debug(`VBus Via Tag: ${this.config.vbusViaTag}`);
         this.log.debug(`VBus Interval: ${this.config.vbusInterval}`);
-        const result = new Promise(
+        return new Promise(
             function (resolve, reject) {
                 // some helper functions
                 function testSerialformat(config) {
@@ -429,7 +429,6 @@ class resol extends utils.Adapter {
                 }
             }
         );
-        return result;
     }
 
 
