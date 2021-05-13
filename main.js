@@ -270,6 +270,17 @@ class resol extends utils.Adapter {
         return result; 
     }
 
+    getDpType (thisName) {
+        let result;
+        jsoncontrollerSetupItems.dp.forEach(item => {
+            if (item.dpName==thisName) {
+                this.log.debug('dp->Name found'+JSON.stringify(item)); 
+                result=item.type;
+            }
+        });  
+        return result; 
+    }
+
     async loadMyConfig (context) {
         try{
             if (jsoncontrollerSetupItems) {          
@@ -303,6 +314,10 @@ class resol extends utils.Adapter {
                 loadedConfig.forEach (item => {
                     let fctItem=this.searchForDpItem(item.valueId);
                     let thisDpName =  context.deviceID + actionPath + fctItem.name;
+                    let thisType = this.getDpType (fctItem.name);
+                    if (thisType == 'number') {
+                       item.value = parseFloat(item.value); 
+                    }
                     this.setStateAsync(thisDpName,item.value,true);
                 });
 
