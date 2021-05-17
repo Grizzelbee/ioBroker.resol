@@ -271,9 +271,20 @@ class resol extends utils.Adapter {
         return result;
     }
 
-    async loadMyConfig(context) {
-        try {
-            if (jsoncontrollerSetupItems) {
+    getDpType (thisName) {
+        let result;
+        jsoncontrollerSetupItems.dp.forEach(item => {
+            if (item.dpName==thisName) {
+                this.log.debug('dp->Name found'+JSON.stringify(item)); 
+                result=item.type;
+            }
+        });  
+        return result; 
+    }
+
+    async loadMyConfig (context) {
+        try{
+            if (jsoncontrollerSetupItems) {          
                 const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
                 context.optimizer = optimizer;
                 if (!optimizer) {
@@ -301,10 +312,14 @@ class resol extends utils.Adapter {
                 const loadedConfig = await context.customizer.loadConfiguration(readConfig, options);
                 this.log.debug('loadedConfig ' + JSON.stringify(loadedConfig));
 
-                loadedConfig.forEach(item => {
-                    const fctItem = this.searchForDpItem(item.valueId);
-                    const thisDpName = context.deviceID + actionPath + fctItem.name;
-                    this.setStateAsync(thisDpName, item.value, true);
+                loadedConfig.forEach (item => {
+                    let fctItem=this.searchForDpItem(item.valueId);
+                    let thisDpName =  context.deviceID + actionPath + fctItem.name;
+                    let thisType = this.getDpType (fctItem.name);
+                    if (thisType == 'number') {
+                       item.value = parseFloat(item.value); 
+                    }
+                    this.setStateAsync(thisDpName,item.value,true);
                 });
 
                 // read combined functions

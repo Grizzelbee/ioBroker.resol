@@ -27,8 +27,8 @@
   "dependencies": {
     "@iobroker/adapter-core": "^2.4.0",
     "lodash": "^4.17.21",
-    "resol-vbus": "^0.21.0",
-    "snyk": "^1.592.0"
+    "resol-vbus": "^0.22.0",
+    "snyk": "^1.529.0"
   },
   "devDependencies": {
     "@iobroker/testing": "^2.4.4",
