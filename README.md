@@ -19,6 +19,12 @@ Please visit <https://github.com/danielwippermann/resol-vbus> and <https://www.n
 * Reading or setting the VBus device configuration parameters is not supported. The tools provided by Resol should be used for this, e.g. via VBus.net or the parameterization tool RPT.
 * Reading DL3 channel 0 (sensors directly connected to the DL3 device) is not supported due to limitations of the DL3 interface.
 
+## sentry.io
+
+This adapter uses sentry.io to collect details on crashes and report it automated to the author. 
+The [ioBroker.sentry plugin](https://github.com/ioBroker/plugin-sentry) is used for it. Please refer to 
+the [plugin homepage](https://github.com/ioBroker/plugin-sentry) for detailed information on what the plugin does, which information is collected and how to disable it, if you don't like to support the author with you're information on crashes.
+
 ## Configuration hints
 
 * The default setting for the connection type is VBus/LAN, but it must be explicitly selected even for VBus/LAN, otherwise no connection will be established.
@@ -127,7 +133,6 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
  
 ## Todo
 * Make use of adapter internal decrypt function (req. at least js-controller >= 3.0)
-* add sentry
   
 
 ## Changelog
@@ -135,6 +140,7 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 ### 0.3.1 (2021-05-07)
 * (gargano)    Fix: wrong object types fixed according JS-Controller 3.x
 * (gargano)    Fix: prevent setState if value = undefined
+* (grizzelbee) New: Added sentry
 
 ### 0.3.0 (2021-01-xx)
 * (grizzelbee) Upd: Updated dependecies

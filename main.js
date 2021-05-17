@@ -12,15 +12,15 @@
 const utils = require('@iobroker/adapter-core');
 // Load modules here, e.g.:
 const vbus = require('resol-vbus');
-const _    = require('lodash');
-const fs   = require('fs');
+const _ = require('lodash');
+const fs = require('fs');
 const path = require('path');
-const adapterName  = require('./package.json').name.split('.').pop();
-const ipformat     = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-const fqdnformat   = /^(?!:\/\/)(?=.{1,255}$)((.{1,63}\.){1,127}(?![0-9]*$)[a-z0-9-]+\.?)$/;
+const adapterName = require('./package.json').name.split('.').pop();
+const ipformat = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+const fqdnformat = /^(?!:\/\/)(?=.{1,255}$)((.{1,63}\.){1,127}(?![0-9]*$)[a-z0-9-]+\.?)$/;
 const serialformat = /^(COM|com)[0-9][0-9]?$|^\/dev\/tty.*$/;
 const vbusioformat = /d[0-9]{10}.[vV][bB][uU][sS].[iInN][oOeE][tT]?/;
-const distPath     = './lib/resol-setup/';
+const distPath = './lib/resol-setup/';
 const setupFileResolTypes = distPath + 'Setup-Resol-Types.js';
 const actionPath = '.Actions.';
 const ctx = {
@@ -46,7 +46,7 @@ class resol extends utils.Adapter {
         this.on('unload', this.onUnload.bind(this));
         this.on('ready', this.onReady.bind(this));
     }
-    
+
     //--- vbus write
     async runShot(context) {
         try {
@@ -55,18 +55,18 @@ class resol extends utils.Adapter {
             context.masterAddress = datagram.sourceAddress;
             this.log.debug('Found master with address 0x' + context.masterAddress.toString(16));
             context.deviceAddress = context.masterAddress;
-        
+
             const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
             context.optimizer = optimizer;
             if (!optimizer) {
-                throw new Error ('Unable to create optimizer for master with address 0x'+context.deviceAddress.toString(16));
+                throw new Error('Unable to create optimizer for master with address 0x' + context.deviceAddress.toString(16));
             }
             context.customizer = new vbus.ConnectionCustomizer({
                 deviceAddress: context.deviceAddress,
                 connection: context.connection,
                 optimizer: context.optimizer,
             });
-    
+
             let savedConfig;
             if (context.saveConfig !== undefined) {
                 const saveConfig = context.saveConfig;
@@ -79,7 +79,7 @@ class resol extends utils.Adapter {
             } else {
                 this.log.debug('Optimizer savedConfig = loadedConfig ', savedConfig);
             }
-            this.log.debug('Save config '+ JSON.stringify(savedConfig));
+            this.log.debug('Save config ' + JSON.stringify(savedConfig));
             savedConfig.reduce((memo, value) => {
                 if (!value.ignored) {
                     memo [value.valueId] = value.value;
@@ -87,15 +87,16 @@ class resol extends utils.Adapter {
                 return memo;
             }, {});
         } catch (e) {
-            this.log.error ('[runShot] Error: ' + e);
+            this.log.error('[runShot] Error: ' + e);
         } finally {
             this.log.debug('Finishing runshot ...');
         }
     }
+
     //--- end vbus write
 
-    async loadJsonFile (filename) {
-        const pathToFile = path.resolve(__dirname,filename);
+    async loadJsonFile(filename) {
+        const pathToFile = path.resolve(__dirname, filename);
         const fileContent = await new Promise((resolve, reject) => {
             fs.readFile(pathToFile, (err, data) => {
                 if (err) {
@@ -108,18 +109,18 @@ class resol extends utils.Adapter {
         return fileContent;
     }
 
-    isNumber(n) { 
-        return /^-?[\d.]+(?:e-?\d+)?$/.test(n);  
+    isNumber(n) {
+        return /^-?[\d.]+(?:e-?\d+)?$/.test(n);
     }
 
 
-    async getJSONByResolId (resolId) {
+    async getJSONByResolId(resolId) {
         let result;
-        this.log.debug ('[getJSONByResolId] given ResolID : ' + resolId);
-        this.log.debug ('[getJSONByResolId] Reading File: [' + setupFileResolTypes + ']');
+        this.log.debug('[getJSONByResolId] given ResolID : ' + resolId);
+        this.log.debug('[getJSONByResolId] Reading File: [' + setupFileResolTypes + ']');
         await this.loadJsonFile(setupFileResolTypes)
             .then((setupResolTypes) => {
-                this.log.debug ('[getJSONByResolId] Successfully read File. Content: [' + setupResolTypes + ']');
+                this.log.debug('[getJSONByResolId] Successfully read File. Content: [' + setupResolTypes + ']');
                 const jsetupResolTypes = JSON.parse(setupResolTypes);
                 this.log.debug('jsetupResolTypes : ' + JSON.stringify(jsetupResolTypes));
                 jsetupResolTypes.forEach(item => {
@@ -144,13 +145,13 @@ class resol extends utils.Adapter {
                 type: 'channel',
                 common: {
                     name: 'These data fields trigger actions on your controller.',
-					type: 'string'
+                    type: 'string'
                 },
                 native: {}
             }, undefined);
 
             this.log.debug('[generateDP]->Resol-Address/Resol-ID:  [' + resolAddr + '] : [' + resolId + ']');
-            const setupResolType = await this.getJSONByResolId (resolAddr);
+            const setupResolType = await this.getJSONByResolId(resolAddr);
             this.log.debug('[generateDP]->setupResolType: ' + JSON.stringify(setupResolType));
             const controllerSetupFile = distPath + setupResolType.setup + '.js';
             this.log.debug('[generateDP] Loading Controller-config-file: ' + controllerSetupFile);
@@ -162,16 +163,16 @@ class resol extends utils.Adapter {
                     jsoncontrollerSetupItems.dp.forEach(item => {
                         this.log.debug('[generateDP]->item ' + JSON.stringify(item));
                         // create dp
-						let thisRole='value';
-						if (item.states) thisRole='indicator';
-						
-                        this.createOrExtendObject(resolId + actionPath + item.dpName , {
+                        let thisRole = 'value';
+                        if (item.states) thisRole = 'indicator';
+
+                        this.createOrExtendObject(resolId + actionPath + item.dpName, {
                             type: 'state',
                             common: {
                                 name: item.dpName,
                                 type: item.type,
-                                min : item.min,
-                                max : item.max,
+                                min: item.min,
+                                max: item.max,
                                 states: item.states,
                                 role: thisRole,
                                 read: true,
@@ -183,91 +184,91 @@ class resol extends utils.Adapter {
                     });
                 })
                 .catch(err => {
-                    this.log.error ('[generateDP] Controller-config-file (' + controllerSetupFile + ') load error: Please check if the file structure is valid.');
-                    this.log.error ('[generateDP] Controller-config-file load error: ' + err);
+                    this.log.error('[generateDP] Controller-config-file (' + controllerSetupFile + ') load error: Please check if the file structure is valid.');
+                    this.log.error('[generateDP] Controller-config-file load error: ' + err);
                 });
         } catch (err) {
-            this.log.error ('[generateDP] Error: ' + err);
+            this.log.error('[generateDP] Error: ' + err);
         } finally {
             this.log.debug('Finishing generateDP...');
         }
     }
 
 
-    getDpFunction (dpName,Value) {
+    getDpFunction(dpName, Value) {
         try {
             const myDpNameArray = dpName.split('.');
             const len = myDpNameArray.length;
             // if the JSON was triggered
             if (len === 3) {
-                if (myDpNameArray[len-1]==='JSON') {
+                if (myDpNameArray[len - 1] === 'JSON') {
                     return (Value);
                 }
-            } 
-            const myDpName=myDpNameArray[len-1];
+            }
+            const myDpName = myDpNameArray[len - 1];
             let myfctItem;
             this.log.debug(JSON.stringify('getDpFunction jsoncontrollerSetupItems ' + jsoncontrollerSetupItems));
             jsoncontrollerSetupItems.fct.forEach(item => {
                 this.log.debug('getDpFunction jsoncontrollerSetupItems->item ' + JSON.stringify(item));
-                if (myDpName===item.name) {
-                    myfctItem=item;
+                if (myDpName === item.name) {
+                    myfctItem = item;
                 }
-            });  
+            });
             // throw if error
             if (!myfctItem) {
-                this.log.error ('[getDpFunction] : fctItem not defined!');
+                this.log.error('[getDpFunction] : fctItem not defined!');
                 return;
             }
             let jsonValue;
             // easy way, only 1 cmd : {"valueId": "Handbetrieb1", "value": 0}
             if (myfctItem.cmd) {
-                jsonValue =[];
-                const jsonItem ={};
+                jsonValue = [];
+                const jsonItem = {};
                 jsonItem.valueId = myfctItem.cmd;
                 jsonItem.value = Value;
-                jsonValue.push (jsonItem);
+                jsonValue.push(jsonItem);
             }
             // more then 1 cmd : [{"valueId": "ORueckkuehlung", "value": 0},{"valueId":"OHolyCool","value": 0}]
             if (myfctItem.cmds) {
-                jsonValue =[];
+                jsonValue = [];
                 myfctItem.cmds.forEach(item => {
-                    this.log.debug(JSON.stringify(item)); 
-                    const jsonItem ={};
+                    this.log.debug(JSON.stringify(item));
+                    const jsonItem = {};
                     jsonItem.valueId = item.cmd;
                     jsonItem.value = Value;
-                    jsonValue.push (jsonItem);
-                });  
+                    jsonValue.push(jsonItem);
+                });
             }
-            this.log.debug(JSON.stringify(jsonValue)); 
+            this.log.debug(JSON.stringify(jsonValue));
             return jsonValue;
         } catch (e) {
-            this.log.error ('[getDpFunction] Error: '+e);
+            this.log.error('[getDpFunction] Error: ' + e);
         } finally {
             this.log.debug('Finishing Dpfunction...');
-        } 
-    }
-    
-
-    searchForFctItem (thisName) {
-        let result;
-        jsoncontrollerSetupItems.fct.forEach(item => {
-            if (item.name==thisName) {
-                this.log.debug('fct->item found'+JSON.stringify(item)); 
-                result=item;
-            }
-        });  
-        return result; 
+        }
     }
 
-    searchForDpItem (thisName) {
+
+    searchForFctItem(thisName) {
         let result;
         jsoncontrollerSetupItems.fct.forEach(item => {
-            if (item.cmd==thisName) {
-                this.log.debug('dp->item found'+JSON.stringify(item)); 
-                result=item;
+            if (item.name == thisName) {
+                this.log.debug('fct->item found' + JSON.stringify(item));
+                result = item;
             }
-        });  
-        return result; 
+        });
+        return result;
+    }
+
+    searchForDpItem(thisName) {
+        let result;
+        jsoncontrollerSetupItems.fct.forEach(item => {
+            if (item.cmd == thisName) {
+                this.log.debug('dp->item found' + JSON.stringify(item));
+                result = item;
+            }
+        });
+        return result;
     }
 
     getDpType (thisName) {
@@ -287,14 +288,14 @@ class resol extends utils.Adapter {
                 const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
                 context.optimizer = optimizer;
                 if (!optimizer) {
-                    throw new Error ('Unable to create optimizer for master with address 0x'+context.deviceAddress.toString(16));
+                    throw new Error('Unable to create optimizer for master with address 0x' + context.deviceAddress.toString(16));
                 }
                 context.customizer = new vbus.ConnectionCustomizer({
                     deviceAddress: context.deviceAddress,
                     connection: context.connection,
                     optimizer: context.optimizer,
                 });
-    
+
                 let readConfig = [];
 
                 jsoncontrollerSetupItems.dp.forEach(item => {
@@ -309,7 +310,7 @@ class resol extends utils.Adapter {
                     optimize: !readConfig
                 };
                 const loadedConfig = await context.customizer.loadConfiguration(readConfig, options);
-                this.log.debug('loadedConfig '+JSON.stringify(loadedConfig)); 
+                this.log.debug('loadedConfig ' + JSON.stringify(loadedConfig));
 
                 loadedConfig.forEach (item => {
                     let fctItem=this.searchForDpItem(item.valueId);
@@ -324,39 +325,39 @@ class resol extends utils.Adapter {
                 // read combined functions
                 readConfig = [];
                 for (const item of jsoncontrollerSetupItems.dp) {
-                    const fctItem=this.searchForFctItem(item.dpName);
+                    const fctItem = this.searchForFctItem(item.dpName);
                     if (fctItem.cmds) {
-                        console.log('fct->item '+JSON.stringify(fctItem)); 
-                        fctItem.cmds.forEach (item => {
+                        console.log('fct->item ' + JSON.stringify(fctItem));
+                        fctItem.cmds.forEach(item => {
                             const thisConfig = {valueId: item.cmd};
                             readConfig.push(thisConfig);
                         });
 
                         const loadedConfig = await context.customizer.loadConfiguration(readConfig, options);
-                        this.log.debug('loadedConfig '+JSON.stringify(loadedConfig)); 
-                       
+                        this.log.debug('loadedConfig ' + JSON.stringify(loadedConfig));
+
                         // check if all items are numbers
                         let checkNumber = true;
-                        loadedConfig.forEach (item=> {
+                        loadedConfig.forEach(item => {
                             if (!this.isNumber(item.value)) checkNumber = false;
                         });
                         if (checkNumber) {
-                            let thisValue=1;
-                            loadedConfig.forEach (item=> {
-                                thisValue&=item.value;
+                            let thisValue = 1;
+                            loadedConfig.forEach(item => {
+                                thisValue &= item.value;
                             });
-                            let thisDpName = context.deviceID + actionPath + fctItem.name;
-                            this.setStateAsync(thisDpName,thisValue,true);
+                            const thisDpName = context.deviceID + actionPath + fctItem.name;
+                            this.setStateAsync(thisDpName, thisValue, true);
                         }
                     }
                 }
 
             }
         } catch (e) {
-            this.log.error (e);
+            this.log.error(e);
         } finally {
             this.log.debug('Finishing loadMyConfig...');
-        } 
+        }
     }
 
 
@@ -365,16 +366,16 @@ class resol extends utils.Adapter {
         if (state && !state.ack) {
             this.log.debug('Change on Object: ' + JSON.stringify(id));
             this.log.debug('State of Object: ' + JSON.stringify(state));
-            this.log.debug('State :'+ state.val);
+            this.log.debug('State :' + state.val);
             const value = JSON.parse(state.val);
-            const myJSON = this.getDpFunction (id,value);
+            const myJSON = this.getDpFunction(id, value);
             this.log.debug('myJSON: ' + JSON.stringify(myJSON));
-            const context ={connection:ctx.connection, deviceAddress:this.myDeviceAddress, saveConfig:myJSON};
-            await this.runShot (context);
+            const context = {connection: ctx.connection, deviceAddress: this.myDeviceAddress, saveConfig: myJSON};
+            await this.runShot(context);
         }
     }
 
-	
+
     async configIsValid(config) {
         this.log.debug('configIsValid Function ');
         this.log.debug('Entering Function [configIsValid]');
@@ -386,8 +387,8 @@ class resol extends utils.Adapter {
         this.log.debug(`VBus Channel: ${this.config.vbusChannel}`);
         this.log.debug(`VBus Via Tag: ${this.config.vbusViaTag}`);
         this.log.debug(`VBus Interval: ${this.config.vbusInterval}`);
-        const result = new Promise(
-            function(resolve, reject) {
+        return new Promise(
+            function (resolve, reject) {
                 // some helper functions
                 function testSerialformat(config) {
                     if (!config.connectionIdentifier.match(serialformat)) {
@@ -396,8 +397,8 @@ class resol extends utils.Adapter {
                 }
 
                 function testIP_and_FQDN_Format(config) {
-                    if (!config.connectionIdentifier.match(ipformat) && !config.connectionIdentifier.match(fqdnformat) ) {
-                        reject( '[' + config.connectionIdentifier + '] is neither a valid IP-Format nor a fully qualified domain name (FQDN)!');
+                    if (!config.connectionIdentifier.match(ipformat) && !config.connectionIdentifier.match(fqdnformat)) {
+                        reject('[' + config.connectionIdentifier + '] is neither a valid IP-Format nor a fully qualified domain name (FQDN)!');
                     }
                 }
 
@@ -418,6 +419,7 @@ class resol extends utils.Adapter {
                         reject('Invalid connection port given! Should be > 0.');
                     }
                 }
+
                 // switch connectionDevice seleted by User
                 if (config.connectionDevice === 'serial') {
                     testSerialformat(config);
@@ -442,19 +444,18 @@ class resol extends utils.Adapter {
                 }
             }
         );
-        return result;
     }
 
 
     async main() {
         let relayActive = 'Relay X active';
-        let language    = 'en';
+        let language = 'en';
 
         try {
             // Get system language and set it for this adapter
             await this.getForeignObjectAsync('system.config').then(sysConf => {
                 this.log.debug('Requesting language from system.');
-                if (sysConf && (sysConf.common.language === 'de' || sysConf.common.language === 'fr') ) {
+                if (sysConf && (sysConf.common.language === 'de' || sysConf.common.language === 'fr')) {
                     // switch language to a language supported by Resol-Lib (de, fr), or default to english
                     language = sysConf.common.language;
                 }
@@ -469,9 +470,11 @@ class resol extends utils.Adapter {
 
                 // Set translation for relay active state
                 switch (language) {
-                    case 'de': relayActive = 'Relais X aktiv';
+                    case 'de':
+                        relayActive = 'Relais X aktiv';
                         break;
-                    case 'fr': relayActive = 'Relais X actif';
+                    case 'fr':
+                        relayActive = 'Relais X actif';
                         break;
                 }
             }).catch(err => {
@@ -511,13 +514,13 @@ class resol extends utils.Adapter {
 
                 case 'inet':
                     this.log.debug('VBus.net Connection via [' + this.config.vbusViaTag.substring(12, this.config.vbusViaTag.length) + '] selected');
-                    this.log.debug('VBus.net Connection via [' + this.config.vbusViaTag.substring(0,11) + '] selected');
+                    this.log.debug('VBus.net Connection via [' + this.config.vbusViaTag.substring(0, 11) + '] selected');
                     ctx.connection = new vbus.TcpConnection({
                         //host: this.config.connectionIdentifier,
                         host: this.config.vbusViaTag.substring(12, this.config.vbusViaTag.length),
                         port: this.config.connectionPort,
                         password: this.config.vbusPassword,
-                        viaTag: this.config.vbusViaTag.substring(0,11)
+                        viaTag: this.config.vbusViaTag.substring(0, 11)
                     });
                     this.log.info('VBus.net Connection via [' + this.config.vbusViaTag + '] selected');
                     break;
@@ -604,13 +607,13 @@ class resol extends utils.Adapter {
                 });
 
                 this.log.debug('received data: ' + JSON.stringify(data));
-                if (data[1]){
+                if (data[1]) {
                     // create device
                     this.createOrExtendObject(data[1].deviceId, {
                         type: 'device',
                         common: {
                             name: data[1].deviceName,
-							type: 'string'
+                            type: 'string'
                         },
                         native: {}
                     }, undefined);
@@ -620,19 +623,23 @@ class resol extends utils.Adapter {
                         type: 'channel',
                         common: {
                             name: data[1].deviceId + '.' + data[1].addressId,
-							type: 'string'
+                            type: 'string'
                         },
                         native: {}
                     }, undefined);
                     // create write dps
                     if (!this.myDeviceAddress) {
-                        this.myDeviceAddress=data[1].addressId;
+                        this.myDeviceAddress = data[1].addressId;
                         this.log.debug('myDeviceAddress: ' + this.myDeviceAddress);
                         this.myDeviceID = data[1].deviceId;
                         this.generateDP(this.myDeviceAddress, this.myDeviceID);
                     }
-                    const thisContext ={connection:ctx.connection,deviceAddress:this.myDeviceAddress,deviceID:this.myDeviceID};
-                    this.loadMyConfig (thisContext);
+                    const thisContext = {
+                        connection: ctx.connection,
+                        deviceAddress: this.myDeviceAddress,
+                        deviceID: this.myDeviceID
+                    };
+                    this.loadMyConfig(thisContext);
                 }
                 // iterate over all data to create datapoints
                 _.forEach(data, (item) => {
@@ -668,18 +675,18 @@ class resol extends utils.Adapter {
                             common.min = -100;
                             common.max = +1000;
                             common.role = 'value.temperature';
-							common.type = 'number';
+                            common.type = 'number';
                             break;
                         case 'Percent':
                             common.min = 0;
                             common.max = 100;
                             common.role = 'level.volume';
-							common.type = 'number';
+                            common.type = 'number';
                             // create Relay X active state (as far as we know these are the only percent-unit states )
                             this.createOrExtendObject(objectId + '_1', {
                                 type: 'state',
                                 common: {
-                                    name: relayActive.replace('X', item.name.substr(item.name.length-2).replace(' ', '')),
+                                    name: relayActive.replace('X', item.name.substr(item.name.length - 2).replace(' ', '')),
                                     type: 'boolean',
                                     role: 'indicator.activity',
                                     unit: '',
@@ -690,11 +697,11 @@ class resol extends utils.Adapter {
                             break;
                         case 'Hours':
                             common.role = 'value';
-							common.type = 'number';
+                            common.type = 'number';
                             break;
                         case 'WattHours':
                             common.role = 'value.power.generation';
-							common.type = 'number';
+                            common.type = 'number';
                             break;
                         case 'None':
                             if (!isBitField) {
@@ -712,7 +719,7 @@ class resol extends utils.Adapter {
                             break;
                         default:
                             common.role = 'value';
-							common.type = 'number';
+                            common.type = 'number';
                             break;
                     }
                     this.createOrExtendObject(objectId, {type: 'state', common}, value);
@@ -722,7 +729,7 @@ class resol extends utils.Adapter {
             this.log.info('Wait for Connection...');
             await ctx.connection.connect();
             ctx.hsc.startTimer();
-                   
+
         } catch (error) {
             this.log.error(`[main()] error: ${error.message}, stack: ${error.stack}`);
         }
@@ -754,12 +761,12 @@ class resol extends utils.Adapter {
         this.getObject(id, function (err, oldObj) {
             if (!err && oldObj) {
                 self.extendObject(id, objData, () => {
-					if (typeof value !== 'undefined') self.setState(id, value, true);
-				});
+                    if (typeof value !== 'undefined') self.setState(id, value, true);
+                });
             } else {
                 self.setObjectNotExists(id, objData, () => {
-					if (typeof value !== 'undefined') self.setState(id, value, true);
-				});
+                    if (typeof value !== 'undefined') self.setState(id, value, true);
+                });
             }
         });
     }

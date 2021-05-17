@@ -87,7 +87,12 @@
             {
                 "js-controller": ">=1.4.2"
             }
-        ]
+        ],
+        "plugins": {
+            "sentry": {
+                "dsn": "https://352824c6326042b38d31ab0a6fa24fc8@o505019.ingest.sentry.io/5758903"
+            }
+        }
     },
     "native": {
         "connectionDevice": "",
