@@ -29,8 +29,8 @@ const ctx = {
     connection: vbus.Connection()
 };
 let jsoncontrollerSetupItems;
-var myDeviceAddress;
-var myDeviceID;
+let myDeviceAddress;
+let myDeviceID;
 
 
 class resol extends utils.Adapter {
@@ -155,7 +155,7 @@ class resol extends utils.Adapter {
             this.log.debug('[generateDP]->setupResolType: ' + JSON.stringify(setupResolType));
             const controllerSetupFile = distPath + setupResolType.setup + '.js';
             this.log.debug('[generateDP] Loading Controller-config-file: ' + controllerSetupFile);
-            await this.loadJsonFile(controllerSetupFile)
+            this.loadJsonFile(controllerSetupFile)
                 .then(controllerSetupItems => {
                     this.log.debug('[generateDP] Controller-config-file content: ' + JSON.stringify(controllerSetupItems));
                     jsoncontrollerSetupItems = JSON.parse(String(controllerSetupItems));
@@ -313,11 +313,11 @@ class resol extends utils.Adapter {
                 this.log.debug('loadedConfig ' + JSON.stringify(loadedConfig));
 
                 loadedConfig.forEach (item => {
-                    let fctItem=this.searchForDpItem(item.valueId);
-                    let thisDpName =  context.deviceID + actionPath + fctItem.name;
-                    let thisType = this.getDpType (fctItem.name);
+                    const fctItem=this.searchForDpItem(item.valueId);
+                    const thisDpName =  context.deviceID + actionPath + fctItem.name;
+                    const thisType = this.getDpType (fctItem.name);
                     if (thisType == 'number') {
-                       item.value = parseFloat(item.value); 
+                        item.value = parseFloat(item.value);
                     }
                     this.setStateAsync(thisDpName,item.value,true);
                 });
@@ -370,7 +370,7 @@ class resol extends utils.Adapter {
             const value = JSON.parse(state.val);
             const myJSON = this.getDpFunction(id, value);
             this.log.debug('myJSON: ' + JSON.stringify(myJSON));
-            const context = {connection: ctx.connection, deviceAddress: this.myDeviceAddress, saveConfig: myJSON};
+            const context = {connection: ctx.connection, deviceAddress: myDeviceAddress, saveConfig: myJSON};
             await this.runShot(context);
         }
     }
@@ -628,16 +628,16 @@ class resol extends utils.Adapter {
                         native: {}
                     }, undefined);
                     // create write dps
-                    if (!this.myDeviceAddress) {
-                        this.myDeviceAddress = data[1].addressId;
-                        this.log.debug('myDeviceAddress: ' + this.myDeviceAddress);
-                        this.myDeviceID = data[1].deviceId;
-                        this.generateDP(this.myDeviceAddress, this.myDeviceID);
+                    if (!myDeviceAddress) {
+                        myDeviceAddress = data[1].addressId;
+                        this.log.debug('myDeviceAddress: ' + myDeviceAddress);
+                        myDeviceID = data[1].deviceId;
+                        this.generateDP(myDeviceAddress, myDeviceID);
                     }
                     const thisContext = {
                         connection: ctx.connection,
-                        deviceAddress: this.myDeviceAddress,
-                        deviceID: this.myDeviceID
+                        deviceAddress: myDeviceAddress,
+                        deviceID: myDeviceID
                     };
                     this.loadMyConfig(thisContext);
                 }

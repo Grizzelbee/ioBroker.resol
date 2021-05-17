@@ -140,10 +140,13 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 ### 0.3.1 (2021-05-07)
 * (gargano)    Fix: wrong object types fixed according JS-Controller 3.x
 * (gargano)    Fix: prevent setState if value = undefined
+* (gargano)    Upd: Updated resol lib by Daniel Wippermann to v0.22.0
 * (grizzelbee) New: Added sentry
+* (grizzelbee) Fix: Made eslint happy
+* (grizzelbee) Upd: updated dependencies
 
 ### 0.3.0 (2021-01-xx)
-* (grizzelbee) Upd: Updated dependecies
+* (grizzelbee) Upd: Updated dependencies
 * (grizzelbee) New: Log connection-losts as info
 
 ### 0.2.1 (2021-01-23)
