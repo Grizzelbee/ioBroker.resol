@@ -25,7 +25,7 @@
     "url": "https://github.com/Grizzelbee/ioBroker.resol"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.4.0",
+    "@iobroker/adapter-core": "^2.5.0",
     "lodash": "^4.17.21",
     "resol-vbus": "^0.22.0",
     "snyk": "^1.529.0"
