@@ -19,6 +19,12 @@ Please visit <https://github.com/danielwippermann/resol-vbus> and <https://www.n
 * Reading or setting the VBus device configuration parameters is not supported. The tools provided by Resol should be used for this, e.g. via VBus.net or the parameterization tool RPT.
 * Reading DL3 channel 0 (sensors directly connected to the DL3 device) is not supported due to limitations of the DL3 interface.
 
+## sentry.io
+
+This adapter uses sentry.io to collect details on crashes and report it automated to the author. 
+The [ioBroker.sentry plugin](https://github.com/ioBroker/plugin-sentry) is used for it. Please refer to 
+the [plugin homepage](https://github.com/ioBroker/plugin-sentry) for detailed information on what the plugin does, which information is collected and how to disable it, if you don't like to support the author with you're information on crashes.
+
 ## Configuration hints
 
 * The default setting for the connection type is VBus/LAN, but it must be explicitly selected even for VBus/LAN, otherwise no connection will be established.
@@ -72,15 +78,79 @@ Best is to copy/paste it from there - **without http://**
 | Example KM2 / DL2| vbus.net |  | 7053 (Default) | None | d01234567890.vbus.io | 
 | Example Dl3| vbus.net |  | 7053 (Default) | Channel x | d01234567890.vbus.io | 
  
+ 
+#### Sending commands to resol device
 
+Edit the file of your controller you will find in the installed directory 'lib\resol-setup'
+
+{"dp": [{"dpName":"Pumpe1","type":"number","min":0,"max":2},
+	    {"dpName":"Pumpe2","type":"number","min":0,"max":2},
+		{"dpName":"AutoRueckkuehl","type":"number","min":0,"max":1}
+	   ],
+	   
+"fct": [{"name":"Pumpe1","cmd":"Handbetrieb1","val":"val"},
+		{"name":"Pumpe2","cmd":"Handbetrieb2","val":"val"},
+		{"name":"AutoRueckkuehl","cmds":[{"cmd":"ORueckkuehlung","val":"val"},{"cmd":"OHolyCool","val":"val"}]}
+	   ]}
+ 
+The items "dp" will be created after installing the adapter
+The items "fct", "name" there is the link of the dpName. 
+Example : If you change the value in the object "Pumpe1" then the adapter sends the command "Handbetrieb1" with the value to the resol device.
+Also more than one command are possible. E.g. "AutoRueckkuehl"
+ 
+#### How to add a new command 
+
+e.g cooling for device resol cs plus
+
+Please notice the device id in the resol objects (8721)
+Open the selectorfile lib/resol-setup/Setup-Resol-Types.js and notice the line according to the device identifier
+{"id":8721,"setup":"setup-resol-deltasol-cs-plus","data":"resol-deltasol-cs-plus-110-data"},
+ 
+Open the file resol-deltasol-cs-plus-110-data.js in directory  resol-vbus/src/configuration-optimizers
+Search in this file for 'ORueckkuehlung'
+
+Open the file setup-resol-deltasol-cs-plus.js in directory lib/resol-setup/
+Add a line in "dp" {"dpName":"Rueckkuehlung","type":"number","min":0,"max":1}
+Add a line in "fct" {"name":"Rueckkuehlung","cmd":"ORueckkuehlung","val":"val"},
+
+The file should look like this
+
+{"dp": [{"dpName":"Pumpe1","type":"number","min":0,"max":2},
+	    {"dpName":"Pumpe2","type":"number","min":0,"max":2},
+		{"dpName":"Rueckkuehlung","type":"number","min":0,"max":1},
+		{"dpName":"AutoRueckkuehl","type":"number","min":0,"max":1}
+	   ],
+	   
+"fct": [{"name":"Pumpe1","cmd":"Handbetrieb1","val":"val"},
+		{"name":"Pumpe2","cmd":"Handbetrieb2","val":"val"},
+		{"name":"Rueckkuehlung","cmd":"ORueckkuehlung","val":"val"},
+		{"name":"AutoRueckkuehl","cmds":[{"cmd":"ORueckkuehlung","val":"val"},{"cmd":"OHolyCool","val":"val"}]}
+	   ]}
+	   
+Save the file and restart the adapter, you will find now a new object Rueckkuehlung.
+
+
+ 
 ## Todo
 * Make use of adapter internal decrypt function (req. at least js-controller >= 3.0)
-* Log connection losts as info
-* add snyk
-* add 
   
 
 ## Changelog
+
+### 0.3.1 (2021-05-07)
+* (gargano)    Fix: wrong object types fixed according JS-Controller 3.x
+* (gargano)    Fix: prevent setState if value = undefined
+* (gargano)    Upd: Updated resol lib by Daniel Wippermann to v0.22.0
+* (grizzelbee) New: Added sentry
+* (grizzelbee) Fix: Made eslint happy
+* (grizzelbee) Upd: updated dependencies
+
+### 0.3.0 (2021-01-xx)
+* (grizzelbee) Upd: Updated dependencies
+* (grizzelbee) New: Log connection-losts as info
+
+### 0.2.1 (2021-01-23)
+* (gargano)    New: write function to resol device added
 
 ### 0.2.0 (2021-01-18)
 * (grizzelbee) New: New Icon

@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "resol",
-        "version": "0.2.0",
+        "version": "0.3.1",
         "news": {
+            "0.3.1": {
+                "en": "Bugfixes and a few new features",
+                "de": "Bugfixes und ein paar neue Funktionen",
+                "ru": "Исправления и несколько новых функций",
+                "pt": "Correções de bugs e alguns novos recursos",
+                "nl": "Bugfixes en een paar nieuwe functies",
+                "fr": "Corrections de bugs et quelques nouvelles fonctionnalités",
+                "it": "Bugfix e alcune nuove funzionalità",
+                "es": "Corrección de errores y algunas características nuevas.",
+                "pl": "Poprawki błędów i kilka nowych funkcji",
+                "zh-cn": "错误修正和一些新功能"
+            },
             "0.2.0": {
                 "en": "Bugfixes and a few new features",
                 "de": "Bugfixes und ein paar neue Funktionen",
@@ -56,10 +68,6 @@
         "authors": [
             "grizzelbee <hanjo@hingsen.de>"
         ],
-        "contributors": [
-            "DutchmanNL",
-            "pdbjjens <jjensen@t-online.de>"
-        ],
         "keywords": [
             "ioBroker",
             "resol",
@@ -87,7 +95,12 @@
             {
                 "js-controller": ">=1.4.2"
             }
-        ]
+        ],
+        "plugins": {
+            "sentry": {
+                "dsn": "https://352824c6326042b38d31ab0a6fa24fc8@o505019.ingest.sentry.io/5758903"
+            }
+        }
     },
     "native": {
         "connectionDevice": "",
