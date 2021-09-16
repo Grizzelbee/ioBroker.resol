@@ -119,7 +119,7 @@
         "connectionDevice": "",
         "connectionIdentifier": "",
         "connectionPort": 7053,
-        "vbusPassword",
+        "vbusPassword": "",
         "vbusChannel": 7,
         "vbusDataOnly": false,
         "vbusViaTag": "",

@@ -21,21 +21,7 @@
 
 
 		// Create secrect for encrypted password storage
-		var secret;
-		function encrypt(key, value) {
-			var result = '';
-			for(var i = 0; i < value.length; ++i) {
-				result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
-			}
-			return result;
-		}
-		function decrypt(key, value) {
-			var result = '';
-			for(var i = 0; i < value.length; ++i) {
-				result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
-			}
-			return result;
-		}
+		var secret = '';
 
         function load(settings, onChange) {
             if (!settings) return;
@@ -45,32 +31,27 @@
 
                 if ($key.attr('type') === 'checkbox') {
                     // do not call onChange direct, because onChange could expect some arguments
-                    $key.prop('checked', settings[id]).change(function () {
-                        onChange();
-                    });
+                    $key.prop('checked', settings[id])
+                        .on('change', () => onChange());
                 } else {
+                    if (id === 'vbusPassword') {
+                        // get the system secret for pwd de-/encryption
+                        socket.emit('getObject', 'system.config', function (err, obj) {
+                            secret = (obj.native ? obj.native.secret : '');
+                            settings[id] = decrypt(secret, settings[id]);
+                            $key.val(settings[id]).on('change', () => onChange());
+                        });
+                    }
                     // do not call onChange direct, because onChange could expect some arguments
-                    $key.val(settings[id]).change(function () {
-                        onChange();
-                    }).keyup(function () {
-                        onChange();
-                    });
+                    $key.val(settings[id])
+                        .on('change', () => onChange())
+                        .on('keyup', () => onChange());
                 }
-            });
-            socket.emit('getObject', 'system.config', function (err, obj) {
-                secret = (obj.native ? obj.native.secret : '') || 'Zgfr56gFe87jJOM';
-                $key = $('#vbusPassword');
-                settings['vbusPassword'] = decrypt(secret, settings['vbusPassword']);
-                $key.val(settings['vbusPassword']).change(function () {
-                    onChange();
-                }).keyup(function () {
-                    onChange();
-                });
-            });
 
-            onChange(false);
-            // (re)initialize all the Materialize labels on the page
-            M.updateTextFields();
+                onChange(false);
+                // (re)initialize all the Materialize labels on the page
+                M.updateTextFields();
+            });
         }
 
         function save(callback) {

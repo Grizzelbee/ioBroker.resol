@@ -132,8 +132,6 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 
  
 ## Todo
-* Make use of adapter internal decrypt function (req. at least js-controller >= 3.0)
-  
 
 ## Changelog
 
@@ -142,6 +140,7 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 * (grizzelbee) Fix: [#27](https://github.com/Grizzelbee/ioBroker.resol/issues/27) Fixed: State value to set for "resol.0.xxx.010221110010002220" has to be type "number" but received type "string" - it may be needed to delete datapoints manually
 * (grizzelbee) Upd: set correct tier in io-package
 * (grizzelbee) New: Writing value null when received value is <= -999 and >= 999. This is to avoid writing crap when no sensors are connected. 
+* (grizzelbee) New: Making use of adapter internal decrypt function (req. at least js-controller >= 3.0)
 
 ### 0.3.1 (2021-05-07)
 * (gargano)    Fix: wrong object types fixed according JS-Controller 3.x

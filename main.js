@@ -459,15 +459,6 @@ class resol extends utils.Adapter {
                     // switch language to a language supported by Resol-Lib (de, fr), or default to english
                     language = sysConf.common.language;
                 }
-                this.log.debug('Requesting systemsecret from system.');
-                if (sysConf && sysConf.native && sysConf.native.secret) {
-                    this.config.vbusPassword = this.decrypt(sysConf.native.secret, this.config.vbusPassword);
-                } else {
-                    this.config.vbusPassword = this.decrypt('Zgfr56gFe87jJOM', this.config.vbusPassword);
-                }
-                // this line may be commented out by user for debugging purposes when assuming issues with password:
-                // this.log.debug(`VBus Password decrypted: ${this.config.vbusPassword}`);
-
                 // Set translation for relay active state
                 switch (language) {
                     case 'de':
@@ -772,16 +763,7 @@ class resol extends utils.Adapter {
         });
     }
 
-    // Decrypt passwords
-    decrypt(key, value) {
-        let result = '';
-        for (let i = 0; i < value.length; ++i) {
-            result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
-        }
-        return result;
-    }
-
-    // Exit adapter 
+    // Exit adapter
     onUnload(callback) {
         try {
             ctx.connection.disconnect();
