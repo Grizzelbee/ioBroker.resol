@@ -30,3 +30,4 @@ maintenance/**
 
 tsconfig.json
 *.ts
+*.cdr
