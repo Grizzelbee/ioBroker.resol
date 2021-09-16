@@ -2,7 +2,17 @@
 
 ![Logo](admin/resol.svg)
 
- 
+![Number of Installations (latest)](http://iobroker.live/badges/resol-installed.svg)
+[![NPM version](https://img.shields.io/npm/v/iobroker.resol.svg)](https://www.npmjs.com/package/iobroker.resol)
+![Number of Installations (stable)](http://iobroker.live/badges/resol-stable.svg)
+[![Known Vulnerabilities](https://snyk.io/test/github/Grizzelbee/ioBroker.resol/badge.svg)](https://snyk.io/test/github/Grizzelbee/ioBroker.resol)
+[![Travis-CI](https://travis-ci.com/Grizzelbee/iobroker.resol.svg?branch=master)](https://travis-ci.com/github/Grizzelbee/iobroker.resol)
+
+[![NPM](https://nodei.co/npm/iobroker.resol.svg?downloads=true)](https://nodei.co/npm/iobroker.resol/)
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/grizzelbee/iobroker.resol/blob/master/LICENSE)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.resol.svg)](https://www.npmjs.com/package/iobroker.resol)
+
 ## ioBroker Adapter for Resol VBus
 
 This adapter is derived from the myVbus adapter and based on the work of by DutchmanNL and pdbjjens.
