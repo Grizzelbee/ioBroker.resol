@@ -673,9 +673,10 @@ class resol extends utils.Adapter {
                     switch (item.unitId) {
                         case 'DegreesCelsius':
                             common.min = -100;
-                            common.max = +1000;
+                            common.max = +300;
                             common.role = 'value.temperature';
                             common.type = 'number';
+                            if (value >=999 || value <= -999) value = null;
                             break;
                         case 'Percent':
                             common.min = 0;
