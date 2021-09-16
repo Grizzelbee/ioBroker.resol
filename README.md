@@ -209,6 +209,7 @@ All other trademarks are the property of their respective owners.
 
 
 ## License
+Copyright (c) 2021 Hanjo Hingsen <open.source@hingsen.de>
 
 MIT License
 
@@ -230,4 +231,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Copyright (c) 2021 Hanjo Hingsen <open.source@hingsen.de>
+
