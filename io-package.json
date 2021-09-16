@@ -54,16 +54,16 @@
         },
         "title": "Resol VBus",
         "titleLang": {
-            "en": "Connect your Resol VBus Devices to ioBroker",
-            "de": "Verbinden Sie Ihre Resol VBus-Geräte mit ioBroker",
-            "ru": "Подключите свои устройства Resol VBus к ioBroker",
-            "pt": "Conecte seus dispositivos Resol VBus ao ioBroker",
-            "nl": "Verbind uw Resol VBus-apparaten met ioBroker",
-            "fr": "Connectez vos appareils Resol VBus à ioBroker",
-            "it": "Collega i tuoi dispositivi Resol VBus a ioBroker",
-            "es": "Conecte sus dispositivos Resol VBus a ioBroker",
-            "pl": "Podłącz urządzenia Resol VBus do ioBroker",
-            "zh-cn": "将您的Resol VBus设备连接到ioBroker"
+            "en": "Connect your Resol VBus Devices",
+            "de": "Verbinden Sie Ihre Resol VBus-Geräte",
+            "ru": "Подключите свои устройства Resol VBus",
+            "pt": "Conecte seus dispositivos Resol VBus",
+            "nl": "Verbind uw Resol VBus-apparaten",
+            "fr": "Connectez vos appareils Resol VBus",
+            "it": "Collega i tuoi dispositivi Resol VBus",
+            "es": "Conecte sus dispositivos Resol VBus",
+            "pl": "Podłącz urządzenia Resol VBus",
+            "zh-cn": "将您的Resol VBus设备连接"
         },
         "desc": {
             "en": "This adapter connects ioBroker to various VBus-based Resol devices",
@@ -106,7 +106,7 @@
         "dataSource": "push",
         "dependencies": [
             {
-                "js-controller": ">=1.4.2"
+                "js-controller": ">=3.0.0"
             }
         ],
         "plugins": {
