@@ -119,12 +119,18 @@
         "connectionDevice": "",
         "connectionIdentifier": "",
         "connectionPort": 7053,
-        "vbusPassword": "",
+        "vbusPassword",
         "vbusChannel": 7,
         "vbusDataOnly": false,
         "vbusViaTag": "",
         "vbusInterval": 30
     },
+    "encryptedNative": [
+        "vbusPassword"
+    ],
+    "protectedNative": [
+        "vbusPassword"
+    ],
     "objects": [],
     "instanceObjects": [
         {
