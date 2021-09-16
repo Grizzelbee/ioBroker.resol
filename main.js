@@ -707,7 +707,7 @@ class resol extends utils.Adapter {
                             if (!isBitField) {
                                 if (isTimeField) {
                                     common.role = 'value';
-                                    common.type = 'number';
+                                    common.type = 'string';
                                 } else {
                                     common.role = 'value';
                                 }
