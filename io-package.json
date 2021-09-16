@@ -78,7 +78,7 @@
             "zh-cn": "该适配器将ioBroker连接到各种基于VBus的Resol设备"
         },
         "authors": [
-            "grizzelbee <hanjo@hingsen.de>"
+            "grizzelbee <open.source@hingsen.de>"
         ],
         "keywords": [
             "ioBroker",
@@ -93,7 +93,7 @@
         "main": "main.js",
         "icon": "resol.svg",
         "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/grizzelbee/ioBroker.resol/master/admin/resol.png",
+        "extIcon": "https://raw.githubusercontent.com/grizzelbee/ioBroker.resol/master/admin/resol.svg",
         "readme": "https://github.com/grizzelbee/ioBroker.resol/blob/master/README.md",
         "loglevel": "info",
         "mode": "daemon",

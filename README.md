@@ -5,6 +5,9 @@
  
 ## ioBroker Adapter for Resol VBus
 
+This adapter is derived from the myVbus adapter and based on the work of by DutchmanNL and pdbjjens.
+Since pdbjjens only wanted to read values and for some people there is a need to get more control of their devices - this adapter was risen.
+
 This adapter connects various VBus-based devices to ioBroker supporting various connection types. 
 
 It's using resol-vbus, a JavaScript library provided by Daniel Wippermann.
@@ -63,9 +66,9 @@ This includes:
 |  | Connectiondevice | Device-address | Port | DL3-Channel | Via-Tag |   
 |------------------|------------------|----------------|------|-------------|---------|
 |           | select your Device from List | IP-Address of your Device | TCP Port | DL3 Channel to use, when applicable | leave blank |
-| Example | KM2 | 192.168.178.xxx | 7053 (Default) | None | | 
-| Example | DL2 | 192.168.178.xxx | 7053 (Default) | None | | 
-| Example | DL3 | 192.168.178.xxx | 7053 (Default) | Channel x | | 
+| Example | KM2 | 192.168.17x.xxx | 7053 (Default) | None | | 
+| Example | DL2 | 192.168.17x.xxx | 7053 (Default) | None | | 
+| Example | DL3 | 192.168.17x.xxx | 7053 (Default) | Channel x | | 
 
 #### Connection via vbus.net by Resol
 You'll find your personal per device Via-tag on the vbus.net homepage under: My VBus.net - My devices.
@@ -227,4 +230,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Copyright (c) 2020 Hanjo Hingsen <hanjo@hingsen.de>
+Copyright (c) 2021 Hanjo Hingsen <open.source@hingsen.de>
