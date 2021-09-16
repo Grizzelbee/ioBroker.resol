@@ -661,7 +661,7 @@ class resol extends utils.Adapter {
                     if ((item.rawValue === undefined) || (item.rawValue === null)) {
                         value = 0;
                     } else if (item.rootTypeId === 'Number') {
-                        value = parseFloat(item.rawValue.toFixed(item.precision));
+                        value = Math.round(parseFloat(item.rawValue.toFixed(item.precision))*100)/100;
                     } else if (item.rootTypeId === 'Time') {
                         value = spec.i18n.moment(item.rawValue * 60000).utc().format('HH:mm');
                     } else if (item.rootTypeId === 'Weektime') {

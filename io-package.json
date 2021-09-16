@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "resol",
-        "version": "0.3.1",
+        "version": "0.3.2",
         "news": {
+            "0.3.2": {
+                "en": "Minor bugfixes.",
+                "de": "Kleinere Fehlerbehebungen.",
+                "ru": "Устранение небольших багов.",
+                "pt": "Pequenas correções de bugs.",
+                "nl": "Kleine bugfixes.",
+                "fr": "Corrections de bugs mineurs.",
+                "it": "Correzioni di bug minori.",
+                "es": "Correcciones de errores menores.",
+                "pl": "Naprawy niewielkich błędów.",
+                "zh-cn": "修正了一些小错误。"
+            },
             "0.3.1": {
                 "en": "Bugfixes and a few new features",
                 "de": "Bugfixes und ein paar neue Funktionen",
@@ -86,6 +98,7 @@
         "loglevel": "info",
         "mode": "daemon",
         "type": "climate-control",
+        "tier": 2,
         "compact": true,
         "materialize": true,
         "supportCustoms": false,

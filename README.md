@@ -137,6 +137,11 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 
 ## Changelog
 
+### 0.3.2 (2021-09-16)
+* (grizzelbee) Upd: updated dependencies
+* (grizzelbee) Fix: [#27](https://github.com/Grizzelbee/ioBroker.resol/issues/27) Fixed: State value to set for "resol.0.xxx.010221110010002220" has to be type "number" but received type "string"
+* (grizzelbee) Upd: set correct tier in io-package
+
 ### 0.3.1 (2021-05-07)
 * (gargano)    Fix: wrong object types fixed according JS-Controller 3.x
 * (gargano)    Fix: prevent setState if value = undefined
