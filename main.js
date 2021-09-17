@@ -24,9 +24,9 @@ const distPath = './lib/resol-setup/';
 const setupFileResolTypes = distPath + 'Setup-Resol-Types.js';
 const actionPath = '.Actions.';
 const ctx = {
-    headerSet: vbus.HeaderSet(),
-    hsc: vbus.HeaderSetConsolidator(),
-    connection: vbus.Connection()
+    headerSet: new vbus.HeaderSet(),
+    hsc: new vbus.HeaderSetConsolidator(),
+    connection: new vbus.Connection()
 };
 let jsoncontrollerSetupItems;
 let myDeviceAddress;
