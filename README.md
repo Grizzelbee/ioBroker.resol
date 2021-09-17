@@ -10,13 +10,16 @@
 
 [![NPM](https://nodei.co/npm/iobroker.resol.svg?downloads=true)](https://nodei.co/npm/iobroker.resol/)
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/grizzelbee/iobroker.resol/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/grizzelbee/iobroker.resol/blob/master/README.md#License)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.resol.svg)](https://www.npmjs.com/package/iobroker.resol)
 
-## ioBroker Adapter for Resol VBus
+## Credits
+This adapter is derived from the myVbus adapter and based on the work of by DutchmanNL and pdbjjens. Many thanks to both of them for their work.
+Since pdbjjens only wanted to read values from vbus and for some people there is a need to get more control of their devices - this adapter was risen.
+Here you get the ability to control your vbus controller.
 
-This adapter is derived from the myVbus adapter and based on the work of by DutchmanNL and pdbjjens.
-Since pdbjjens only wanted to read values and for some people there is a need to get more control of their devices - this adapter was risen.
+
+## ioBroker Adapter for Resol VBus
 
 This adapter connects various VBus-based devices to ioBroker supporting various connection types. 
 
