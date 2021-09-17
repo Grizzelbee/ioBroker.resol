@@ -6,8 +6,7 @@
 [![NPM version](https://img.shields.io/npm/v/iobroker.resol.svg)](https://www.npmjs.com/package/iobroker.resol)
 ![Number of Installations (stable)](http://iobroker.live/badges/resol-stable.svg)
 [![Known Vulnerabilities](https://snyk.io/test/github/Grizzelbee/ioBroker.resol/badge.svg)](https://snyk.io/test/github/Grizzelbee/ioBroker.resol)
-[![Travis-CI](https://travis-ci.com/Grizzelbee/iobroker.resol.svg?branch=master)](https://travis-ci.com/github/Grizzelbee/iobroker.resol)
-
+[![Node.js CI](https://github.com/Grizzelbee/ioBroker.resol/actions/workflows/node.js.yml/badge.svg)](https://github.com/Grizzelbee/ioBroker.resol/actions/workflows/node.js.yml)
 [![NPM](https://nodei.co/npm/iobroker.resol.svg?downloads=true)](https://nodei.co/npm/iobroker.resol/)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/grizzelbee/iobroker.resol/blob/master/README.md#License)
