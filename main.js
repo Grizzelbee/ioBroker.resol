@@ -97,7 +97,7 @@ class resol extends utils.Adapter {
 
     async loadJsonFile(filename) {
         const pathToFile = path.resolve(__dirname, filename);
-        const fileContent = await new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             fs.readFile(pathToFile, (err, data) => {
                 if (err) {
                     reject(err);
@@ -106,7 +106,6 @@ class resol extends utils.Adapter {
                 }
             });
         });
-        return fileContent;
     }
 
     isNumber(n) {
@@ -252,7 +251,7 @@ class resol extends utils.Adapter {
     searchForFctItem(thisName) {
         let result;
         jsoncontrollerSetupItems.fct.forEach(item => {
-            if (item.name == thisName) {
+            if (item.name === thisName) {
                 this.log.debug('fct->item found' + JSON.stringify(item));
                 result = item;
             }
@@ -263,7 +262,7 @@ class resol extends utils.Adapter {
     searchForDpItem(thisName) {
         let result;
         jsoncontrollerSetupItems.fct.forEach(item => {
-            if (item.cmd == thisName) {
+            if (item.cmd === thisName) {
                 this.log.debug('dp->item found' + JSON.stringify(item));
                 result = item;
             }
@@ -274,7 +273,7 @@ class resol extends utils.Adapter {
     getDpType (thisName) {
         let result;
         jsoncontrollerSetupItems.dp.forEach(item => {
-            if (item.dpName==thisName) {
+            if (item.dpName===thisName) {
                 this.log.debug('dp->Name found'+JSON.stringify(item)); 
                 result=item.type;
             }
@@ -316,7 +315,7 @@ class resol extends utils.Adapter {
                     const fctItem=this.searchForDpItem(item.valueId);
                     const thisDpName =  context.deviceID + actionPath + fctItem.name;
                     const thisType = this.getDpType (fctItem.name);
-                    if (thisType == 'number') {
+                    if (thisType === 'number') {
                         item.value = parseFloat(item.value);
                     }
                     this.setStateAsync(thisDpName,item.value,true);
@@ -732,10 +731,18 @@ class resol extends utils.Adapter {
         try {
             // Terminate adapter after first start because configuration is not yet received
             // Adapter is restarted automatically when config page is closed
-            await this.configIsValid(this.config)
+            this.configIsValid(this.config)
                 .then(result => {
                     this.log.info(result);
-                    this.main();
+                    this.getForeignObject('system.config', (err, obj) => {
+                        if (this.supportsFeature && this.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
+                            if (obj && obj.native && obj.native.secret) {
+                                //noinspection JSUnresolvedVariable
+                                this.config.vbusPassword = this.decrypt(obj.native.secret, this.config.vbusPassword);
+                            }
+                            this.main();
+                        }
+                    });
                 })
                 .catch(err => {
                     this.log.error(err);
