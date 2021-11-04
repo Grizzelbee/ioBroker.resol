@@ -151,6 +151,10 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 
 ## Changelog
 
+### 0.3.3 (2021-11-04)
+* (grizzelbee) Upd: updated dependencies
+* (grizzelbee) Upd: Switched from adapter-type climate-control to energy
+
 ### 0.3.2 (2021-09-16)
 * (grizzelbee) Upd: updated dependencies
 * (grizzelbee) Fix: [#27](https://github.com/Grizzelbee/ioBroker.resol/issues/27) Fixed: State value to set for "resol.0.xxx.010221110010002220" has to be type "number" but received type "string" - it may be needed to delete datapoints manually
