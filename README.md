@@ -151,22 +151,22 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 
 ## Changelog
 
-### 0.4.0 (2021-11-08)
+### v0.4.0 (2021-11-08)
 * (grizzelbee) Upd: updated dependencies
 * (grizzelbee) New: Trying more than one time to connect when network isn't setup properly. E.g. on router startup.
 
-### 0.3.3 (2021-11-04)
+### v0.3.3 (2021-11-04)
 * (grizzelbee) Upd: updated dependencies
 * (grizzelbee) Upd: Switched from adapter-type climate-control to energy
 
-### 0.3.2 (2021-09-16)
+### v0.3.2 (2021-09-16)
 * (grizzelbee) Upd: updated dependencies
 * (grizzelbee) Fix: [#27](https://github.com/Grizzelbee/ioBroker.resol/issues/27) Fixed: State value to set for "resol.0.xxx.010221110010002220" has to be type "number" but received type "string" - it may be needed to delete datapoints manually
 * (grizzelbee) Upd: set correct tier in io-package
 * (grizzelbee) New: Writing value null when received value is <= -999 and >= 999. This is to avoid writing crap when no sensors are connected. 
 * (grizzelbee) New: Making use of adapter internal decrypt function (req. at least js-controller >= 3.0)
 
-### 0.3.1 (2021-05-07)
+### v0.3.1 (2021-05-07)
 * (gargano)    Fix: wrong object types fixed according JS-Controller 3.x
 * (gargano)    Fix: prevent setState if value = undefined
 * (gargano)    Upd: Updated resol lib by Daniel Wippermann to v0.22.0
@@ -174,14 +174,14 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 * (grizzelbee) Fix: Made eslint happy
 * (grizzelbee) Upd: updated dependencies
 
-### 0.3.0 (2021-01-xx)
+### v0.3.0 (2021-01-xx)
 * (grizzelbee) Upd: Updated dependencies
 * (grizzelbee) New: Log connection-losts as info
 
-### 0.2.1 (2021-01-23)
+### v0.2.1 (2021-01-23)
 * (gargano)    New: write function to resol device added
 
-### 0.2.0 (2021-01-18)
+### v0.2.0 (2021-01-18)
 * (grizzelbee) New: New Icon
 * (grizzelbee) Upd: Update resol-Bus lib to V0.21.0 
 * (grizzelbee) Upd: Security-Update to lodash lib 
@@ -191,7 +191,7 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 * (grizzelbee) New: Extended documentation
 * (grizzelbee) Fix: Adapter doesn't crash on connection losts anymore
 
-### 0.1.0 (2020-03-29)
+### v0.1.0 (2020-03-29)
 * (grizzelbee) Fix: config page shows current settings now (not default anymore) **May raise the need to reenter the password!**
 * (grizzelbee) Fix: "Connected" state is updated correctly now if connection is disrupted.
 * (grizzelbee) New: Added Badge for latest(npm) version to readme
@@ -201,23 +201,22 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 * (grizzelbee) New: added new activity indicator states for each relais.
 * (grizzelbee) New: testing configuration to avoid start with invalid config
 
-### 0.0.6
+### v0.0.6
 * (pdbjjens) alpha 6 release updated dependencies
 
-### 0.0.5
+### v0.0.5
 * (pdbjjens) alpha 5 release improved type and role mapping of adapter values
 
-### 0.0.4
+### v0.0.4
 * (pdbjjens) alpha 4 release updated dependency on resol-vbus library to 0.21.0
 
-### 0.0.3
+### v0.0.3
 * (pdbjjens) alpha 3 release tested with DL3 over local LAN and VBus.net and DeltaSol SLT (0x1001) incl. HQM (0x1011)
 
-### 0.0.2
+### v0.0.2
 * (pdbjjens) alpha 2 release tested with VBus/LAN, KM2, VBus.net and DeltaSol E (0x7721 & 0x7722), DeltaSol M (0x7311 & 0x716), DeltaSol CS Plus (0x2211), Oventrop RQXXL (0x7541)
 
-### 0.0.1
-
+### v0.0.1
 * (pdbjjens) initial release tested only with VBus/USB (Serial) and DeltaSol(R) BS2009 (0x427B)
 
 ## Legal Notices
