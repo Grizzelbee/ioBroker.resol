@@ -717,8 +717,18 @@ class resol extends utils.Adapter {
                 });
             });
             // Establish connection             
-            this.log.info('Wait for Connection...');
-            await ctx.connection.connect();
+            this.log.info('Waiting for Connection...');
+            let connected = false;
+            do {
+                try {
+                    await ctx.connection.connect();
+                    connected = true;
+                } catch(error){
+                    await clearTimeout( setTimeout(()=>{
+                        this.log.error(`Error on connection attempt: ${error.message}.`);
+                    }, 10000));
+                }
+            } while ( !connected );
             ctx.hsc.startTimer();
 
         } catch (error) {
