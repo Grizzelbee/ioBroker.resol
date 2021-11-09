@@ -16,7 +16,7 @@
 ## Credits
 This adapter is derived from the myVbus adapter and based on the work of by DutchmanNL and pdbjjens. Many thanks to both of them for their work.
 Since pdbjjens only wanted to read values from vbus and for some people there is a need to get more control of their devices - this adapter was risen.
-Here you get the ability to control your vbus controller.
+Here you get the ability to control your vbus controller. Many thanks go out to both of them for their work.
 
 
 ## ioBroker Adapter for Resol VBus
@@ -119,7 +119,7 @@ Also more than one command are possible. E.g. "AutoRueckkuehl"
 e.g cooling for device resol cs plus
 
 Please notice the device id in the resol objects (8721)
-Open the selectorfile lib/resol-setup/Setup-Resol-Types.js and notice the line according to the device identifier
+Open the selector file lib/resol-setup/Setup-Resol-Types.js and notice the line according to the device identifier
 {"id":8721,"setup":"setup-resol-deltasol-cs-plus","data":"resol-deltasol-cs-plus-110-data"},
  
 Open the file resol-deltasol-cs-plus-110-data.js in directory  resol-vbus/src/configuration-optimizers
@@ -150,6 +150,11 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 ## Todo
 
 ## Changelog
+
+### 0.4.0 (2021-11-08)
+* (grizzelbee) Upd: updated dependencies
+* (grizzelbee) New: Trying more than one time to connect when network isn't setup properly. E.g. on router startup.
+
 
 ### 0.3.2 (2021-09-16)
 * (grizzelbee) Upd: updated dependencies

@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "resol",
-        "version": "0.3.2",
+        "version": "0.4.0",
         "news": {
+            "0.4.0": {
+                "en": "Trying more than one time to connect when network isn't setup properly. E.g. on router startup.",
+                "de": "Versuchen Sie mehr als einmal, eine Verbindung herzustellen, wenn das Netzwerk nicht richtig eingerichtet ist. ",
+                "ru": "Попытка подключения более одного раза, когда сеть не настроена должным образом. ",
+                "pt": "Tentando conectar mais de uma vez quando a rede não está configurada corretamente. ",
+                "nl": "Meer dan één keer proberen verbinding te maken wanneer het netwerk niet correct is ingesteld. ",
+                "fr": "Essayer plusieurs fois de se connecter lorsque le réseau n'est pas configuré correctement. ",
+                "it": "Tentando più di una volta di connettersi quando la rete non è configurata correttamente. ",
+                "es": "Intentando conectarse más de una vez cuando la red no está configurada correctamente. ",
+                "pl": "Próbujesz więcej niż raz połączyć się, gdy sieć nie jest prawidłowo skonfigurowana. ",
+                "zh-cn": "当网络设置不正确时尝试多次连接。"
+            },
             "0.3.2": {
                 "en": "Minor bugfixes.",
                 "de": "Kleinere Fehlerbehebungen.",
