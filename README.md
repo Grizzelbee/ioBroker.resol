@@ -16,7 +16,7 @@
 ## Credits
 This adapter is derived from the myVbus adapter and based on the work of by DutchmanNL and pdbjjens. Many thanks to both of them for their work.
 Since pdbjjens only wanted to read values from vbus and for some people there is a need to get more control of their devices - this adapter was risen.
-Here you get the ability to control your vbus controller. Many thanks go out to both of them for their work.
+Here you get the ability to control your vbus controller.
 
 
 ## ioBroker Adapter for Resol VBus
@@ -155,6 +155,9 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 * (grizzelbee) Upd: updated dependencies
 * (grizzelbee) New: Trying more than one time to connect when network isn't setup properly. E.g. on router startup.
 
+### 0.3.3 (2021-11-04)
+* (grizzelbee) Upd: updated dependencies
+* (grizzelbee) Upd: Switched from adapter-type climate-control to energy
 
 ### 0.3.2 (2021-09-16)
 * (grizzelbee) Upd: updated dependencies

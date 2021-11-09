@@ -15,6 +15,18 @@
                 "pl": "Próbujesz więcej niż raz połączyć się, gdy sieć nie jest prawidłowo skonfigurowana. ",
                 "zh-cn": "当网络设置不正确时尝试多次连接。"
             },
+            "0.3.3": {
+                "en": "Updated dependencies and switched to adapter-type: energy.",
+                "de": "Abhängigkeiten aktualisiert und auf Adaptertyp umgestellt: Energie.",
+                "ru": "Обновлены зависимости и переключены на тип адаптера: энергия.",
+                "pt": "Dependências atualizadas e mudadas para o tipo de adaptador: energia.",
+                "nl": "Afhankelijkheden bijgewerkt en overgeschakeld naar adaptertype: energie.",
+                "fr": "Dépendances mises à jour et passage au type d'adaptateur : énergie.",
+                "it": "Dipendenze aggiornate e passaggio al tipo di adattatore: energia.",
+                "es": "Dependencias actualizadas y cambiadas a tipo adaptador: energía.",
+                "pl": "Zaktualizowano zależności i przełączono na typ adaptera: energia.",
+                "zh-cn": "更新依赖项并切换到适配器类型：能源。"
+            },
             "0.3.2": {
                 "en": "Minor bugfixes.",
                 "de": "Kleinere Fehlerbehebungen.",
@@ -78,16 +90,16 @@
             "zh-cn": "将您的Resol VBus设备连接"
         },
         "desc": {
-            "en": "This adapter connects ioBroker to various VBus-based Resol devices",
-            "de": "Dieser Adapter verbindet ioBroker mit verschiedenen VBus-basierten Resol-Geräten",
-            "ru": "Этот адаптер подключает ioBroker к различным VBus-устройствам Resol",
-            "pt": "Este adaptador conecta o ioBroker a vários dispositivos Resol baseados em VBus",
-            "nl": "Deze adapter verbindt ioBroker met verschillende VBus-gebaseerde Resol-apparaten",
-            "fr": "Cet adaptateur connecte ioBroker à divers appareils Resol basés sur VBus",
-            "it": "Questo adattatore collega ioBroker a vari dispositivi Resol basati su VBus",
-            "es": "Este adaptador conecta ioBroker a varios dispositivos Resol basados ​​en VBus",
-            "pl": "Ten adapter łączy ioBroker z różnymi urządzeniami Resol opartymi na VBus",
-            "zh-cn": "该适配器将ioBroker连接到各种基于VBus的Resol设备"
+            "en": "Connects to various Resol-VBus-based devices",
+            "de": "Verbindet sich mit verschiedenen Resol-VBus-basierten Geräten",
+            "ru": "Подключается к различным устройствам на базе Resol-VBus",
+            "pt": "Conecta-se a vários dispositivos baseados em Resol-VBus",
+            "nl": "Maakt verbinding met verschillende op Resol-VBus gebaseerde apparaten",
+            "fr": "Se connecte à divers appareils basés sur Resol-VBus",
+            "it": "Si collega a vari dispositivi basati su Resol-VBus",
+            "es": "Se conecta a varios dispositivos basados ​​en Resol-VBus",
+            "pl": "Łączy się z różnymi urządzeniami opartymi na Resol-VBus",
+            "zh-cn": "连接到各种基于 Resol-VBus 的设备"
         },
         "authors": [
             "grizzelbee <open.source@hingsen.de>"
@@ -109,7 +121,7 @@
         "readme": "https://github.com/grizzelbee/ioBroker.resol/blob/master/README.md",
         "loglevel": "info",
         "mode": "daemon",
-        "type": "climate-control",
+        "type": "energy",
         "tier": 2,
         "compact": true,
         "materialize": true,
