@@ -755,7 +755,7 @@ class resol extends utils.Adapter {
                 })
                 .catch(err => {
                     this.log.error(err);
-                    this.setStateAsync('info.connection', false);
+                    this.setStateAsync('info.connection', false, true);
                     this.terminate('Terminating Adapter until Configuration is completed', 11);
                 });
         } catch (error) {
