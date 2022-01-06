@@ -153,6 +153,7 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 * (grizzelbee) Fix: switched action roles from "indicator" to "switch" to be compliant with ioBroker rules
 * (grizzelbee) Fix: Removed password encryption stuff and added dependency Admin >=4.0.9
 * (grizzelbee) Fix: Fixed a few code warnings
+* (grizzelbee) Fix: Fixed: info.connection has been written w/o ACK 
 * (grizzelbee) Upd: updated dependencies
 
 ### v0.4.0 (2021-11-08)
