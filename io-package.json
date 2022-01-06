@@ -130,7 +130,8 @@
         "dataSource": "push",
         "dependencies": [
             {
-                "js-controller": ">=3.0.0"
+                "js-controller": ">=3.0.0",
+                "admin": ">=4.0.9"
             }
         ],
         "plugins": {
