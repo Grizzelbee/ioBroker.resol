@@ -147,7 +147,7 @@ class resol extends utils.Adapter {
                     type: 'string'
                 },
                 native: {}
-            }, undefined);
+            }, null);
 
             this.log.debug('[generateDP]->Resol-Address/Resol-ID:  [' + resolAddr + '] : [' + resolId + ']');
             const setupResolType = await this.getJSONByResolId(resolAddr);
@@ -163,7 +163,7 @@ class resol extends utils.Adapter {
                         this.log.debug('[generateDP]->item ' + JSON.stringify(item));
                         // create dp
                         let thisRole = 'value';
-                        if (item.states) thisRole = 'indicator';
+                        if (item.states) thisRole = 'switch';
 
                         this.createOrExtendObject(resolId + actionPath + item.dpName, {
                             type: 'state',
@@ -178,7 +178,7 @@ class resol extends utils.Adapter {
                                 write: true
                             },
                             native: {}
-                        }, undefined);
+                        }, null);
                         this.subscribeStates(resolId + actionPath + item.dpName);
                     });
                 })
@@ -274,16 +274,16 @@ class resol extends utils.Adapter {
         let result;
         jsoncontrollerSetupItems.dp.forEach(item => {
             if (item.dpName===thisName) {
-                this.log.debug('dp->Name found'+JSON.stringify(item)); 
+                this.log.debug('dp->Name found'+JSON.stringify(item));
                 result=item.type;
             }
-        });  
-        return result; 
+        });
+        return result;
     }
 
     async loadMyConfig (context) {
         try{
-            if (jsoncontrollerSetupItems) {          
+            if (jsoncontrollerSetupItems) {
                 const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
                 context.optimizer = optimizer;
                 if (!optimizer) {
@@ -300,7 +300,7 @@ class resol extends utils.Adapter {
                 jsoncontrollerSetupItems.dp.forEach(item => {
                     const fct = this.searchForFctItem(item.dpName);
                     if (fct.cmd) {
-                        // generate readConfig                        
+                        // generate readConfig
                         const thisConfig = {valueId: fct.cmd};
                         readConfig.push(thisConfig);
                     }
@@ -716,7 +716,7 @@ class resol extends utils.Adapter {
                     this.createOrExtendObject(objectId, {type: 'state', common}, value);
                 });
             });
-            // Establish connection             
+            // Establish connection
             this.log.info('Waiting for Connection...');
             let connected = false;
             do {
