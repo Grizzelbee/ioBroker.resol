@@ -149,6 +149,9 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 
 ## Changelog
 
+### v0.4.2 (2022-01-05)
+* (grizzelbee) Fix: Removed password encryption stuff from admin to avoid double encryption
+
 ### v0.4.1 (2022-01-05)
 * (grizzelbee) Fix: switched action roles from "indicator" to "switch" to be compliant with ioBroker rules
 * (grizzelbee) Fix: Removed password encryption stuff and added dependency Admin >=4.0.9

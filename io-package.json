@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "resol",
-        "version": "0.4.1",
+        "version": "0.4.2",
         "news": {
-            "0.4.1": {
+            "0.4.2": {
                 "en": "Fixed some issues shown up at review.",
                 "de": "Einige Probleme behoben, die bei der Überprüfung auftauchten.",
                 "ru": "Исправлены некоторые проблемы, обнаруженные при проверке.",
