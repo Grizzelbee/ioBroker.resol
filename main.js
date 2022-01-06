@@ -374,7 +374,10 @@ class resol extends utils.Adapter {
         }
     }
 
-
+    /*
+    * @param {object} config Current  active config for adapter
+    * @returns {string} Result of the check
+    * */
     async configIsValid(config) {
         this.log.debug('configIsValid Function ');
         this.log.debug('Entering Function [configIsValid]');
@@ -744,15 +747,7 @@ class resol extends utils.Adapter {
             this.configIsValid(this.config)
                 .then(result => {
                     this.log.info(result);
-                    this.getForeignObject('system.config', (err, obj) => {
-                        if (this.supportsFeature && this.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
-                            if (obj && obj.native && obj.native.secret) {
-                                //noinspection JSUnresolvedVariable
-                                this.config.vbusPassword = this.decrypt(obj.native.secret, this.config.vbusPassword);
-                            }
-                            this.main();
-                        }
-                    });
+                    this.main();
                 })
                 .catch(err => {
                     this.log.error(err);
