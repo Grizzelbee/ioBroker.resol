@@ -18,11 +18,6 @@
 	<script type="text/javascript" src="words.js"></script>
 
 	<script type="text/javascript">
-
-
-		// Create secrect for encrypted password storage
-		var secret = '';
-
         function load(settings, onChange) {
             if (!settings) return;
             $('.value').each(function () {
@@ -34,14 +29,6 @@
                     $key.prop('checked', settings[id])
                         .on('change', () => onChange());
                 } else {
-                    if (id === 'vbusPassword') {
-                        // get the system secret for pwd de-/encryption
-                        socket.emit('getObject', 'system.config', function (err, obj) {
-                            secret = (obj.native ? obj.native.secret : '');
-                            settings[id] = decrypt(secret, settings[id]);
-                            $key.val(settings[id]).on('change', () => onChange());
-                        });
-                    }
                     // do not call onChange direct, because onChange could expect some arguments
                     $key.val(settings[id])
                         .on('change', () => onChange())
@@ -64,9 +51,6 @@
                     obj[id] = $this.prop('checked');
                 } else {
                     let value = $this.val();
-                    if ( id === 'vbusPassword') {
-                        value = encrypt(secret, value);
-                    }
                     obj[id] = value;
                 }
             });

@@ -59,7 +59,9 @@ class resol extends utils.Adapter {
             const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
             context.optimizer = optimizer;
             if (!optimizer) {
-                throw new Error('Unable to create optimizer for master with address 0x' + context.deviceAddress.toString(16));
+                // log error and exit function
+                this.log.error('Unable to create optimizer for master with address 0x' + context.deviceAddress.toString(16));
+                return;
             }
             context.customizer = new vbus.ConnectionCustomizer({
                 deviceAddress: context.deviceAddress,
@@ -75,9 +77,9 @@ class resol extends utils.Adapter {
                     optimize: false,
                 };
                 this.log.debug('Start Optimizer');
-                savedConfig = await context.customizer.saveConfiguration(saveConfig, oldConfig, options);
+                savedConfig = await context.customizer.saveConfiguration(saveConfig, oldConfig, options) ;
             } else {
-                this.log.debug('Optimizer savedConfig = loadedConfig ', savedConfig);
+                this.log.debug('Optimizer savedConfig = loadedConfig ', savedConfig || 'Not initialized!');
             }
             this.log.debug('Save config ' + JSON.stringify(savedConfig));
             savedConfig.reduce((memo, value) => {
@@ -147,7 +149,7 @@ class resol extends utils.Adapter {
                     type: 'string'
                 },
                 native: {}
-            }, undefined);
+            }, null);
 
             this.log.debug('[generateDP]->Resol-Address/Resol-ID:  [' + resolAddr + '] : [' + resolId + ']');
             const setupResolType = await this.getJSONByResolId(resolAddr);
@@ -163,7 +165,7 @@ class resol extends utils.Adapter {
                         this.log.debug('[generateDP]->item ' + JSON.stringify(item));
                         // create dp
                         let thisRole = 'value';
-                        if (item.states) thisRole = 'indicator';
+                        if (item.states) thisRole = 'switch';
 
                         this.createOrExtendObject(resolId + actionPath + item.dpName, {
                             type: 'state',
@@ -178,7 +180,7 @@ class resol extends utils.Adapter {
                                 write: true
                             },
                             native: {}
-                        }, undefined);
+                        }, null);
                         this.subscribeStates(resolId + actionPath + item.dpName);
                     });
                 })
@@ -274,20 +276,22 @@ class resol extends utils.Adapter {
         let result;
         jsoncontrollerSetupItems.dp.forEach(item => {
             if (item.dpName===thisName) {
-                this.log.debug('dp->Name found'+JSON.stringify(item)); 
+                this.log.debug('dp->Name found'+JSON.stringify(item));
                 result=item.type;
             }
-        });  
-        return result; 
+        });
+        return result;
     }
 
     async loadMyConfig (context) {
         try{
-            if (jsoncontrollerSetupItems) {          
+            if (jsoncontrollerSetupItems) {
                 const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
                 context.optimizer = optimizer;
                 if (!optimizer) {
-                    throw new Error('Unable to create optimizer for master with address 0x' + context.deviceAddress.toString(16));
+                    // log error and exit function
+                    this.log.error('Unable to create optimizer for master with address 0x' + context.deviceAddress.toString(16));
+                    return;
                 }
                 context.customizer = new vbus.ConnectionCustomizer({
                     deviceAddress: context.deviceAddress,
@@ -300,7 +304,7 @@ class resol extends utils.Adapter {
                 jsoncontrollerSetupItems.dp.forEach(item => {
                     const fct = this.searchForFctItem(item.dpName);
                     if (fct.cmd) {
-                        // generate readConfig                        
+                        // generate readConfig
                         const thisConfig = {valueId: fct.cmd};
                         readConfig.push(thisConfig);
                     }
@@ -374,7 +378,10 @@ class resol extends utils.Adapter {
         }
     }
 
-
+    /*
+    * @param {object} config Current  active config for adapter
+    * @returns {string} Result of the check
+    * */
     async configIsValid(config) {
         this.log.debug('configIsValid Function ');
         this.log.debug('Entering Function [configIsValid]');
@@ -716,7 +723,7 @@ class resol extends utils.Adapter {
                     this.createOrExtendObject(objectId, {type: 'state', common}, value);
                 });
             });
-            // Establish connection             
+            // Establish connection
             this.log.info('Waiting for Connection...');
             let connected = false;
             do {
@@ -744,19 +751,11 @@ class resol extends utils.Adapter {
             this.configIsValid(this.config)
                 .then(result => {
                     this.log.info(result);
-                    this.getForeignObject('system.config', (err, obj) => {
-                        if (this.supportsFeature && this.supportsFeature('ADAPTER_AUTO_DECRYPT_NATIVE')) {
-                            if (obj && obj.native && obj.native.secret) {
-                                //noinspection JSUnresolvedVariable
-                                this.config.vbusPassword = this.decrypt(obj.native.secret, this.config.vbusPassword);
-                            }
-                            this.main();
-                        }
-                    });
+                    this.main();
                 })
                 .catch(err => {
                     this.log.error(err);
-                    this.setStateAsync('info.connection', false);
+                    this.setStateAsync('info.connection', false, true);
                     this.terminate('Terminating Adapter until Configuration is completed', 11);
                 });
         } catch (error) {

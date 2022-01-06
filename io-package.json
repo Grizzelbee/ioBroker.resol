@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "resol",
-        "version": "0.4.0",
+        "version": "0.4.2",
         "news": {
+            "0.4.2": {
+                "en": "Fixed some issues shown up at review.",
+                "de": "Einige Probleme behoben, die bei der Überprüfung auftauchten.",
+                "ru": "Исправлены некоторые проблемы, обнаруженные при проверке.",
+                "pt": "Corrigidos alguns problemas mostrados na revisão.",
+                "nl": "Enkele problemen opgelost die tijdens de beoordeling werden weergegeven.",
+                "fr": "Correction de certains problèmes signalés lors de la révision.",
+                "it": "Risolti alcuni problemi mostrati durante la revisione.",
+                "es": "Se corrigieron algunos problemas que se mostraron en la revisión.",
+                "pl": "Naprawiono niektóre problemy, które pojawiły się podczas przeglądu.",
+                "zh-cn": "修复了审查时出现的一些问题。"
+            },
             "0.4.0": {
                 "en": "Trying more than one time to connect when network isn't setup properly. E.g. on router startup.",
                 "de": "Versuchen Sie mehr als einmal, eine Verbindung herzustellen, wenn das Netzwerk nicht richtig eingerichtet ist. ",
@@ -130,7 +142,8 @@
         "dataSource": "push",
         "dependencies": [
             {
-                "js-controller": ">=3.0.0"
+                "js-controller": ">=3.0.0",
+                "admin": ">=4.0.9"
             }
         ],
         "plugins": {
