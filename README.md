@@ -63,10 +63,10 @@ the [plugin homepage](https://github.com/ioBroker/plugin-sentry) for detailed in
 ### Examples:
 #### Connection via USB/Serial
 
-| Operating System | Connectiondevice | Device-address | Port | DL3-Channel | Via-Tag |   
-|------------------|------------------|----------------|------|-------------|---------|
-| Windows          | USB/Serial       | COMx           |      | None        |         |
-| Linux            |                  | /dev/tty.usbserial/ | | None        |          |
+| Operating System | Connectiondevice | Device-address      | Port | DL3-Channel | Via-Tag |   
+|------------------|------------------|---------------------|------|-------------|---------|
+| Windows          | USB/Serial       | COMx                |      | None        |         |
+| Linux            |                  | /dev/tty.usbserial/ |      | None        |         |
 
 #### Connection via LAN 
 This includes: 
@@ -76,23 +76,23 @@ This includes:
   * DL3 Devices (Selection of Channel is important, Channel 0 is not supported)
   * Serial to LAN Gateways
 
-|  | Connectiondevice | Device-address | Port | DL3-Channel | Via-Tag |   
-|------------------|------------------|----------------|------|-------------|---------|
-|           | select your Device from List | IP-Address of your Device | TCP Port | DL3 Channel to use, when applicable | leave blank |
-| Example | KM2 | 192.168.17x.xxx | 7053 (Default) | None | | 
-| Example | DL2 | 192.168.17x.xxx | 7053 (Default) | None | | 
-| Example | DL3 | 192.168.17x.xxx | 7053 (Default) | Channel x | | 
+|         | Connectiondevice             | Device-address            | Port           | DL3-Channel                         | Via-Tag     |   
+|---------|------------------------------|---------------------------|----------------|-------------------------------------|-------------|
+|         | select your Device from List | IP-Address of your Device | TCP Port       | DL3 Channel to use, when applicable | leave blank |
+| Example | KM2                          | 192.168.17x.xxx           | 7053 (Default) | None                                |             | 
+| Example | DL2                          | 192.168.17x.xxx           | 7053 (Default) | None                                |             | 
+| Example | DL3                          | 192.168.17x.xxx           | 7053 (Default) | Channel x                           |             | 
 
 #### Connection via vbus.net by Resol
 You'll find your personal per device Via-tag on the vbus.net homepage under: My VBus.net - My devices.
 Best is to copy/paste it from there - **without http://**
  
-|    | Connectiondevice | Device-address | Port | DL3-Channel | Via-Tag |   
-|------------------|------------------|----------------|------|-------------|---------|
-|           | select vbus.net from List | leave blank | TCP Port | None | your Via-tag from resol vbus.net |
-| Example KM2 / DL2 | vbus.net |  | 7053 (Default) | None | d01234567890.vbus.net | 
-| Example KM2 / DL2| vbus.net |  | 7053 (Default) | None | d01234567890.vbus.io | 
-| Example Dl3| vbus.net |  | 7053 (Default) | Channel x | d01234567890.vbus.io | 
+|                   | Connectiondevice          | Device-address | Port           | DL3-Channel | Via-Tag                          |   
+|-------------------|---------------------------|----------------|----------------|-------------|----------------------------------|
+|                   | select vbus.net from List | leave blank    | TCP Port       | None        | your Via-tag from resol vbus.net |
+| Example KM2 / DL2 | vbus.net                  |                | 7053 (Default) | None        | d01234567890.vbus.net            | 
+| Example KM2 / DL2 | vbus.net                  |                | 7053 (Default) | None        | d01234567890.vbus.io             | 
+| Example Dl3       | vbus.net                  |                | 7053 (Default) | Channel x   | d01234567890.vbus.io             | 
  
  
 #### Sending commands to resol device
@@ -145,11 +145,15 @@ The file should look like this
 	   
 Save the file and restart the adapter, you will find now a new object Rueckkuehlung.
 
-
- 
 ## Todo
 
 ## Changelog
+
+### v0.4.1 (2022-01-05)
+* (grizzelbee) Fix: switched action roles from "indicator" to "switch" to be compliant with ioBroker rules
+* (grizzelbee) Fix: Removed password encryption stuff and added dependency Admin >=4.0.9
+* (grizzelbee) Fix: Fixed a few code warnings
+* (grizzelbee) Upd: updated dependencies
 
 ### v0.4.0 (2021-11-08)
 * (grizzelbee) Upd: updated dependencies
@@ -251,5 +255,5 @@ SOFTWARE.
 
 ## Copyright
 
-Copyright (c) 2021 grizzelbee <open.source@hingsen.de>
+Copyright (c) 2022 grizzelbee <open.source@hingsen.de>
 
