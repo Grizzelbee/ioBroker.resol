@@ -59,7 +59,9 @@ class resol extends utils.Adapter {
             const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
             context.optimizer = optimizer;
             if (!optimizer) {
-                throw new Error('Unable to create optimizer for master with address 0x' + context.deviceAddress.toString(16));
+                // log error and exit function
+                this.log.error('Unable to create optimizer for master with address 0x' + context.deviceAddress.toString(16));
+                return;
             }
             context.customizer = new vbus.ConnectionCustomizer({
                 deviceAddress: context.deviceAddress,
@@ -75,9 +77,9 @@ class resol extends utils.Adapter {
                     optimize: false,
                 };
                 this.log.debug('Start Optimizer');
-                savedConfig = await context.customizer.saveConfiguration(saveConfig, oldConfig, options);
+                savedConfig = await context.customizer.saveConfiguration(saveConfig, oldConfig, options) ;
             } else {
-                this.log.debug('Optimizer savedConfig = loadedConfig ', savedConfig);
+                this.log.debug('Optimizer savedConfig = loadedConfig ', savedConfig || 'Not initialized!');
             }
             this.log.debug('Save config ' + JSON.stringify(savedConfig));
             savedConfig.reduce((memo, value) => {
@@ -287,7 +289,9 @@ class resol extends utils.Adapter {
                 const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
                 context.optimizer = optimizer;
                 if (!optimizer) {
-                    throw new Error('Unable to create optimizer for master with address 0x' + context.deviceAddress.toString(16));
+                    // log error and exit function
+                    this.log.error('Unable to create optimizer for master with address 0x' + context.deviceAddress.toString(16));
+                    return;
                 }
                 context.customizer = new vbus.ConnectionCustomizer({
                     deviceAddress: context.deviceAddress,
