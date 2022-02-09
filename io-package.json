@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "resol",
-        "version": "0.4.2",
+        "version": "0.4.3",
         "news": {
+            "0.4.3": {
+                "en": "fixed wrong state role \"switch\" and changed to \"level\".",
+                "de": "Falsche Statusrolle \"Switch\" behoben und auf \"Level\" geändert.",
+                "ru": "исправлено неправильное состояние роли «переключатель» и изменено на «уровень».",
+                "pt": "corrigiu a função de estado errada \"switch\" e mudou para \"level\".",
+                "nl": "de verkeerde statusrol \"switch\" gerepareerd en gewijzigd in \"level\".",
+                "fr": "correction du mauvais rôle d'état \"commutateur\" et changé en \"niveau\".",
+                "it": "corretto il ruolo di stato errato \"interruttore\" e modificato in \"livello\".",
+                "es": "Se corrigió el \"cambio\" de rol de estado incorrecto y se cambió a \"nivel\".",
+                "pl": "naprawiono błędny stan roli \"przełącznik\" i zmieniono na \"poziom\".",
+                "zh-cn": "修复了错误的状态角色“开关”并更改为“级别”。"
+            },
             "0.4.2": {
                 "en": "Fixed some issues shown up at review.",
                 "de": "Einige Probleme behoben, die bei der Überprüfung auftauchten.",

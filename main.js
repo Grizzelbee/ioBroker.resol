@@ -165,7 +165,7 @@ class resol extends utils.Adapter {
                         this.log.debug('[generateDP]->item ' + JSON.stringify(item));
                         // create dp
                         let thisRole = 'value';
-                        if (item.states) thisRole = 'switch';
+                        if (item.states) thisRole = 'level';
 
                         this.createOrExtendObject(resolId + actionPath + item.dpName, {
                             type: 'state',

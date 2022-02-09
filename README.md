@@ -149,6 +149,9 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 
 ## Changelog
 
+### v0.4.3 (2022-02-08)
+* (grizzelbee) Fix: fixed wrong state role "switch" and changed to "level"
+
 ### v0.4.2 (2022-01-05)
 * (grizzelbee) Fix: Removed password encryption stuff from admin to avoid double encryption
 
