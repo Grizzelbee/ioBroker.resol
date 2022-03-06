@@ -29,7 +29,7 @@
     "@iobroker/plugin-sentry": "^1.1.10",
     "lodash": "^4.17.21",
     "resol-vbus": "^0.24.0",
-    "snyk": "^1.849.0"
+    "snyk": "^1.851.0"
   },
   "devDependencies": {
     "@iobroker/testing": "^2.5.4",
