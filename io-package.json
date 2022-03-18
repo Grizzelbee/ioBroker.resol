@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "resol",
-        "version": "0.4.3",
+        "version": "0.4.4",
         "news": {
+            "0.4.4": {
+                "en": "Added donate button to config page and readme file\nDependencies got updated",
+                "de": "Spenden-Button zur Konfigurationsseite und Readme-Datei hinzugefügt \n Abhängigkeiten wurden aktualisiert",
+                "ru": "Добавлена ​​кнопка пожертвования на страницу конфигурации и файл readme \n Зависимости обновлены",
+                "pt": "Adicionado botão de doação à página de configuração e arquivo leia-me \n As dependências foram atualizadas",
+                "nl": "Donatieknop toegevoegd aan configuratiepagina en leesmij-bestand \n Afhankelijkheden zijn bijgewerkt",
+                "fr": "Ajout du bouton Faire un don à la page de configuration et au fichier Lisez-moi \n Les dépendances ont été mises à jour",
+                "it": "Aggiunto pulsante di donazione alla pagina di configurazione e al file Leggimi \n Le dipendenze sono state aggiornate",
+                "es": "Se agregó el botón de donación a la página de configuración y al archivo Léame \n Las dependencias se actualizaron",
+                "pl": "Dodano przycisk darowizny do strony konfiguracyjnej i pliku readme\nZależności zostały zaktualizowane",
+                "zh-cn": "在配置页面和自述文件中添加了捐赠按钮\n更新了依赖项"
+            },
             "0.4.3": {
                 "en": "fixed wrong state role \"switch\" and changed to \"level\".",
                 "de": "Falsche Statusrolle \"Switch\" behoben und auf \"Level\" geändert.",
