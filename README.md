@@ -20,11 +20,15 @@ Here you get the ability to control your vbus controller.
 
 
 ## ioBroker Adapter for Resol VBus
-
 This adapter connects various VBus-based devices to ioBroker supporting various connection types. 
 
+> If you like this adapter and consider supporting me <br/>
+> [![Donate with payPal](admin/paypal-donate-button.png)](https://www.paypal.com/donate/?hosted_button_id=SPUDTXGNG2MYG)
+
+
+
 It's using resol-vbus, a JavaScript library provided by Daniel Wippermann.
-Please visit <https://github.com/danielwippermann/resol-vbus> and <https://www.npmjs.com/package/resol-vbus> if you're interested in a deeper dive. 
+Please visit <https://github.com/danielwippermann/resol-vbus>  if you're interested in a deeper dive. 
 
 ## Features
 
@@ -142,6 +146,9 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 ## Todo
 
 ## Changelog
+### v0.4.4 (2022-03-17)
+* (grizzelbee) New: Added donate button to config page and readme
+* (grizzelbee) Upd: Dependencies got updated
 
 ### v0.4.3 (2022-02-08)
 * (grizzelbee) Fix: fixed wrong state role "switch" and changed to "level"
