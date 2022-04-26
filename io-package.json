@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "resol",
-        "version": "0.4.4",
+        "version": "1.0.0",
         "news": {
+            "1.0.0": {
+                "en": "New: Added support for Cosmo controllers (No Sensor connected = 888°C)\nUpd: Pushed version from 0.4.4 to v1.0.0 to be compliant to semver\nDependencies got updated",
+                "de": "Neu: Unterstützung für Cosmo-Controller hinzugefügt (Kein Sensor angeschlossen = 888°C)\nUpd: Version von 0.4.4 auf v1.0.0 gepusht, um semver-konform zu sein\nAbhängigkeiten wurden aktualisiert",
+                "ru": "Новое: добавлена ​​поддержка контроллеров Cosmo (датчик не подключен = 888°C)\nUpd: обновлена ​​версия с 0.4.4 до v1.0.0 для совместимости с semver\nОбновлены зависимости",
+                "pt": "Novo: Adicionado suporte para controladores Cosmo (Sem Sensor conectado = 888°C)\nAtualização: Versão empurrada de 0.4.4 para v1.0.0 para ser compatível com semver\nAs dependências foram atualizadas",
+                "nl": "Nieuw: ondersteuning toegevoegd voor Cosmo-controllers (geen sensor aangesloten = 888°C)\nUpd: versie gepusht van 0.4.4 naar v1.0.0 om te voldoen aan semver\nAfhankelijkheden zijn bijgewerkt",
+                "fr": "Nouveau : Ajout de la prise en charge des contrôleurs Cosmo (Aucun capteur connecté = 888°C)\nMise à jour : Version poussée de 0.4.4 à v1.0.0 pour être conforme à semver\nLes dépendances ont été mises à jour",
+                "it": "Novità: Aggiunto supporto per i controller Cosmo (nessun sensore connesso = 888°C)\nAggiornamento: Versione pushata da 0.4.4 a v1.0.0 per essere conforme a semver\nLe dipendenze sono state aggiornate",
+                "es": "Nuevo: Compatibilidad agregada para los controladores Cosmo (sin sensor conectado = 888 ° C) \n Actualización: versión impulsada de 0.4.4 a v1.0.0 para cumplir con semver \n Se actualizaron las dependencias",
+                "pl": "Nowość: Dodano obsługę kontrolerów Cosmo (brak podłączonego czujnika = 888°C)\nAktualizacja: Przesunięto wersję z 0.4.4 do v1.0.0, aby była zgodna z serwerem\nZależności zostały zaktualizowane",
+                "zh-cn": "新增内容：增加了对 Cosmo 控制器的支持（未连接传感器 = 888°C）\n更新：将版本从 0.4.4 推送到 v1.0.0 以符合 semver\n更新依赖项"
+            },
             "0.4.4": {
                 "en": "Added donate button to config page and readme file\nDependencies got updated",
                 "de": "Spenden-Button zur Konfigurationsseite und Readme-Datei hinzugefügt \n Abhängigkeiten wurden aktualisiert",

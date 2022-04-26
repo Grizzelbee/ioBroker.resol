@@ -146,6 +146,11 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 ## Todo
 
 ## Changelog
+### v1.0.0 (2022-04-25)
+* (grizzelbee) New: [#94](https://github.com/Grizzelbee/ioBroker.resol/issues/94) Added support for Cosmo controllers (No Sensor connected = 888°C)
+* (grizzelbee) Upd: Pushed version from 0.4.4 to v1.0.0 to be compliant to semver
+* (grizzelbee) Upd: Dependencies got updated
+
 ### v0.4.4 (2022-03-17)
 * (grizzelbee) New: Added donate button to config page and readme
 * (grizzelbee) Upd: Dependencies got updated
