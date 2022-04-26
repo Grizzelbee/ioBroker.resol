@@ -673,7 +673,7 @@ class resol extends utils.Adapter {
                             common.max = +300;
                             common.role = 'value.temperature';
                             common.type = 'number';
-                            if (value >=999 || value <= -999) value = null;
+                            if (Math.abs(Math.trunc(value)) === 999 || Math.abs(Math.trunc(value)) === 888) value = null;
                             break;
                         case 'Percent':
                             common.min = 0;
