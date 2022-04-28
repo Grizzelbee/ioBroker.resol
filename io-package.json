@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "resol",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "news": {
+            "1.1.0": {
+                "en": "New: Added support for DeltaSol E and improved support for Cosmo Multi 2 controllers",
+                "de": "Neu: Unterstützung für DeltaSol E und verbesserte Unterstützung für Cosmo Multi 2 Controller hinzugefügt",
+                "ru": "Новое: добавлена ​​поддержка DeltaSol E и улучшена поддержка контроллеров Cosmo Multi 2.",
+                "pt": "Novo: Adicionado suporte para DeltaSol E e suporte aprimorado para controladores Cosmo Multi 2",
+                "nl": "Nieuw: ondersteuning toegevoegd voor DeltaSol E en verbeterde ondersteuning voor Cosmo Multi 2-controllers",
+                "fr": "Nouveau : Ajout de la prise en charge de DeltaSol E et amélioration de la prise en charge des contrôleurs Cosmo Multi 2",
+                "it": "Novità: Aggiunto il supporto per DeltaSol E e migliorato il supporto per i controller Cosmo Multi 2",
+                "es": "Nuevo: soporte agregado para DeltaSol E y soporte mejorado para controladores Cosmo Multi 2",
+                "pl": "Nowość: Dodano obsługę DeltaSol E i ulepszoną obsługę kontrolerów Cosmo Multi 2",
+                "zh-cn": "新增内容：增加了对 DeltaSol E 的支持并改进了对 Cosmo Multi 2 控制器的支持"
+            },
             "1.0.0": {
                 "en": "New: Added support for Cosmo controllers (No Sensor connected = 888°C)\nUpd: Pushed version from 0.4.4 to v1.0.0 to be compliant to semver\nDependencies got updated",
                 "de": "Neu: Unterstützung für Cosmo-Controller hinzugefügt (Kein Sensor angeschlossen = 888°C)\nUpd: Version von 0.4.4 auf v1.0.0 gepusht, um semver-konform zu sein\nAbhängigkeiten wurden aktualisiert",
