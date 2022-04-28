@@ -286,6 +286,11 @@ class resol extends utils.Adapter {
     async loadMyConfig (context) {
         try{
             if (jsoncontrollerSetupItems) {
+                switch (context.deviceAddress){
+                    case 30753: // Cosemo-Multi-2 is a relabeld DeltaSol-E
+                        context.deviceAddress = 4176; // fake a DeltaSol-E since Cosmo-Controllers aren't supported by the Resol-Lib
+                        break;
+                }
                 const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
                 context.optimizer = optimizer;
                 if (!optimizer) {
