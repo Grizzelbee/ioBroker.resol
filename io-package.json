@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "resol",
-        "version": "1.1.0",
+        "version": "1.1.1",
         "news": {
+            "1.1.1": {
+                "en": "Fixed filename of DeltaSol-E config file",
+                "de": "Dateiname der Konfigurationsdatei von DeltaSol-E korrigiert",
+                "ru": "Исправлено имя файла конфигурации DeltaSol-E.",
+                "pt": "Corrigido o nome do arquivo de configuração DeltaSol-E",
+                "nl": "Vaste bestandsnaam van DeltaSol-E configuratiebestand",
+                "fr": "Nom de fichier fixe du fichier de configuration DeltaSol-E",
+                "it": "Corretto il nome del file di configurazione DeltaSol-E",
+                "es": "Nombre de archivo fijo del archivo de configuración DeltaSol-E",
+                "pl": "Naprawiono nazwę pliku konfiguracyjnego DeltaSol-E",
+                "zh-cn": "修复了 DeltaSol-E 配置文件的文件名"
+            },
             "1.1.0": {
                 "en": "New: Added support for DeltaSol E and improved support for Cosmo Multi 2 controllers",
                 "de": "Neu: Unterstützung für DeltaSol E und verbesserte Unterstützung für Cosmo Multi 2 Controller hinzugefügt",

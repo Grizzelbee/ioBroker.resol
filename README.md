@@ -146,8 +146,11 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 ## Todo
 
 ## Changelog
+### v1.1.1 (2022-04-28)
+* (grizzelbee) New: [#96](https://github.com/Grizzelbee/ioBroker.resol/issues/96) Fixed filename of DeltaSol-E config file
+
 ### v1.1.0 (2022-04-28)
-* (grizzelbee) New: [#96](https://github.com/Grizzelbee/ioBroker.resol/issues/96) Added support for DeltaSol E and improved support for Cosmo Multi 2 controllers
+* (grizzelbee) New: [#96](https://github.com/Grizzelbee/ioBroker.resol/issues/96) Added support for DeltaSol-E and improved support for Cosmo-Multi-2 controllers
 
 ### v1.0.0 (2022-04-25)
 * (grizzelbee) New: [#94](https://github.com/Grizzelbee/ioBroker.resol/issues/94) Added support for Cosmo controllers (No Sensor connected = 888°C)
