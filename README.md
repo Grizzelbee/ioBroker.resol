@@ -146,6 +146,9 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 ## Todo
 
 ## Changelog
+### v1.1.3 (2022-04-28)
+* (grizzelbee) New: [#96](https://github.com/Grizzelbee/ioBroker.resol/issues/96) Fixed Cosmo-Multi-2 support (Faking a DeltaSol-E now)
+
 ### v1.1.2 (2022-04-28)
 * (grizzelbee) New: [#96](https://github.com/Grizzelbee/ioBroker.resol/issues/96) Fixed filename of Cosmo-Multi-2 config file
 
