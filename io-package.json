@@ -218,7 +218,6 @@
         "connectionPort": 7053,
         "vbusPassword": "",
         "vbusChannel": 7,
-        "vbusDataOnly": false,
         "vbusViaTag": "",
         "vbusInterval": 30
     },
