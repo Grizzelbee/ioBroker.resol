@@ -435,11 +435,15 @@ class resol extends utils.Adapter {
                 if (config.connectionDevice === 'serial') {
                     testSerialformat(config);
                     resolve('Config seems to be valid for USB/Serial.');
-                } else if (config.connectionDevice === 'lan' || config.connectionDevice === 'langw') {
+                } else if (config.connectionDevice === 'lan') {
                     testIP_and_FQDN_Format(config);
                     testPassword(config);
                     testPort(config);
-                    resolve('Config seems to be valid for LAN or LAN-Gateway.');
+                    resolve('Config seems to be valid for LAN.');
+                } else if (config.connectionDevice === 'langw') {
+                    testIP_and_FQDN_Format(config);
+                    testPort(config);
+                    resolve('Config seems to be valid for Serial-to-LAN-Gateway.');
                 } else if (config.connectionDevice === 'dl2' || config.connectionDevice === 'dl3') {
                     testIP_and_FQDN_Format(config);
                     testPort(config);
@@ -509,7 +513,7 @@ class resol extends utils.Adapter {
                     ctx.connection = new vbus.TcpConnection({
                         host: this.config.connectionIdentifier,
                         port: this.config.connectionPort,
-                        rawVBusDataOnly: this.config.vbusDataOnly
+                        rawVBusDataOnly: true
                     });
                     this.log.info('TCP Connection via LAN-gw to [' + this.config.connectionIdentifier + ':' + this.config.connectionPort + '] selected');
                     break;
