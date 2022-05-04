@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "resol",
-        "version": "1.1.5",
+        "version": "1.1.6",
         "news": {
             "1.1.5": {
                 "en": "Fixed support for Cosmo Multi 2 controllers",
