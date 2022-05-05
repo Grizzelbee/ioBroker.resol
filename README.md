@@ -146,6 +146,8 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 ## Todo
 
 ## Changelog
+### **WORK IN PROGRESS**
+
 ### v1.1.6 (2022-05-04)
 * (grizzelbee) Fix: [#103](https://github.com/Grizzelbee/ioBroker.resol/issues/103) Fixed support for Serial-to-LAN-Gateway connections (Disabled credentials handshake - which is not necessary over serial ports.)
 
