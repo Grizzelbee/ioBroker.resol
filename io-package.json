@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "resol",
-        "version": "1.1.6",
+        "version": "1.2.0",
         "news": {
+            "1.2.0": {
+                "en": "New: Added support for DeltaSol BX",
+                "de": "Neu: Unterstützung für DeltaSol BX hinzugefügt",
+                "ru": "Новое: добавлена ​​поддержка DeltaSol BX.",
+                "pt": "Novo: Adicionado suporte para DeltaSol BX",
+                "nl": "Nieuw: ondersteuning toegevoegd voor DeltaSol BX",
+                "fr": "Nouveau : Ajout de la prise en charge de DeltaSol BX",
+                "it": "Novità: Aggiunto supporto per DeltaSol BX",
+                "es": "Nuevo: soporte agregado para DeltaSol BX",
+                "pl": "Nowość: Dodano obsługę DeltaSol BX",
+                "zh-cn": "新增：增加了对 DeltaSol BX 的支持"
+            },
             "1.1.5": {
                 "en": "Fixed support for Cosmo Multi 2 controllers",
                 "de": "Die Unterstützung für Cosmo Multi 2-Controller wurde korrigiert",
