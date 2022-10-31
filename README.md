@@ -148,7 +148,7 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 ## Changelog
 ### **WORK IN PROGRESS**
 
-### v1.3.0 (2022-11-01)
+### 1.3.0 (2022-11-01)
 * (grizzelbee) Fix: [#106](https://github.com/Grizzelbee/ioBroker.resol/issues/106) Attempt to fix errors in log regarding DeltaSol-BX
 * (grizzelbee) Fix: [#108](https://github.com/Grizzelbee/ioBroker.resol/issues/106) Attempt to fix errors in log regarding DeltaSol-SLT and others
 * (grizzelbee) New: Moved Admin interface to jsonConfig 
