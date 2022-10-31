@@ -1,0 +1,109 @@
+{
+  "i18n": true,
+  "type": "panel",
+  "items": {
+    "donationHelp": {
+      "type": "staticText",
+      "text": "donation"
+    },
+    "donateButton": {
+      "type": "staticImage",
+      "src": "adapter/resol/admin/paypal-donate-button.png",
+      "href": "https://www.paypal.com/donate/?hosted_button_id=SPUDTXGNG2MYG"
+    },
+    "_basicSection": {
+      "newLine": true,
+      "type" : "header",
+      "text" : "Basic settings",
+      "size": 2,
+      "sm": 36,
+      "md": 12,
+      "lg": 9
+    },
+    "connectionDevice": {
+      "newLine": true,
+      "type": "select",
+      "label": "Lbl_ConnectionDevice",
+      "tooltip" : "Desc_ConnectionDevice",
+      "options": [
+        {"label":{"en": "VBus/LAN"}, "value": "lan"},
+        {"label":{"en": "KM2/DL2"}, "value": "dl2"},
+        {"label":{"en": "DL3"}, "value": "dl3"},
+        {"label":{"en": "vbus.net"}, "value": "inet"},
+        {"label":{"en": "Serial/USB"}, "value": "serial"},
+        {"label":{"en": "Serial to LAN gateway"}, "value": "langw"}
+        ],
+      "sm": 12,
+      "md": 4,
+      "lg": 3
+    },
+    "connectionIdentifier": {
+      "type": "text",
+      "label": "Lbl_DeviceAddress",
+      "tooltip" : "Desc_DeviceAddress",
+      "sm": 12,
+      "md": 4,
+      "lg": 3
+    },
+    "connectionPort": {
+      "type": "number",
+      "min": 1,
+      "max": 65565,
+      "label": "Lbl_ConnectionPort",
+      "default": 30,
+      "tooltip": "Desc_ConnectionPort",
+      "sm": 12,
+      "md": 4,
+      "lg": 3
+    },
+    "vbusPassword": {
+      "newLine": true,
+      "type": "password",
+      "label": "Lbl_DevicePassword",
+      "tooltip" : "Desc_DevicePassword",
+      "sm": 12,
+      "md": 4,
+      "lg": 3
+    },
+    "vbusChannel": {
+      "type": "select",
+      "label": "Lbl_DL3Channel",
+      "tooltip" : "Desc_DL3Channel",
+      "default": 7,
+      "options": [
+        {"label":{"en": "None"}, "value": "7"},
+        {"label":{"en": "DL2 Channel 1"}, "value": "1"},
+        {"label":{"en": "DL2 Channel 2"}, "value": "2"},
+        {"label":{"en": "DL2 Channel 3"}, "value": "3"},
+        {"label":{"en": "DL2 Channel 4"}, "value": "4"},
+        {"label":{"en": "DL2 Channel 5"}, "value": "5"},
+        {"label":{"en": "DL2 Channel 6"}, "value": "6"},
+        {"label":{"en": "DL2 Channel 0"}, "value": "0"}
+      ],
+      "sm": 12,
+      "md": 4,
+      "lg": 3
+    },
+    "vbusViaTag": {
+      "type": "text",
+      "label": "Lbl_Via-tag",
+      "default": false,
+      "tooltip": "Desc_Via-tag",
+      "sm": 12,
+      "md": 4,
+      "lg": 3
+    },
+    "vbusInterval": {
+      "newLine": true,
+      "type": "number",
+      "min": 1,
+      "max": 65565,
+      "label": "Lbl_Pollintervall",
+      "default": 30,
+      "tooltip": "Desc_Pollintervall",
+      "sm": 12,
+      "md": 4,
+      "lg": 3
+    }
+  }
+}
