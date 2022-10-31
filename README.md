@@ -149,6 +149,11 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 ### **WORK IN PROGRESS**
 
 ### v1.2.0 (2022-05-16)
+* (grizzelbee) Fix: [#106](https://github.com/Grizzelbee/ioBroker.resol/issues/106) Attempt to fix errors in log regarding DeltaSol-BX
+* (grizzelbee) Fix: [#108](https://github.com/Grizzelbee/ioBroker.resol/issues/106) Attempt to fix errors in log regarding DeltaSol-SLT and others
+* (grizzelbee) Upd: Dependencies got updated
+
+### v1.2.0 (2022-05-16)
 * (grizzelbee) New: [#106](https://github.com/Grizzelbee/ioBroker.resol/issues/106) Added support for DeltaSol-BX
 
 ### v1.1.6 (2022-05-04)
