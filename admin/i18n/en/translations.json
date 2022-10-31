@@ -23,5 +23,6 @@
     "Serial to LAN-Gateway": "Serial to LAN-Gateway",
     "VBus/LAN": "VBus/LAN",
     "donation": "If you like this adapter and consider supporting me:",
-    "none": "None"
+    "none": "None",
+    "Basic settings": "Basic settings"
 }

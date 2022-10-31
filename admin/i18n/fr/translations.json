@@ -23,5 +23,6 @@
     "Serial to LAN-Gateway": "Passerelle série vers LAN",
     "VBus/LAN": "VBus / LAN",
     "donation": "Si vous aimez cet adaptateur et envisagez de me soutenir :",
-    "none": "Aucun"
+    "none": "Aucun",
+    "Basic settings": "Paramètres de base"
 }
