@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "resol",
-        "version": "1.2.0",
+        "version": "1.3.0",
         "news": {
+            "1.3.0": {
+                "en": "Fixed log errors for some controllers\nMoved Admin interface to jsonConfig\nsome maintenance",
+                "de": "Protokollfehler für einige Controller behoben \n Admin-Schnittstelle zu jsonConfig umgebaut \n einige Wartungsarbeiten",
+                "ru": "Исправлены ошибки журнала для некоторых контроллеров \n Интерфейс администратора перенесен в jsonConfig \n некоторое техническое обслуживание",
+                "pt": "Erros de log corrigidos para alguns controladores \n Interface de administração movida para jsonConfig \n alguma manutenção",
+                "nl": "Vaste logfouten voor sommige controllers \n Beheerdersinterface verplaatst naar jsonConfig \n enig onderhoud",
+                "fr": "Correction des erreurs de journal pour certains contrôleurs \n Interface d'administration déplacée vers jsonConfig \n certaines opérations de maintenance",
+                "it": "Risolti errori di registro per alcuni controller\nInterfaccia di amministrazione spostata in jsonConfig\nalcuni interventi di manutenzione",
+                "es": "Errores de registro fijos para algunos controladores \n Interfaz de administración movida a jsonConfig \n algo de mantenimiento",
+                "pl": "Naprawiono błędy logów dla niektórych kontrolerów\nPrzeniesiono interfejs administratora do jsonConfig\nniektóre prace konserwacyjne",
+                "uk": "Виправлено помилки журналу для деяких контролерів\nінтерфейс адміністратора переміщено до jsonConfig\nдеяке обслуговування",
+                "zh-cn": "修复了一些控制器的日志错误\n将管理界面移至 jsonConfig\n一些维护"
+            },
             "1.2.0": {
                 "en": "New: Added support for DeltaSol BX",
                 "de": "Neu: Unterstützung für DeltaSol BX hinzugefügt",
@@ -13,7 +26,8 @@
                 "it": "Novità: Aggiunto supporto per DeltaSol BX",
                 "es": "Nuevo: soporte agregado para DeltaSol BX",
                 "pl": "Nowość: Dodano obsługę DeltaSol BX",
-                "zh-cn": "新增：增加了对 DeltaSol BX 的支持"
+                "zh-cn": "新增：增加了对 DeltaSol BX 的支持",
+                "uk": "Нове: додано підтримку DeltaSol BX"
             },
             "1.1.5": {
                 "en": "Fixed support for Cosmo Multi 2 controllers",
@@ -25,7 +39,8 @@
                 "it": "Corretto il supporto per i controller Cosmo Multi 2",
                 "es": "Soporte fijo para controladores Cosmo Multi 2",
                 "pl": "Naprawiono obsługę kontrolerów Cosmo Multi 2",
-                "zh-cn": "修复了对 Cosmo Multi 2 控制器的支持"
+                "zh-cn": "修复了对 Cosmo Multi 2 控制器的支持",
+                "uk": "Виправлена ​​підтримка контролерів Cosmo Multi 2"
             },
             "1.1.0": {
                 "en": "New: Added support for DeltaSol E and improved support for Cosmo Multi 2 controllers",
@@ -37,7 +52,8 @@
                 "it": "Novità: Aggiunto il supporto per DeltaSol E e migliorato il supporto per i controller Cosmo Multi 2",
                 "es": "Nuevo: soporte agregado para DeltaSol E y soporte mejorado para controladores Cosmo Multi 2",
                 "pl": "Nowość: Dodano obsługę DeltaSol E i ulepszoną obsługę kontrolerów Cosmo Multi 2",
-                "zh-cn": "新增内容：增加了对 DeltaSol E 的支持并改进了对 Cosmo Multi 2 控制器的支持"
+                "zh-cn": "新增内容：增加了对 DeltaSol E 的支持并改进了对 Cosmo Multi 2 控制器的支持",
+                "uk": "Нове: додано підтримку DeltaSol E та покращено підтримку контролерів Cosmo Multi 2"
             },
             "1.0.0": {
                 "en": "New: Added support for Cosmo controllers (No Sensor connected = 888°C)\nUpd: Pushed version from 0.4.4 to v1.0.0 to be compliant to semver\nDependencies got updated",
@@ -49,7 +65,8 @@
                 "it": "Novità: Aggiunto supporto per i controller Cosmo (nessun sensore connesso = 888°C)\nAggiornamento: Versione pushata da 0.4.4 a v1.0.0 per essere conforme a semver\nLe dipendenze sono state aggiornate",
                 "es": "Nuevo: Compatibilidad agregada para los controladores Cosmo (sin sensor conectado = 888 ° C) \n Actualización: versión impulsada de 0.4.4 a v1.0.0 para cumplir con semver \n Se actualizaron las dependencias",
                 "pl": "Nowość: Dodano obsługę kontrolerów Cosmo (brak podłączonego czujnika = 888°C)\nAktualizacja: Przesunięto wersję z 0.4.4 do v1.0.0, aby była zgodna z serwerem\nZależności zostały zaktualizowane",
-                "zh-cn": "新增内容：增加了对 Cosmo 控制器的支持（未连接传感器 = 888°C）\n更新：将版本从 0.4.4 推送到 v1.0.0 以符合 semver\n更新依赖项"
+                "zh-cn": "新增内容：增加了对 Cosmo 控制器的支持（未连接传感器 = 888°C）\n更新：将版本从 0.4.4 推送到 v1.0.0 以符合 semver\n更新依赖项",
+                "uk": "Нове: додано підтримку контролерів Cosmo (без підключеного датчика = 888°C)\nОновлено: версію 0.4.4 перенесено на v1.0.0 для сумісності з semver\nЗалежності оновлено"
             },
             "0.4.4": {
                 "en": "Added donate button to config page and readme file\nDependencies got updated",
@@ -61,7 +78,8 @@
                 "it": "Aggiunto pulsante di donazione alla pagina di configurazione e al file Leggimi \n Le dipendenze sono state aggiornate",
                 "es": "Se agregó el botón de donación a la página de configuración y al archivo Léame \n Las dependencias se actualizaron",
                 "pl": "Dodano przycisk darowizny do strony konfiguracyjnej i pliku readme\nZależności zostały zaktualizowane",
-                "zh-cn": "在配置页面和自述文件中添加了捐赠按钮\n更新了依赖项"
+                "zh-cn": "在配置页面和自述文件中添加了捐赠按钮\n更新了依赖项",
+                "uk": "Додано кнопку пожертви на сторінку конфігурації та файл readme\nЗалежності оновлено"
             },
             "0.4.3": {
                 "en": "fixed wrong state role \"switch\" and changed to \"level\".",
@@ -73,7 +91,8 @@
                 "it": "corretto il ruolo di stato errato \"interruttore\" e modificato in \"livello\".",
                 "es": "Se corrigió el \"cambio\" de rol de estado incorrecto y se cambió a \"nivel\".",
                 "pl": "naprawiono błędny stan roli \"przełącznik\" i zmieniono na \"poziom\".",
-                "zh-cn": "修复了错误的状态角色“开关”并更改为“级别”。"
+                "zh-cn": "修复了错误的状态角色“开关”并更改为“级别”。",
+                "uk": "виправлено неправильний стан ролі \"перемикач\" і змінено на \"рівень\"."
             },
             "0.4.2": {
                 "en": "Fixed some issues shown up at review.",
@@ -85,7 +104,8 @@
                 "it": "Risolti alcuni problemi mostrati durante la revisione.",
                 "es": "Se corrigieron algunos problemas que se mostraron en la revisión.",
                 "pl": "Naprawiono niektóre problemy, które pojawiły się podczas przeglądu.",
-                "zh-cn": "修复了审查时出现的一些问题。"
+                "zh-cn": "修复了审查时出现的一些问题。",
+                "uk": "Виправлено деякі проблеми, які виявлялися під час перевірки."
             },
             "0.4.0": {
                 "en": "Trying more than one time to connect when network isn't setup properly. E.g. on router startup.",
@@ -97,7 +117,8 @@
                 "it": "Tentando più di una volta di connettersi quando la rete non è configurata correttamente. ",
                 "es": "Intentando conectarse más de una vez cuando la red no está configurada correctamente. ",
                 "pl": "Próbujesz więcej niż raz połączyć się, gdy sieć nie jest prawidłowo skonfigurowana. ",
-                "zh-cn": "当网络设置不正确时尝试多次连接。"
+                "zh-cn": "当网络设置不正确时尝试多次连接。",
+                "uk": "Більш ніж одна спроба підключитися, коли мережу налаштовано неправильно. наприклад під час запуску маршрутизатора."
             },
             "0.3.3": {
                 "en": "Updated dependencies and switched to adapter-type: energy.",
@@ -109,7 +130,8 @@
                 "it": "Dipendenze aggiornate e passaggio al tipo di adattatore: energia.",
                 "es": "Dependencias actualizadas y cambiadas a tipo adaptador: energía.",
                 "pl": "Zaktualizowano zależności i przełączono na typ adaptera: energia.",
-                "zh-cn": "更新依赖项并切换到适配器类型：能源。"
+                "zh-cn": "更新依赖项并切换到适配器类型：能源。",
+                "uk": "Оновлено залежності та переведено на тип адаптера: енергія."
             },
             "0.3.2": {
                 "en": "Minor bugfixes.",
@@ -121,7 +143,8 @@
                 "it": "Correzioni di bug minori.",
                 "es": "Correcciones de errores menores.",
                 "pl": "Naprawy niewielkich błędów.",
-                "zh-cn": "修正了一些小错误。"
+                "zh-cn": "修正了一些小错误。",
+                "uk": "Незначні виправлення помилок."
             },
             "0.3.1": {
                 "en": "Bugfixes and a few new features",
@@ -133,7 +156,8 @@
                 "it": "Bugfix e alcune nuove funzionalità",
                 "es": "Corrección de errores y algunas características nuevas.",
                 "pl": "Poprawki błędów i kilka nowych funkcji",
-                "zh-cn": "错误修正和一些新功能"
+                "zh-cn": "错误修正和一些新功能",
+                "uk": "Виправлення помилок і кілька нових функцій"
             },
             "0.2.0": {
                 "en": "Bugfixes and a few new features",
@@ -145,7 +169,8 @@
                 "it": "Bugfix e alcune nuove funzionalità",
                 "es": "Corrección de errores y algunas características nuevas.",
                 "pl": "Poprawki błędów i kilka nowych funkcji",
-                "zh-cn": "错误修正和一些新功能"
+                "zh-cn": "错误修正和一些新功能",
+                "uk": "Виправлення помилок і кілька нових функцій"
             },
             "0.1.0": {
                 "en": "Bugfixes and a few new features",
@@ -157,7 +182,8 @@
                 "it": "Bugfix e alcune nuove funzionalità",
                 "es": "Corrección de errores y algunas características nuevas.",
                 "pl": "Poprawki błędów i kilka nowych funkcji",
-                "zh-cn": "错误修正和一些新功能"
+                "zh-cn": "错误修正和一些新功能",
+                "uk": "Виправлення помилок і кілька нових функцій"
             }
         },
         "title": "Resol VBus",
@@ -171,7 +197,8 @@
             "it": "Collega i tuoi dispositivi Resol VBus",
             "es": "Conecte sus dispositivos Resol VBus",
             "pl": "Podłącz urządzenia Resol VBus",
-            "zh-cn": "将您的Resol VBus设备连接"
+            "zh-cn": "将您的Resol VBus设备连接",
+            "uk": "Підключіть свої пристрої Resol VBus"
         },
         "desc": {
             "en": "Connects to various Resol-VBus-based devices",
@@ -183,7 +210,8 @@
             "it": "Si collega a vari dispositivi basati su Resol-VBus",
             "es": "Se conecta a varios dispositivos basados ​​en Resol-VBus",
             "pl": "Łączy się z różnymi urządzeniami opartymi na Resol-VBus",
-            "zh-cn": "连接到各种基于 Resol-VBus 的设备"
+            "zh-cn": "连接到各种基于 Resol-VBus 的设备",
+            "uk": "Підключається до різних пристроїв на основі Resol-VBus"
         },
         "authors": [
             "grizzelbee <open.source@hingsen.de>"
@@ -212,9 +240,17 @@
         "supportCustoms": false,
         "connectionType": "local",
         "dataSource": "push",
+        "adminUI": {
+            "config": "json"
+        },
+        "globalDependencies": [
+            {
+                "admin": ">=5.1.13"
+            }
+        ],
         "dependencies": [
             {
-                "js-controller": ">=3.0.0",
+                "js-controller": ">=3.3.22",
                 "admin": ">=4.0.9"
             }
         ],
