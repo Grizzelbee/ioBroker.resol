@@ -22,10 +22,6 @@ appveyor.yaml
 # npm package files
 iobroker.*.tgz
 
-# i18n intermediate files
-admin/i18n
-admin/i18n/
-
 # maintenance scripts
 maintenance/**
 .github/
