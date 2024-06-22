@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "resol",
-        "version": "1.3.0",
+        "version": "1.4.0",
         "news": {
+            "1.4.0": {
+                "en": "Upd: Dependencies got updated*Upd: Translations got updated*Fix: Finished work on new jsonConfig admin-UI*New: Added new option for MX-Controllers to admin-UI*New: Admin-UI now hides options which are invalid for the selected device.*New: Integrated Actions for MX-Controller (V1 and V2)\t ",
+                "de": "Upd: Abhängigkeiten wurden aktualisiert*Upd: Übersetzungen wurden aktualisiert*Fix: Arbeit an der neuen jsonConfig Admin-UI abgeschlossen*Neu: Neue Option für MX-Controller zur Admin-UI hinzugefügt*Neu: Admin-UI verbirgt jetzt Optionen, die für ungültig sind ausgewähltes Gerät.*Neu: Integrierte Aktionen für MX-Controller (V1 und V2)",
+                "ru": "Обновление: обновлены зависимости * Обновление: обновлены переводы * Исправлено: завершена работа над новым пользовательским интерфейсом администратора jsonConfig * Новое: добавлена ​​новая опция для MX-контроллеров в пользовательский интерфейс администратора * Новое: пользовательский интерфейс администратора теперь скрывает параметры, которые недействительны для выбранное устройство.*Новое: интегрированные действия для MX-контроллера (V1 и V2).",
+                "pt": "Upd: Dependências foram atualizadas*Upd: Traduções foram atualizadas*Fix: Trabalho concluído no novo jsonConfig admin-UI*Novo: Adicionada nova opção para MX-Controllers para admin-UI*Novo: Admin-UI agora oculta opções que são inválidas para o dispositivo selecionado.*Novo: Ações integradas para MX-Controller (V1 e V2)",
+                "nl": "Upd: Afhankelijkheden zijn bijgewerkt*Upd: Vertalingen zijn bijgewerkt*Fix: Voltooid werk aan nieuwe jsonConfig admin-UI*Nieuw: Nieuwe optie voor MX-controllers toegevoegd aan admin-UI*Nieuw: Admin-UI verbergt nu opties die ongeldig zijn voor de geselecteerd apparaat.*Nieuw: geïntegreerde acties voor MX-Controller (V1 en V2)",
+                "fr": "Mise à jour : les dépendances ont été mises à jour*Mise à jour : les traductions ont été mises à jour*Correction : travail terminé sur la nouvelle interface utilisateur d'administration jsonConfig*Nouveau : ajout d'une nouvelle option pour les contrôleurs MX à l'interface utilisateur d'administration*Nouveau : l'interface utilisateur d'administration masque désormais les options qui ne sont pas valides pour le périphérique sélectionné.*Nouveau : actions intégrées pour MX-Controller (V1 et V2)",
+                "it": "Aggiornamento: le dipendenze sono state aggiornate*Aggiornamento: le traduzioni sono state aggiornate*Correzione: lavoro terminato sulla nuova interfaccia utente di amministrazione jsonConfig*Novità: aggiunta una nuova opzione per i controller MX all'interfaccia utente di amministrazione*Novità: l'interfaccia utente di amministrazione ora nasconde le opzioni che non sono valide per dispositivo selezionato.*Novità: azioni integrate per controller MX (V1 e V2)",
+                "es": "Actualización: Se actualizaron las dependencias* Actualización: Se actualizaron las traducciones* Solución: Trabajo finalizado en la nueva interfaz de usuario de administrador jsonConfig* Nuevo: se agregó una nueva opción para controladores MX a la interfaz de usuario de administrador* Nuevo: la interfaz de usuario de administrador ahora oculta opciones que no son válidas para dispositivo seleccionado.*Nuevo: Acciones integradas para MX-Controller (V1 y V2)",
+                "pl": "Aktualizacja: Zależności zostały zaktualizowane*Aktualizacja: Tłumaczenia zostały zaktualizowane*Poprawka: Zakończono prace nad nowym interfejsem administratora jsonConfig*Nowość: Dodano nową opcję dla kontrolerów MX do interfejsu administratora*Nowość: Interfejs administratora ukrywa teraz opcje, które są nieprawidłowe dla wybrane urządzenie.*Nowość: Zintegrowane akcje dla kontrolera MX (V1 i V2)",
+                "uk": "Оновлено: залежності оновлено*Оновлено: оновлено переклади*Виправлення: завершено роботу над новим інтерфейсом адміністратора jsonConfig*Нове: додано нову опцію для MX-контролерів до інтерфейсу адміністратора*Нове: тепер інтерфейс адміністратора приховує параметри, недійсні для вибраний пристрій.*Нове: інтегровані дії для MX-Controller (V1 і V2)",
+                "zh-cn": "更新：依赖项已更新*更新：翻译已更新*修复：完成了新 jsonConfig admin-UI 的工作*新功能：向 admin-UI 添加了 MX 控制器的新选项*新功能：Admin-UI 现在隐藏了对选定的设备。*新功能：MX 控制器（V1 和 V2）的集成操作"
+            },
             "1.3.0": {
                 "en": "Fixed log errors for some controllers\nMoved Admin interface to jsonConfig\nsome maintenance",
                 "de": "Protokollfehler für einige Controller behoben \n Admin-Schnittstelle zu jsonConfig umgebaut \n einige Wartungsarbeiten",
@@ -67,123 +80,6 @@
                 "pl": "Nowość: Dodano obsługę kontrolerów Cosmo (brak podłączonego czujnika = 888°C)\nAktualizacja: Przesunięto wersję z 0.4.4 do v1.0.0, aby była zgodna z serwerem\nZależności zostały zaktualizowane",
                 "zh-cn": "新增内容：增加了对 Cosmo 控制器的支持（未连接传感器 = 888°C）\n更新：将版本从 0.4.4 推送到 v1.0.0 以符合 semver\n更新依赖项",
                 "uk": "Нове: додано підтримку контролерів Cosmo (без підключеного датчика = 888°C)\nОновлено: версію 0.4.4 перенесено на v1.0.0 для сумісності з semver\nЗалежності оновлено"
-            },
-            "0.4.4": {
-                "en": "Added donate button to config page and readme file\nDependencies got updated",
-                "de": "Spenden-Button zur Konfigurationsseite und Readme-Datei hinzugefügt \n Abhängigkeiten wurden aktualisiert",
-                "ru": "Добавлена ​​кнопка пожертвования на страницу конфигурации и файл readme \n Зависимости обновлены",
-                "pt": "Adicionado botão de doação à página de configuração e arquivo leia-me \n As dependências foram atualizadas",
-                "nl": "Donatieknop toegevoegd aan configuratiepagina en leesmij-bestand \n Afhankelijkheden zijn bijgewerkt",
-                "fr": "Ajout du bouton Faire un don à la page de configuration et au fichier Lisez-moi \n Les dépendances ont été mises à jour",
-                "it": "Aggiunto pulsante di donazione alla pagina di configurazione e al file Leggimi \n Le dipendenze sono state aggiornate",
-                "es": "Se agregó el botón de donación a la página de configuración y al archivo Léame \n Las dependencias se actualizaron",
-                "pl": "Dodano przycisk darowizny do strony konfiguracyjnej i pliku readme\nZależności zostały zaktualizowane",
-                "zh-cn": "在配置页面和自述文件中添加了捐赠按钮\n更新了依赖项",
-                "uk": "Додано кнопку пожертви на сторінку конфігурації та файл readme\nЗалежності оновлено"
-            },
-            "0.4.3": {
-                "en": "fixed wrong state role \"switch\" and changed to \"level\".",
-                "de": "Falsche Statusrolle \"Switch\" behoben und auf \"Level\" geändert.",
-                "ru": "исправлено неправильное состояние роли «переключатель» и изменено на «уровень».",
-                "pt": "corrigiu a função de estado errada \"switch\" e mudou para \"level\".",
-                "nl": "de verkeerde statusrol \"switch\" gerepareerd en gewijzigd in \"level\".",
-                "fr": "correction du mauvais rôle d'état \"commutateur\" et changé en \"niveau\".",
-                "it": "corretto il ruolo di stato errato \"interruttore\" e modificato in \"livello\".",
-                "es": "Se corrigió el \"cambio\" de rol de estado incorrecto y se cambió a \"nivel\".",
-                "pl": "naprawiono błędny stan roli \"przełącznik\" i zmieniono na \"poziom\".",
-                "zh-cn": "修复了错误的状态角色“开关”并更改为“级别”。",
-                "uk": "виправлено неправильний стан ролі \"перемикач\" і змінено на \"рівень\"."
-            },
-            "0.4.2": {
-                "en": "Fixed some issues shown up at review.",
-                "de": "Einige Probleme behoben, die bei der Überprüfung auftauchten.",
-                "ru": "Исправлены некоторые проблемы, обнаруженные при проверке.",
-                "pt": "Corrigidos alguns problemas mostrados na revisão.",
-                "nl": "Enkele problemen opgelost die tijdens de beoordeling werden weergegeven.",
-                "fr": "Correction de certains problèmes signalés lors de la révision.",
-                "it": "Risolti alcuni problemi mostrati durante la revisione.",
-                "es": "Se corrigieron algunos problemas que se mostraron en la revisión.",
-                "pl": "Naprawiono niektóre problemy, które pojawiły się podczas przeglądu.",
-                "zh-cn": "修复了审查时出现的一些问题。",
-                "uk": "Виправлено деякі проблеми, які виявлялися під час перевірки."
-            },
-            "0.4.0": {
-                "en": "Trying more than one time to connect when network isn't setup properly. E.g. on router startup.",
-                "de": "Versuchen Sie mehr als einmal, eine Verbindung herzustellen, wenn das Netzwerk nicht richtig eingerichtet ist. ",
-                "ru": "Попытка подключения более одного раза, когда сеть не настроена должным образом. ",
-                "pt": "Tentando conectar mais de uma vez quando a rede não está configurada corretamente. ",
-                "nl": "Meer dan één keer proberen verbinding te maken wanneer het netwerk niet correct is ingesteld. ",
-                "fr": "Essayer plusieurs fois de se connecter lorsque le réseau n'est pas configuré correctement. ",
-                "it": "Tentando più di una volta di connettersi quando la rete non è configurata correttamente. ",
-                "es": "Intentando conectarse más de una vez cuando la red no está configurada correctamente. ",
-                "pl": "Próbujesz więcej niż raz połączyć się, gdy sieć nie jest prawidłowo skonfigurowana. ",
-                "zh-cn": "当网络设置不正确时尝试多次连接。",
-                "uk": "Більш ніж одна спроба підключитися, коли мережу налаштовано неправильно. наприклад під час запуску маршрутизатора."
-            },
-            "0.3.3": {
-                "en": "Updated dependencies and switched to adapter-type: energy.",
-                "de": "Abhängigkeiten aktualisiert und auf Adaptertyp umgestellt: Energie.",
-                "ru": "Обновлены зависимости и переключены на тип адаптера: энергия.",
-                "pt": "Dependências atualizadas e mudadas para o tipo de adaptador: energia.",
-                "nl": "Afhankelijkheden bijgewerkt en overgeschakeld naar adaptertype: energie.",
-                "fr": "Dépendances mises à jour et passage au type d'adaptateur : énergie.",
-                "it": "Dipendenze aggiornate e passaggio al tipo di adattatore: energia.",
-                "es": "Dependencias actualizadas y cambiadas a tipo adaptador: energía.",
-                "pl": "Zaktualizowano zależności i przełączono na typ adaptera: energia.",
-                "zh-cn": "更新依赖项并切换到适配器类型：能源。",
-                "uk": "Оновлено залежності та переведено на тип адаптера: енергія."
-            },
-            "0.3.2": {
-                "en": "Minor bugfixes.",
-                "de": "Kleinere Fehlerbehebungen.",
-                "ru": "Устранение небольших багов.",
-                "pt": "Pequenas correções de bugs.",
-                "nl": "Kleine bugfixes.",
-                "fr": "Corrections de bugs mineurs.",
-                "it": "Correzioni di bug minori.",
-                "es": "Correcciones de errores menores.",
-                "pl": "Naprawy niewielkich błędów.",
-                "zh-cn": "修正了一些小错误。",
-                "uk": "Незначні виправлення помилок."
-            },
-            "0.3.1": {
-                "en": "Bugfixes and a few new features",
-                "de": "Bugfixes und ein paar neue Funktionen",
-                "ru": "Исправления и несколько новых функций",
-                "pt": "Correções de bugs e alguns novos recursos",
-                "nl": "Bugfixes en een paar nieuwe functies",
-                "fr": "Corrections de bugs et quelques nouvelles fonctionnalités",
-                "it": "Bugfix e alcune nuove funzionalità",
-                "es": "Corrección de errores y algunas características nuevas.",
-                "pl": "Poprawki błędów i kilka nowych funkcji",
-                "zh-cn": "错误修正和一些新功能",
-                "uk": "Виправлення помилок і кілька нових функцій"
-            },
-            "0.2.0": {
-                "en": "Bugfixes and a few new features",
-                "de": "Bugfixes und ein paar neue Funktionen",
-                "ru": "Исправления и несколько новых функций",
-                "pt": "Correções de bugs e alguns novos recursos",
-                "nl": "Bugfixes en een paar nieuwe functies",
-                "fr": "Corrections de bugs et quelques nouvelles fonctionnalités",
-                "it": "Bugfix e alcune nuove funzionalità",
-                "es": "Corrección de errores y algunas características nuevas.",
-                "pl": "Poprawki błędów i kilka nowych funkcji",
-                "zh-cn": "错误修正和一些新功能",
-                "uk": "Виправлення помилок і кілька нових функцій"
-            },
-            "0.1.0": {
-                "en": "Bugfixes and a few new features",
-                "de": "Bugfixes und ein paar neue Funktionen",
-                "ru": "Исправления и несколько новых функций",
-                "pt": "Correções de bugs e alguns novos recursos",
-                "nl": "Bugfixes en een paar nieuwe functies",
-                "fr": "Corrections de bugs et quelques nouvelles fonctionnalités",
-                "it": "Bugfix e alcune nuove funzionalità",
-                "es": "Corrección de errores y algunas características nuevas.",
-                "pl": "Poprawki błędów i kilka nowych funkcji",
-                "zh-cn": "错误修正和一些新功能",
-                "uk": "Виправлення помилок і кілька нових функцій"
             }
         },
         "title": "Resol VBus",
@@ -240,6 +136,8 @@
         "supportCustoms": false,
         "connectionType": "local",
         "dataSource": "push",
+        "messagebox": true,
+        "subscribe": "messagebox",
         "adminUI": {
             "config": "json"
         },
@@ -258,6 +156,11 @@
             "sentry": {
                 "dsn": "https://352824c6326042b38d31ab0a6fa24fc8@o505019.ingest.sentry.io/5758903"
             }
+        },
+        "licenseInformation": {
+            "license": "MIT",
+            "link": "https://github.com/grizzelbee/ioBroker.resol/blob/master/README.md",
+            "type": "free"
         }
     },
     "native": {
@@ -267,7 +170,9 @@
         "vbusPassword": "",
         "vbusChannel": 7,
         "vbusViaTag": "",
-        "vbusInterval": 30
+        "vbusInterval": 30,
+        "controller": "Other",
+        "controllerMajorVersion": "1"
     },
     "encryptedNative": [
         "vbusPassword"
