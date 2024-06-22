@@ -24,5 +24,15 @@
     "VBus/LAN": "VBus /局域网",
     "donation": "如果你喜欢这个适配器并考虑支持我：",
     "none": "没有",
-    "Basic settings": "基本设置"
+    "Basic settings": "基本设置",
+    "Desc_Controller": "安装的控制器类型为 MX-Controller 或其他；由于 MX 控制器需要特殊设置，因此需要。",
+    "Lbl_ControllerMajorVersion": "控制器的主要版本",
+    "Lbl_Controller": "控制器类型",
+    "Other": "其他",
+    "Desc_ControllerMajorVersion": "布拉布拉布拉。这里没有什么帮助。",
+    "Communication settings": "通讯设置",
+    "Controller settings": "控制器设置",
+    "DetectController": "检测控制器",
+    "Desc_DetectController": "点击此按钮尝试自动检测您的控制器。",
+    "Lbl_UpAndRunning": "该适配器需要启动并运行才能检测控制器 - 但首先配置通信设置。"
 }

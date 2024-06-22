@@ -24,5 +24,15 @@
     "VBus/LAN": "VBus / LAN",
     "donation": "Als je deze adapter leuk vindt en overweegt mij te steunen:",
     "none": "Geen",
-    "Basic settings": "Basis instellingen"
+    "Basic settings": "Basis instellingen",
+    "Desc_Controller": "Het geïnstalleerde controllertype MX-Controller of Anders; nodig omdat er speciale instellingen zijn voor MX-controllers.",
+    "Lbl_ControllerMajorVersion": "Hoofdversie van de controller",
+    "Lbl_Controller": "Type controller",
+    "Other": "Ander",
+    "Desc_ControllerMajorVersion": "Bla Bla Bla. Niets nuttigs hier.",
+    "Communication settings": "Communicatie-instellingen",
+    "Controller settings": "Controller-instellingen",
+    "DetectController": "Controller detecteren",
+    "Desc_DetectController": "Druk op deze knop om te proberen uw controller automatisch te detecteren.",
+    "Lbl_UpAndRunning": "Deze adapter moet actief zijn om de controller te kunnen detecteren, maar configureer eerst de communicatie-instellingen."
 }
