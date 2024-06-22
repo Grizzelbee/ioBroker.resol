@@ -45,8 +45,81 @@ class resol extends utils.Adapter {
         this.on('stateChange', this.onStateChange.bind(this));
         this.on('unload', this.onUnload.bind(this));
         this.on('ready', this.onReady.bind(this));
+        this.on('message', this.onMessage.bind(this));
     }
 
+    /**
+     * onMessage
+     *
+     * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
+     * Using this method requires "common.messagebox" property to be set to true in io-package.json
+     * This function exchanges information between the admin frontend and the backend.
+     * In detail: it performs the 2 FA login at the dyson API. Therefore it receives messages from admin,
+     * sends them to dyson and reaches the received data back to admin.
+     *
+     * @param {object} msg - Message object containing all necessary data to request the needed information
+     */
+    async onMessage( msg ) {
+        this.log.debug('OnMessage: Received some request - Level 1.');
+        if (typeof msg === 'object' && msg.callback && msg.from && msg.from.startsWith('system.adapter.admin') ) {
+            this.log.debug('OnMessage: Received some request - Level 2.');
+            if (msg.command === 'detectController'){
+                this.log.debug('OnMessage: Received detect controller request.');
+                this.detectController()
+                    .then((response) => this.sendTo(msg.from, msg.command, response, msg.callback))
+                    .catch((e) => {
+                        this.log.warn(`Couldn't handle detectController message: ${e}`);
+                        this.sendTo(msg.from, msg.command, { error: e || 'No data' }, msg.callback);
+                    });
+            } else if ( msg.command=== "getControllersForAdminSelect") {
+                this.getControllersForAdminSelect()
+                    .then((response) => this.sendTo(msg.from, msg.command, response, msg.callback))
+                    .catch((e) =>{
+                        this.log.warn(`Couldn't handle getControllersForAdminSelect message: ${e}`);
+                        this.sendTo(msg.from, msg.command, { error: e || 'No data' }, msg.callback);
+                    });
+            }
+        }
+    }
+
+
+    async detectController(){
+        this.log.info('Trying to detect controller...');
+        const context = {connection: ctx.connection, deviceAddress: myDeviceAddress, saveConfig: {}};
+        try{
+            const datagram = await context.connection.waitForFreeBus();
+            this.log.debug(`Got Data from controller: ${JSON.stringify(datagram)}`);
+            const controller = await this.getJSONByResolId(datagram.sourceAddress);
+            this.log.debug(`Got Data from controller-setup-file: ${JSON.stringify(controller)}`);
+            this.log.info(`Found controller: ${controller.friendlyName}`);
+            return {native: {controller:controller.type}};
+        } catch(error){
+            this.log.error(error);
+        }
+    }
+
+    async getControllersForAdminSelect(){
+        this.log.debug('Trying to get controllers from file...');
+        this.loadJsonFile(setupFileResolTypes)
+            .then((data) => {
+                /*
+                data = JSON.parse(data);
+                this.log.debug(`Got Data from file: ${JSON.stringify(data)}`);
+                const result = [];
+                for (const row of data){
+                    this.log.debug(`Row in file: ${JSON.stringify(row)}`);
+                    result.push({label: row.friendlyName, value: row.type});
+                }
+                this.log.debug(`getControllersForAdminSelect file-return value: ${JSON.stringify(result)}`);
+                return result;
+                 */
+                return [{label:'test-1', value:'TEST-1'}, {label:'test-2', value:'TEST-2'}];
+            })
+            .catch( (error) => {
+                this.log.error(error);
+                return [{label:'test-1', value:'TEST-1'}, {label:'test-2', value:'TEST-2'}];
+            });
+    }
     //--- vbus write
     async runShot(context) {
         try {
