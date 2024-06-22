@@ -71,7 +71,7 @@ class resol extends utils.Adapter {
                         this.log.warn(`Couldn't handle detectController message: ${e}`);
                         this.sendTo(msg.from, msg.command, { error: e || 'No data' }, msg.callback);
                     });
-            } else if ( msg.command=== "getControllersForAdminSelect") {
+            } else if ( msg.command=== 'getControllersForAdminSelect') {
                 this.getControllersForAdminSelect()
                     .then((response) => this.sendTo(msg.from, msg.command, response, msg.callback))
                     .catch((e) =>{
@@ -98,11 +98,14 @@ class resol extends utils.Adapter {
         }
     }
 
+    /**
+     *  currently not used
+     * @returns {Promise<void>}
+     */
     async getControllersForAdminSelect(){
         this.log.debug('Trying to get controllers from file...');
         this.loadJsonFile(setupFileResolTypes)
             .then((data) => {
-                /*
                 data = JSON.parse(data);
                 this.log.debug(`Got Data from file: ${JSON.stringify(data)}`);
                 const result = [];
@@ -112,8 +115,6 @@ class resol extends utils.Adapter {
                 }
                 this.log.debug(`getControllersForAdminSelect file-return value: ${JSON.stringify(result)}`);
                 return result;
-                 */
-                return [{label:'test-1', value:'TEST-1'}, {label:'test-2', value:'TEST-2'}];
             })
             .catch( (error) => {
                 this.log.error(error);
