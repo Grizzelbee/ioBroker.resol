@@ -31,6 +31,7 @@ const ctx = {
 let jsoncontrollerSetupItems;
 let myDeviceAddress;
 let myDeviceID;
+let myDeviceVersion;
 
 
 class resol extends utils.Adapter {
@@ -89,7 +90,7 @@ class resol extends utils.Adapter {
         try{
             const datagram = await context.connection.waitForFreeBus();
             this.log.debug(`Got Data from controller: ${JSON.stringify(datagram)}`);
-            const controller = await this.getJSONByResolId(datagram.sourceAddress);
+            const controller = await this.getJSONByResolId(datagram.sourceAddress,myDeviceVersion);
             this.log.debug(`Got Data from controller-setup-file: ${JSON.stringify(controller)}`);
             this.log.info(`Found controller: ${controller.friendlyName}`);
             return {native: {controller:controller.type}};
@@ -130,7 +131,19 @@ class resol extends utils.Adapter {
             this.log.debug('Found master with address 0x' + context.masterAddress.toString(16));
             context.deviceAddress = context.masterAddress;
 
-            const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
+			switch (context.deviceAddress){
+                case 30753: // Surrogat : Cosmo-Multi-2 is a relabled DeltaSol-E
+                        context.deviceAddress = 4176; // fake a DeltaSol-E since Cosmo-Controllers aren't supported by the Resol-Lib
+                        break;
+                }
+
+            //const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
+            const options1 = {
+                deviceAddress : context.deviceAddress,
+                version : context.deviceVersion
+            }
+            this.log.debug('options1 ' + JSON.stringify(options1));
+            const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizer(options1);
             context.optimizer = optimizer;
             if (!optimizer) {
                 // log error and exit function
@@ -189,7 +202,7 @@ class resol extends utils.Adapter {
     }
 
 
-    async getJSONByResolId(resolId) {
+    async getJSONByResolId(resolId,deviceVersion) {
         let result;
         this.log.debug('[getJSONByResolId] given ResolID : ' + resolId);
         this.log.debug('[getJSONByResolId] Reading File: [' + setupFileResolTypes + ']');
@@ -201,7 +214,10 @@ class resol extends utils.Adapter {
                 jsetupResolTypes.forEach(item => {
 
                     if (resolId === item.id) {
-                        result = item;
+                        //myDeviceVersion == item.majorVersion;
+                        if (item.majorVersion) {
+                        	if (item.majorVersion===deviceVersion) result = item;	
+                    	} else result = item;
                     }
                 });
                 if (!result) this.log.warn('[getJSONByResolId] Controller type not found in setup file.');
@@ -226,7 +242,7 @@ class resol extends utils.Adapter {
             }, null);
 
             this.log.debug('[generateDP]->Resol-Address/Resol-ID:  [' + resolAddr + '] : [' + resolId + ']');
-            const setupResolType = await this.getJSONByResolId(resolAddr);
+            const setupResolType = await this.getJSONByResolId(resolAddr,myDeviceVersion);
             this.log.debug('[generateDP]->setupResolType: ' + JSON.stringify(setupResolType));
             const controllerSetupFile = distPath + setupResolType.setup + '.js';
             this.log.debug('[generateDP] Loading Controller-config-file: ' + controllerSetupFile);
@@ -358,14 +374,21 @@ class resol extends utils.Adapter {
     }
 
     async loadMyConfig (context) {
+        this.log.debug('loadMyConfig (context) ' + JSON.stringify(context));
         try{
             if (jsoncontrollerSetupItems) {
                 switch (context.deviceAddress){
-                    case 30753: // Cosemo-Multi-2 is a relabeld DeltaSol-E
+                    case 30753: // Surrogat : Cosmo-Multi-2 is a relabled DeltaSol-E
                         context.deviceAddress = 4176; // fake a DeltaSol-E since Cosmo-Controllers aren't supported by the Resol-Lib
                         break;
                 }
-                const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
+                //const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizerByDeviceAddress(context.deviceAddress);
+                const options1 = {
+                    deviceAddress : context.deviceAddress,
+                    version : context.deviceVersion
+                }
+                this.log.debug('options1 ' + JSON.stringify(options1));
+                const optimizer = await vbus.ConfigurationOptimizerFactory.createOptimizer(options1);
                 context.optimizer = optimizer;
                 if (!optimizer) {
                     // log error and exit function
@@ -452,7 +475,7 @@ class resol extends utils.Adapter {
             const value = JSON.parse(state.val);
             const myJSON = this.getDpFunction(id, value);
             this.log.debug('myJSON: ' + JSON.stringify(myJSON));
-            const context = {connection: ctx.connection, deviceAddress: myDeviceAddress, saveConfig: myJSON};
+            const context = {connection: ctx.connection, deviceAddress: myDeviceAddress, deviceVersion: myDeviceVersion,saveConfig: myJSON};
             await this.runShot(context);
         }
     }
@@ -472,6 +495,7 @@ class resol extends utils.Adapter {
         this.log.debug(`VBus Channel: ${this.config.vbusChannel}`);
         this.log.debug(`VBus Via Tag: ${this.config.vbusViaTag}`);
         this.log.debug(`VBus Interval: ${this.config.vbusInterval}`);
+        this.log.debug(`Major Version: ${this.config.controllerMajorVersion}`);
         return new Promise(
             function (resolve, reject) {
                 // some helper functions
@@ -564,7 +588,10 @@ class resol extends utils.Adapter {
             const spec = new vbus.Specification({
                 language: language
             });
-
+			
+			// set up device version
+			myDeviceVersion = this.config.controllerMajorVersion;
+			
             // Set up connection depending on connection device and check connection identifier
             switch (this.config.connectionDevice) {
                 case 'lan':
@@ -710,14 +737,15 @@ class resol extends utils.Adapter {
                     // create write dps
                     if (!myDeviceAddress) {
                         myDeviceAddress = data[1].addressId;
-                        this.log.debug('myDeviceAddress: ' + myDeviceAddress);
+                        this.log.debug('myDeviceAddress: ' + myDeviceAddress+' myDeviceVersion: '+myDeviceVersion);
                         myDeviceID = data[1].deviceId;
                         this.generateDP(myDeviceAddress, myDeviceID);
                     }
                     const thisContext = {
                         connection: ctx.connection,
                         deviceAddress: myDeviceAddress,
-                        deviceID: myDeviceID
+                        deviceID: myDeviceID,
+                        deviceVersion: myDeviceVersion
                     };
                     this.loadMyConfig(thisContext);
                 }

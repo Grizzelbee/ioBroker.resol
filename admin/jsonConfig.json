@@ -171,8 +171,8 @@
       "default": "1",
       "tooltip": "Desc_ControllerMajorVersion",
       "options": [
-        {"label": "V1", "value": "1"},
-        {"label": "V2", "value": "2"}
+        {"label": "V1", "value": 1},
+        {"label": "V2", "value": 2}
       ],
       "hidden": "data.controller==='Other'",
       "sm": 12,
