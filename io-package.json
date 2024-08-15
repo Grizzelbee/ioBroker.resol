@@ -170,7 +170,7 @@
         "vbusViaTag": "",
         "vbusInterval": 30,
         "controller": "Other",
-        "controllerMajorVersion": "1"
+        "controllerMajorVersion": 1
     },
     "encryptedNative": [
         "vbusPassword"

@@ -204,7 +204,7 @@ class resol extends utils.Adapter {
 
     async getJSONByResolId(resolId,deviceVersion) {
         let result;
-        this.log.debug('[getJSONByResolId] given ResolID : ' + resolId);
+        this.log.debug('[getJSONByResolId] given Resol-ID : ' + resolId+ ' Version '+deviceVersion);
         this.log.debug('[getJSONByResolId] Reading File: [' + setupFileResolTypes + ']');
         await this.loadJsonFile(setupFileResolTypes)
             .then((setupResolTypes) => {
@@ -214,13 +214,15 @@ class resol extends utils.Adapter {
                 jsetupResolTypes.forEach(item => {
 
                     if (resolId === item.id) {
+			this.log.debug('[getJSONByResolId] Resol-ID found : ' + resolId);
                         //myDeviceVersion == item.majorVersion;
                         if (item.majorVersion) {
-                        	if (item.majorVersion===deviceVersion) result = item;	
+				this.log.debug('[getJSONByResolId] majorVersion exists in file: ' + item.majorVersion);
+                        	if (item.majorVersion==deviceVersion) result = item; else this.log.error('[getJSONByResolId] device version not correct, please set in config');	
                     	} else result = item;
                     }
                 });
-                if (!result) this.log.warn('[getJSONByResolId] Controller type not found in setup file.');
+                if (!result) this.log.error('[getJSONByResolId] Controller type not found in setup file.');
                 this.log.debug('[getJSONByResolId] result : ' + JSON.stringify(result));
             })
             .catch((err) => {
@@ -228,6 +230,7 @@ class resol extends utils.Adapter {
             });
         return result;
     }
+
 
     // generate all dp read from file
     async generateDP(resolAddr, resolId) {
