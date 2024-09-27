@@ -147,6 +147,7 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 
 ## Changelog
 ### **WORK IN PROGRESS**
+* (@foxriver76) removed `@iobroker/plugin-sentry` dependency (necessary for js-controller v7)
 
 ### 1.3.0 (2022-11-01)
 * (grizzelbee) Fix: [#106](https://github.com/Grizzelbee/ioBroker.resol/issues/106) Attempt to fix errors in log regarding DeltaSol-BX
