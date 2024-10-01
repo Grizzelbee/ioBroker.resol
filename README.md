@@ -146,6 +146,10 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 ## Todo
 
 ## Changelog
+
+## **WORK IN PROGRESS**
+* (grizzelbee) Upd: Internal update
+
 ### 1.4.1 (2024-10-01)
 * (grizzelbee) Upd: Dependencies got updated
 * (grizzelbee) Fix: Plugin-Sentry removed

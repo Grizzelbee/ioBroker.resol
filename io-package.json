@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "resol",
-        "version": "1.4.0",
+        "version": "1.4.1",
         "news": {
             "1.4.0": {
                 "en": "Upd: Dependencies got updated*Upd: Translations got updated*Fix: Finished work on new jsonConfig admin-UI*New: Added new option for MX-Controllers to admin-UI*New: Admin-UI now hides options which are invalid for the selected device.*New: Integrated Actions for MX-Controller (V1 and V2)\t ",
