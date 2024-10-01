@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "resol",
-    "version": "1.4.2",
+    "version": "1.5.0",
     "news": {
+      "1.5.0": {
+        "en": "Upd: Fixed some issues mentioned by adapter-checker",
+        "de": "Upd: Behoben einige Probleme von Adapter-Checker",
+        "ru": "Upd: Исправлены некоторые вопросы, упомянутые адаптером-проверщиком",
+        "pt": "Upd: Corrigido alguns problemas mencionados pelo verificador do adaptador",
+        "nl": "Upd: Enkele problemen opgelost die door adapter-checker worden genoemd",
+        "fr": "Mise à jour: Correction de certains problèmes mentionnés par adaptateur-vérificateur",
+        "it": "Upd: Risolto alcuni problemi menzionati da adattatore-chicker",
+        "es": "Subir: Arreglar algunos problemas mencionados por el adaptador",
+        "pl": "Upd: Naprawiono niektóre problemy wymienione przez adapter- checker",
+        "uk": "Увімкнено: Виправлено деякі проблеми, зазначені адаптером",
+        "zh-cn": "Upd: 解决适配器-检查器提到的一些问题"
+      },
       "1.4.2": {
         "en": "Upd: Internal update",
         "de": "Aktualisierung: Internes Update",
@@ -41,61 +54,8 @@
         "pl": "Naprawiono błędy logów dla niektórych kontrolerów\nPrzeniesiono interfejs administratora do jsonConfig\nniektóre prace konserwacyjne",
         "uk": "Виправлено помилки журналу для деяких контролерів\nінтерфейс адміністратора переміщено до jsonConfig\nдеяке обслуговування",
         "zh-cn": "修复了一些控制器的日志错误\n将管理界面移至 jsonConfig\n一些维护"
-      },
-      "1.2.0": {
-        "en": "New: Added support for DeltaSol BX",
-        "de": "Neu: Unterstützung für DeltaSol BX hinzugefügt",
-        "ru": "Новое: добавлена ​​поддержка DeltaSol BX.",
-        "pt": "Novo: Adicionado suporte para DeltaSol BX",
-        "nl": "Nieuw: ondersteuning toegevoegd voor DeltaSol BX",
-        "fr": "Nouveau : Ajout de la prise en charge de DeltaSol BX",
-        "it": "Novità: Aggiunto supporto per DeltaSol BX",
-        "es": "Nuevo: soporte agregado para DeltaSol BX",
-        "pl": "Nowość: Dodano obsługę DeltaSol BX",
-        "zh-cn": "新增：增加了对 DeltaSol BX 的支持",
-        "uk": "Нове: додано підтримку DeltaSol BX"
-      },
-      "1.1.5": {
-        "en": "Fixed support for Cosmo Multi 2 controllers",
-        "de": "Die Unterstützung für Cosmo Multi 2-Controller wurde korrigiert",
-        "ru": "Исправлена ​​поддержка контроллеров Cosmo Multi 2.",
-        "pt": "Suporte fixo para controladores Cosmo Multi 2",
-        "nl": "Vaste ondersteuning voor Cosmo Multi 2-controllers",
-        "fr": "Prise en charge fixe des contrôleurs Cosmo Multi 2",
-        "it": "Corretto il supporto per i controller Cosmo Multi 2",
-        "es": "Soporte fijo para controladores Cosmo Multi 2",
-        "pl": "Naprawiono obsługę kontrolerów Cosmo Multi 2",
-        "zh-cn": "修复了对 Cosmo Multi 2 控制器的支持",
-        "uk": "Виправлена ​​підтримка контролерів Cosmo Multi 2"
-      },
-      "1.1.0": {
-        "en": "New: Added support for DeltaSol E and improved support for Cosmo Multi 2 controllers",
-        "de": "Neu: Unterstützung für DeltaSol E und verbesserte Unterstützung für Cosmo Multi 2 Controller hinzugefügt",
-        "ru": "Новое: добавлена ​​поддержка DeltaSol E и улучшена поддержка контроллеров Cosmo Multi 2.",
-        "pt": "Novo: Adicionado suporte para DeltaSol E e suporte aprimorado para controladores Cosmo Multi 2",
-        "nl": "Nieuw: ondersteuning toegevoegd voor DeltaSol E en verbeterde ondersteuning voor Cosmo Multi 2-controllers",
-        "fr": "Nouveau : Ajout de la prise en charge de DeltaSol E et amélioration de la prise en charge des contrôleurs Cosmo Multi 2",
-        "it": "Novità: Aggiunto il supporto per DeltaSol E e migliorato il supporto per i controller Cosmo Multi 2",
-        "es": "Nuevo: soporte agregado para DeltaSol E y soporte mejorado para controladores Cosmo Multi 2",
-        "pl": "Nowość: Dodano obsługę DeltaSol E i ulepszoną obsługę kontrolerów Cosmo Multi 2",
-        "zh-cn": "新增内容：增加了对 DeltaSol E 的支持并改进了对 Cosmo Multi 2 控制器的支持",
-        "uk": "Нове: додано підтримку DeltaSol E та покращено підтримку контролерів Cosmo Multi 2"
-      },
-      "1.0.0": {
-        "en": "New: Added support for Cosmo controllers (No Sensor connected = 888°C)\nUpd: Pushed version from 0.4.4 to v1.0.0 to be compliant to semver\nDependencies got updated",
-        "de": "Neu: Unterstützung für Cosmo-Controller hinzugefügt (Kein Sensor angeschlossen = 888°C)\nUpd: Version von 0.4.4 auf v1.0.0 gepusht, um semver-konform zu sein\nAbhängigkeiten wurden aktualisiert",
-        "ru": "Новое: добавлена ​​поддержка контроллеров Cosmo (датчик не подключен = 888°C)\nUpd: обновлена ​​версия с 0.4.4 до v1.0.0 для совместимости с semver\nОбновлены зависимости",
-        "pt": "Novo: Adicionado suporte para controladores Cosmo (Sem Sensor conectado = 888°C)\nAtualização: Versão empurrada de 0.4.4 para v1.0.0 para ser compatível com semver\nAs dependências foram atualizadas",
-        "nl": "Nieuw: ondersteuning toegevoegd voor Cosmo-controllers (geen sensor aangesloten = 888°C)\nUpd: versie gepusht van 0.4.4 naar v1.0.0 om te voldoen aan semver\nAfhankelijkheden zijn bijgewerkt",
-        "fr": "Nouveau : Ajout de la prise en charge des contrôleurs Cosmo (Aucun capteur connecté = 888°C)\nMise à jour : Version poussée de 0.4.4 à v1.0.0 pour être conforme à semver\nLes dépendances ont été mises à jour",
-        "it": "Novità: Aggiunto supporto per i controller Cosmo (nessun sensore connesso = 888°C)\nAggiornamento: Versione pushata da 0.4.4 a v1.0.0 per essere conforme a semver\nLe dipendenze sono state aggiornate",
-        "es": "Nuevo: Compatibilidad agregada para los controladores Cosmo (sin sensor conectado = 888 ° C) \n Actualización: versión impulsada de 0.4.4 a v1.0.0 para cumplir con semver \n Se actualizaron las dependencias",
-        "pl": "Nowość: Dodano obsługę kontrolerów Cosmo (brak podłączonego czujnika = 888°C)\nAktualizacja: Przesunięto wersję z 0.4.4 do v1.0.0, aby była zgodna z serwerem\nZależności zostały zaktualizowane",
-        "zh-cn": "新增内容：增加了对 Cosmo 控制器的支持（未连接传感器 = 888°C）\n更新：将版本从 0.4.4 推送到 v1.0.0 以符合 semver\n更新依赖项",
-        "uk": "Нове: додано підтримку контролерів Cosmo (без підключеного датчика = 888°C)\nОновлено: версію 0.4.4 перенесено на v1.0.0 для сумісності з semver\nЗалежності оновлено"
       }
     },
-    "title": "Resol VBus",
     "titleLang": {
       "en": "Connect your Resol VBus Devices",
       "de": "Verbinden Sie Ihre Resol VBus-Geräte",
@@ -126,15 +86,11 @@
       "grizzelbee <open.source@hingsen.de>"
     ],
     "keywords": [
-      "ioBroker",
       "resol",
-      "Smart Home",
-      "home automation",
       "VBus",
-      "Resol"
+      "Solar"
     ],
     "platform": "Javascript/Node.js",
-    "main": "main.js",
     "icon": "resol.svg",
     "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/grizzelbee/ioBroker.resol/master/admin/resol.svg",
@@ -144,7 +100,6 @@
     "type": "energy",
     "tier": 2,
     "compact": true,
-    "materialize": true,
     "supportCustoms": false,
     "connectionType": "local",
     "dataSource": "push",
@@ -159,8 +114,7 @@
     ],
     "dependencies": [
       {
-        "js-controller": ">=3.3.22",
-        "admin": ">=4.0.9"
+        "js-controller": ">=5.0.19"
       }
     ],
     "plugins": {
