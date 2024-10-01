@@ -24,5 +24,15 @@
     "VBus/LAN": "VBus / LAN",
     "donation": "Jeśli podoba Ci się ten adapter i rozważ wsparcie mnie:",
     "none": "Żaden",
-    "Basic settings": "Podstawowe ustawienia"
+    "Basic settings": "Podstawowe ustawienia",
+    "Desc_Controller": "Zainstalowany sterownik typu MX-Controller lub Inny; potrzebne, ponieważ dla kontrolerów MX wymagane są specjalne ustawienia.",
+    "Lbl_ControllerMajorVersion": "Główna wersja kontrolera",
+    "Lbl_Controller": "Typ kontrolera",
+    "Other": "Inny",
+    "Desc_ControllerMajorVersion": "Bla Bla Bla. Nie ma tu nic pomocnego.",
+    "Communication settings": "Ustawienia komunikacji",
+    "Controller settings": "Ustawienia kontrolera",
+    "DetectController": "Wykryj kontroler",
+    "Desc_DetectController": "Naciśnij ten przycisk, aby spróbować automatycznie wykryć kontroler.",
+    "Lbl_UpAndRunning": "Aby wykryć kontroler, ten adapter musi być uruchomiony i uruchomiony, ale najpierw skonfiguruj ustawienia komunikacji."
 }

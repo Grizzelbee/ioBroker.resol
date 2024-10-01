@@ -7,14 +7,22 @@
       "text": "donation"
     },
     "donateButton": {
+      "newLine": true,
       "type": "staticImage",
       "src": "adapter/resol/admin/paypal-donate-button.png",
       "href": "https://www.paypal.com/donate/?hosted_button_id=SPUDTXGNG2MYG"
     },
-    "_basicSection": {
+    "testAlive": {
+      "newLine": true,
+      "type": "alive",
+      "label": "",
+      "textAlive": "",
+      "textNotAlive": "Lbl_UpAndRunning"
+    },
+    "_CommunicationSection": {
       "newLine": true,
       "type" : "header",
-      "text" : "Basic settings",
+      "text" : "Communication settings",
       "size": 2,
       "sm": 36,
       "md": 12,
@@ -41,6 +49,7 @@
       "type": "text",
       "label": "Lbl_DeviceAddress",
       "tooltip" : "Desc_DeviceAddress",
+      "hidden": "data.connectionDevice==='inet'",
       "sm": 12,
       "md": 4,
       "lg": 3
@@ -52,6 +61,7 @@
       "label": "Lbl_ConnectionPort",
       "default": 30,
       "tooltip": "Desc_ConnectionPort",
+      "hidden": "(data.connectionDevice==='inet') || (data.connectionDevice==='serial')",
       "sm": 12,
       "md": 4,
       "lg": 3
@@ -69,6 +79,7 @@
       "type": "select",
       "label": "Lbl_DL3Channel",
       "tooltip" : "Desc_DL3Channel",
+      "hidden": "data.connectionDevice!='dl3'",
       "default": 7,
       "options": [
         {"label":{"en": "None"}, "value": "7"},
@@ -89,6 +100,7 @@
       "label": "Lbl_Via-tag",
       "default": false,
       "tooltip": "Desc_Via-tag",
+      "hidden": "data.connectionDevice!='inet'",
       "sm": 12,
       "md": 4,
       "lg": 3
@@ -101,6 +113,68 @@
       "label": "Lbl_Pollintervall",
       "default": 30,
       "tooltip": "Desc_Pollintervall",
+      "sm": 12,
+      "md": 4,
+      "lg": 3
+    },
+    "_ControllerSection": {
+      "newLine": true,
+      "type" : "header",
+      "text" : "Controller settings",
+      "size": 2,
+      "sm": 36,
+      "md": 12,
+      "lg": 9
+    },
+    "detectController": {
+      "newLine": true,
+      "type": "sendTo",
+      "label": "DetectController",
+      "tooltip": "Desc_DetectController",
+      "icon": "search",
+      "variant": "outlined",
+      "showProcess": true,
+      "command": "detectController",
+      "jsonData": "{}",
+      "useNative": true,
+      "sm": 12,
+      "md": 2,
+      "lg": 3
+    },
+    "controller": {
+      "type": "select",
+      "label": "Lbl_Controller",
+      "default": "",
+      "tooltip": "Desc_Controller",
+      "hidden": "data.connectionDevice==='inet'",
+      "options": [
+        {"label":{"en":"Deltasol CS2"},    "value":"CS2"},
+        {"label":{"en":"Deltasol CS4"},    "value":"CS4"},
+        {"label":{"en":"Deltasol CS Plus"},"value":"CS+"},
+        {"label":{"en":"Deltasol MX"},     "value":"MX"},
+        {"label":{"en":"Deltasol SLT"},    "value":"SLT"},
+        {"label":{"en":"Deltasol HC"},     "value":"HC"},
+        {"label":{"en":"Deltasol C"},      "value":"C"},
+        {"label":{"en":"Deltasol BX"},     "value":"BX"},
+        {"label":{"en":"Deltasol BX Plus"}, "value":"BX+"},
+        {"label":{"en":"Deltasol BS4 V2"}, "value":"BS4V2"},
+        {"label":{"en":"Deltasol E V2"},   "value":"EV2"},
+        {"label":{"en":"Cosmo Multi 2"},   "value":"CosmoMulti2"}
+      ],
+      "sm": 12,
+      "md": 4,
+      "lg": 3
+    },
+    "controllerMajorVersion": {
+      "type": "select",
+      "label": "Lbl_ControllerMajorVersion",
+      "default": "1",
+      "tooltip": "Desc_ControllerMajorVersion",
+      "options": [
+        {"label": "V1", "value": 1},
+        {"label": "V2", "value": 2}
+      ],
+      "hidden": "data.controller==='Other'",
       "sm": 12,
       "md": 4,
       "lg": 3
