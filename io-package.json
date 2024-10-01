@@ -28,32 +28,6 @@
         "pl": "Upd: Aktualizacja wewnętrzna",
         "uk": "Оновлення: Внутрішнє оновлення",
         "zh-cn": "Upd: 内部更新"
-      },
-      "1.4.0": {
-        "en": "Upd: Dependencies got updated*Upd: Translations got updated*Fix: Finished work on new jsonConfig admin-UI*New: Added new option for MX-Controllers to admin-UI*New: Admin-UI now hides options which are invalid for the selected device.*New: Integrated Actions for MX-Controller (V1 and V2)\t ",
-        "de": "Upd: Abhängigkeiten wurden aktualisiert*Upd: Übersetzungen wurden aktualisiert*Fix: Arbeit an der neuen jsonConfig Admin-UI abgeschlossen*Neu: Neue Option für MX-Controller zur Admin-UI hinzugefügt*Neu: Admin-UI verbirgt jetzt Optionen, die für ungültig sind ausgewähltes Gerät.*Neu: Integrierte Aktionen für MX-Controller (V1 und V2)",
-        "ru": "Обновление: обновлены зависимости * Обновление: обновлены переводы * Исправлено: завершена работа над новым пользовательским интерфейсом администратора jsonConfig * Новое: добавлена ​​новая опция для MX-контроллеров в пользовательский интерфейс администратора * Новое: пользовательский интерфейс администратора теперь скрывает параметры, которые недействительны для выбранное устройство.*Новое: интегрированные действия для MX-контроллера (V1 и V2).",
-        "pt": "Upd: Dependências foram atualizadas*Upd: Traduções foram atualizadas*Fix: Trabalho concluído no novo jsonConfig admin-UI*Novo: Adicionada nova opção para MX-Controllers para admin-UI*Novo: Admin-UI agora oculta opções que são inválidas para o dispositivo selecionado.*Novo: Ações integradas para MX-Controller (V1 e V2)",
-        "nl": "Upd: Afhankelijkheden zijn bijgewerkt*Upd: Vertalingen zijn bijgewerkt*Fix: Voltooid werk aan nieuwe jsonConfig admin-UI*Nieuw: Nieuwe optie voor MX-controllers toegevoegd aan admin-UI*Nieuw: Admin-UI verbergt nu opties die ongeldig zijn voor de geselecteerd apparaat.*Nieuw: geïntegreerde acties voor MX-Controller (V1 en V2)",
-        "fr": "Mise à jour : les dépendances ont été mises à jour*Mise à jour : les traductions ont été mises à jour*Correction : travail terminé sur la nouvelle interface utilisateur d'administration jsonConfig*Nouveau : ajout d'une nouvelle option pour les contrôleurs MX à l'interface utilisateur d'administration*Nouveau : l'interface utilisateur d'administration masque désormais les options qui ne sont pas valides pour le périphérique sélectionné.*Nouveau : actions intégrées pour MX-Controller (V1 et V2)",
-        "it": "Aggiornamento: le dipendenze sono state aggiornate*Aggiornamento: le traduzioni sono state aggiornate*Correzione: lavoro terminato sulla nuova interfaccia utente di amministrazione jsonConfig*Novità: aggiunta una nuova opzione per i controller MX all'interfaccia utente di amministrazione*Novità: l'interfaccia utente di amministrazione ora nasconde le opzioni che non sono valide per dispositivo selezionato.*Novità: azioni integrate per controller MX (V1 e V2)",
-        "es": "Actualización: Se actualizaron las dependencias* Actualización: Se actualizaron las traducciones* Solución: Trabajo finalizado en la nueva interfaz de usuario de administrador jsonConfig* Nuevo: se agregó una nueva opción para controladores MX a la interfaz de usuario de administrador* Nuevo: la interfaz de usuario de administrador ahora oculta opciones que no son válidas para dispositivo seleccionado.*Nuevo: Acciones integradas para MX-Controller (V1 y V2)",
-        "pl": "Aktualizacja: Zależności zostały zaktualizowane*Aktualizacja: Tłumaczenia zostały zaktualizowane*Poprawka: Zakończono prace nad nowym interfejsem administratora jsonConfig*Nowość: Dodano nową opcję dla kontrolerów MX do interfejsu administratora*Nowość: Interfejs administratora ukrywa teraz opcje, które są nieprawidłowe dla wybrane urządzenie.*Nowość: Zintegrowane akcje dla kontrolera MX (V1 i V2)",
-        "uk": "Оновлено: залежності оновлено*Оновлено: оновлено переклади*Виправлення: завершено роботу над новим інтерфейсом адміністратора jsonConfig*Нове: додано нову опцію для MX-контролерів до інтерфейсу адміністратора*Нове: тепер інтерфейс адміністратора приховує параметри, недійсні для вибраний пристрій.*Нове: інтегровані дії для MX-Controller (V1 і V2)",
-        "zh-cn": "更新：依赖项已更新*更新：翻译已更新*修复：完成了新 jsonConfig admin-UI 的工作*新功能：向 admin-UI 添加了 MX 控制器的新选项*新功能：Admin-UI 现在隐藏了对选定的设备。*新功能：MX 控制器（V1 和 V2）的集成操作"
-      },
-      "1.3.0": {
-        "en": "Fixed log errors for some controllers\nMoved Admin interface to jsonConfig\nsome maintenance",
-        "de": "Protokollfehler für einige Controller behoben \n Admin-Schnittstelle zu jsonConfig umgebaut \n einige Wartungsarbeiten",
-        "ru": "Исправлены ошибки журнала для некоторых контроллеров \n Интерфейс администратора перенесен в jsonConfig \n некоторое техническое обслуживание",
-        "pt": "Erros de log corrigidos para alguns controladores \n Interface de administração movida para jsonConfig \n alguma manutenção",
-        "nl": "Vaste logfouten voor sommige controllers \n Beheerdersinterface verplaatst naar jsonConfig \n enig onderhoud",
-        "fr": "Correction des erreurs de journal pour certains contrôleurs \n Interface d'administration déplacée vers jsonConfig \n certaines opérations de maintenance",
-        "it": "Risolti errori di registro per alcuni controller\nInterfaccia di amministrazione spostata in jsonConfig\nalcuni interventi di manutenzione",
-        "es": "Errores de registro fijos para algunos controladores \n Interfaz de administración movida a jsonConfig \n algo de mantenimiento",
-        "pl": "Naprawiono błędy logów dla niektórych kontrolerów\nPrzeniesiono interfejs administratora do jsonConfig\nniektóre prace konserwacyjne",
-        "uk": "Виправлено помилки журналу для деяких контролерів\nінтерфейс адміністратора переміщено до jsonConfig\nдеяке обслуговування",
-        "zh-cn": "修复了一些控制器的日志错误\n将管理界面移至 jsonConfig\n一些维护"
       }
     },
     "titleLang": {
