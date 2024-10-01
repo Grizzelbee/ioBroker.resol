@@ -147,6 +147,9 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 
 ## Changelog
 ### **WORK IN PROGRESS**
+* (grizzelbee) Upd: Dependencies got updated
+* (grizzelbee) Fix: Plugin-Sentry removed
+* (grizzelbee) Upd: made release script working 
 
 ### 1.4.0 (2024-07-xx)
 * (grizzelbee) Upd: Dependencies got updated
