@@ -1,205 +1,218 @@
 {
-    "common": {
-        "name": "resol",
-        "version": "1.4.1",
-        "news": {
-            "1.4.0": {
-                "en": "Upd: Dependencies got updated*Upd: Translations got updated*Fix: Finished work on new jsonConfig admin-UI*New: Added new option for MX-Controllers to admin-UI*New: Admin-UI now hides options which are invalid for the selected device.*New: Integrated Actions for MX-Controller (V1 and V2)\t ",
-                "de": "Upd: Abhängigkeiten wurden aktualisiert*Upd: Übersetzungen wurden aktualisiert*Fix: Arbeit an der neuen jsonConfig Admin-UI abgeschlossen*Neu: Neue Option für MX-Controller zur Admin-UI hinzugefügt*Neu: Admin-UI verbirgt jetzt Optionen, die für ungültig sind ausgewähltes Gerät.*Neu: Integrierte Aktionen für MX-Controller (V1 und V2)",
-                "ru": "Обновление: обновлены зависимости * Обновление: обновлены переводы * Исправлено: завершена работа над новым пользовательским интерфейсом администратора jsonConfig * Новое: добавлена ​​новая опция для MX-контроллеров в пользовательский интерфейс администратора * Новое: пользовательский интерфейс администратора теперь скрывает параметры, которые недействительны для выбранное устройство.*Новое: интегрированные действия для MX-контроллера (V1 и V2).",
-                "pt": "Upd: Dependências foram atualizadas*Upd: Traduções foram atualizadas*Fix: Trabalho concluído no novo jsonConfig admin-UI*Novo: Adicionada nova opção para MX-Controllers para admin-UI*Novo: Admin-UI agora oculta opções que são inválidas para o dispositivo selecionado.*Novo: Ações integradas para MX-Controller (V1 e V2)",
-                "nl": "Upd: Afhankelijkheden zijn bijgewerkt*Upd: Vertalingen zijn bijgewerkt*Fix: Voltooid werk aan nieuwe jsonConfig admin-UI*Nieuw: Nieuwe optie voor MX-controllers toegevoegd aan admin-UI*Nieuw: Admin-UI verbergt nu opties die ongeldig zijn voor de geselecteerd apparaat.*Nieuw: geïntegreerde acties voor MX-Controller (V1 en V2)",
-                "fr": "Mise à jour : les dépendances ont été mises à jour*Mise à jour : les traductions ont été mises à jour*Correction : travail terminé sur la nouvelle interface utilisateur d'administration jsonConfig*Nouveau : ajout d'une nouvelle option pour les contrôleurs MX à l'interface utilisateur d'administration*Nouveau : l'interface utilisateur d'administration masque désormais les options qui ne sont pas valides pour le périphérique sélectionné.*Nouveau : actions intégrées pour MX-Controller (V1 et V2)",
-                "it": "Aggiornamento: le dipendenze sono state aggiornate*Aggiornamento: le traduzioni sono state aggiornate*Correzione: lavoro terminato sulla nuova interfaccia utente di amministrazione jsonConfig*Novità: aggiunta una nuova opzione per i controller MX all'interfaccia utente di amministrazione*Novità: l'interfaccia utente di amministrazione ora nasconde le opzioni che non sono valide per dispositivo selezionato.*Novità: azioni integrate per controller MX (V1 e V2)",
-                "es": "Actualización: Se actualizaron las dependencias* Actualización: Se actualizaron las traducciones* Solución: Trabajo finalizado en la nueva interfaz de usuario de administrador jsonConfig* Nuevo: se agregó una nueva opción para controladores MX a la interfaz de usuario de administrador* Nuevo: la interfaz de usuario de administrador ahora oculta opciones que no son válidas para dispositivo seleccionado.*Nuevo: Acciones integradas para MX-Controller (V1 y V2)",
-                "pl": "Aktualizacja: Zależności zostały zaktualizowane*Aktualizacja: Tłumaczenia zostały zaktualizowane*Poprawka: Zakończono prace nad nowym interfejsem administratora jsonConfig*Nowość: Dodano nową opcję dla kontrolerów MX do interfejsu administratora*Nowość: Interfejs administratora ukrywa teraz opcje, które są nieprawidłowe dla wybrane urządzenie.*Nowość: Zintegrowane akcje dla kontrolera MX (V1 i V2)",
-                "uk": "Оновлено: залежності оновлено*Оновлено: оновлено переклади*Виправлення: завершено роботу над новим інтерфейсом адміністратора jsonConfig*Нове: додано нову опцію для MX-контролерів до інтерфейсу адміністратора*Нове: тепер інтерфейс адміністратора приховує параметри, недійсні для вибраний пристрій.*Нове: інтегровані дії для MX-Controller (V1 і V2)",
-                "zh-cn": "更新：依赖项已更新*更新：翻译已更新*修复：完成了新 jsonConfig admin-UI 的工作*新功能：向 admin-UI 添加了 MX 控制器的新选项*新功能：Admin-UI 现在隐藏了对选定的设备。*新功能：MX 控制器（V1 和 V2）的集成操作"
-            },
-            "1.3.0": {
-                "en": "Fixed log errors for some controllers\nMoved Admin interface to jsonConfig\nsome maintenance",
-                "de": "Protokollfehler für einige Controller behoben \n Admin-Schnittstelle zu jsonConfig umgebaut \n einige Wartungsarbeiten",
-                "ru": "Исправлены ошибки журнала для некоторых контроллеров \n Интерфейс администратора перенесен в jsonConfig \n некоторое техническое обслуживание",
-                "pt": "Erros de log corrigidos para alguns controladores \n Interface de administração movida para jsonConfig \n alguma manutenção",
-                "nl": "Vaste logfouten voor sommige controllers \n Beheerdersinterface verplaatst naar jsonConfig \n enig onderhoud",
-                "fr": "Correction des erreurs de journal pour certains contrôleurs \n Interface d'administration déplacée vers jsonConfig \n certaines opérations de maintenance",
-                "it": "Risolti errori di registro per alcuni controller\nInterfaccia di amministrazione spostata in jsonConfig\nalcuni interventi di manutenzione",
-                "es": "Errores de registro fijos para algunos controladores \n Interfaz de administración movida a jsonConfig \n algo de mantenimiento",
-                "pl": "Naprawiono błędy logów dla niektórych kontrolerów\nPrzeniesiono interfejs administratora do jsonConfig\nniektóre prace konserwacyjne",
-                "uk": "Виправлено помилки журналу для деяких контролерів\nінтерфейс адміністратора переміщено до jsonConfig\nдеяке обслуговування",
-                "zh-cn": "修复了一些控制器的日志错误\n将管理界面移至 jsonConfig\n一些维护"
-            },
-            "1.2.0": {
-                "en": "New: Added support for DeltaSol BX",
-                "de": "Neu: Unterstützung für DeltaSol BX hinzugefügt",
-                "ru": "Новое: добавлена ​​поддержка DeltaSol BX.",
-                "pt": "Novo: Adicionado suporte para DeltaSol BX",
-                "nl": "Nieuw: ondersteuning toegevoegd voor DeltaSol BX",
-                "fr": "Nouveau : Ajout de la prise en charge de DeltaSol BX",
-                "it": "Novità: Aggiunto supporto per DeltaSol BX",
-                "es": "Nuevo: soporte agregado para DeltaSol BX",
-                "pl": "Nowość: Dodano obsługę DeltaSol BX",
-                "zh-cn": "新增：增加了对 DeltaSol BX 的支持",
-                "uk": "Нове: додано підтримку DeltaSol BX"
-            },
-            "1.1.5": {
-                "en": "Fixed support for Cosmo Multi 2 controllers",
-                "de": "Die Unterstützung für Cosmo Multi 2-Controller wurde korrigiert",
-                "ru": "Исправлена ​​поддержка контроллеров Cosmo Multi 2.",
-                "pt": "Suporte fixo para controladores Cosmo Multi 2",
-                "nl": "Vaste ondersteuning voor Cosmo Multi 2-controllers",
-                "fr": "Prise en charge fixe des contrôleurs Cosmo Multi 2",
-                "it": "Corretto il supporto per i controller Cosmo Multi 2",
-                "es": "Soporte fijo para controladores Cosmo Multi 2",
-                "pl": "Naprawiono obsługę kontrolerów Cosmo Multi 2",
-                "zh-cn": "修复了对 Cosmo Multi 2 控制器的支持",
-                "uk": "Виправлена ​​підтримка контролерів Cosmo Multi 2"
-            },
-            "1.1.0": {
-                "en": "New: Added support for DeltaSol E and improved support for Cosmo Multi 2 controllers",
-                "de": "Neu: Unterstützung für DeltaSol E und verbesserte Unterstützung für Cosmo Multi 2 Controller hinzugefügt",
-                "ru": "Новое: добавлена ​​поддержка DeltaSol E и улучшена поддержка контроллеров Cosmo Multi 2.",
-                "pt": "Novo: Adicionado suporte para DeltaSol E e suporte aprimorado para controladores Cosmo Multi 2",
-                "nl": "Nieuw: ondersteuning toegevoegd voor DeltaSol E en verbeterde ondersteuning voor Cosmo Multi 2-controllers",
-                "fr": "Nouveau : Ajout de la prise en charge de DeltaSol E et amélioration de la prise en charge des contrôleurs Cosmo Multi 2",
-                "it": "Novità: Aggiunto il supporto per DeltaSol E e migliorato il supporto per i controller Cosmo Multi 2",
-                "es": "Nuevo: soporte agregado para DeltaSol E y soporte mejorado para controladores Cosmo Multi 2",
-                "pl": "Nowość: Dodano obsługę DeltaSol E i ulepszoną obsługę kontrolerów Cosmo Multi 2",
-                "zh-cn": "新增内容：增加了对 DeltaSol E 的支持并改进了对 Cosmo Multi 2 控制器的支持",
-                "uk": "Нове: додано підтримку DeltaSol E та покращено підтримку контролерів Cosmo Multi 2"
-            },
-            "1.0.0": {
-                "en": "New: Added support for Cosmo controllers (No Sensor connected = 888°C)\nUpd: Pushed version from 0.4.4 to v1.0.0 to be compliant to semver\nDependencies got updated",
-                "de": "Neu: Unterstützung für Cosmo-Controller hinzugefügt (Kein Sensor angeschlossen = 888°C)\nUpd: Version von 0.4.4 auf v1.0.0 gepusht, um semver-konform zu sein\nAbhängigkeiten wurden aktualisiert",
-                "ru": "Новое: добавлена ​​поддержка контроллеров Cosmo (датчик не подключен = 888°C)\nUpd: обновлена ​​версия с 0.4.4 до v1.0.0 для совместимости с semver\nОбновлены зависимости",
-                "pt": "Novo: Adicionado suporte para controladores Cosmo (Sem Sensor conectado = 888°C)\nAtualização: Versão empurrada de 0.4.4 para v1.0.0 para ser compatível com semver\nAs dependências foram atualizadas",
-                "nl": "Nieuw: ondersteuning toegevoegd voor Cosmo-controllers (geen sensor aangesloten = 888°C)\nUpd: versie gepusht van 0.4.4 naar v1.0.0 om te voldoen aan semver\nAfhankelijkheden zijn bijgewerkt",
-                "fr": "Nouveau : Ajout de la prise en charge des contrôleurs Cosmo (Aucun capteur connecté = 888°C)\nMise à jour : Version poussée de 0.4.4 à v1.0.0 pour être conforme à semver\nLes dépendances ont été mises à jour",
-                "it": "Novità: Aggiunto supporto per i controller Cosmo (nessun sensore connesso = 888°C)\nAggiornamento: Versione pushata da 0.4.4 a v1.0.0 per essere conforme a semver\nLe dipendenze sono state aggiornate",
-                "es": "Nuevo: Compatibilidad agregada para los controladores Cosmo (sin sensor conectado = 888 ° C) \n Actualización: versión impulsada de 0.4.4 a v1.0.0 para cumplir con semver \n Se actualizaron las dependencias",
-                "pl": "Nowość: Dodano obsługę kontrolerów Cosmo (brak podłączonego czujnika = 888°C)\nAktualizacja: Przesunięto wersję z 0.4.4 do v1.0.0, aby była zgodna z serwerem\nZależności zostały zaktualizowane",
-                "zh-cn": "新增内容：增加了对 Cosmo 控制器的支持（未连接传感器 = 888°C）\n更新：将版本从 0.4.4 推送到 v1.0.0 以符合 semver\n更新依赖项",
-                "uk": "Нове: додано підтримку контролерів Cosmo (без підключеного датчика = 888°C)\nОновлено: версію 0.4.4 перенесено на v1.0.0 для сумісності з semver\nЗалежності оновлено"
-            }
-        },
-        "title": "Resol VBus",
-        "titleLang": {
-            "en": "Connect your Resol VBus Devices",
-            "de": "Verbinden Sie Ihre Resol VBus-Geräte",
-            "ru": "Подключите свои устройства Resol VBus",
-            "pt": "Conecte seus dispositivos Resol VBus",
-            "nl": "Verbind uw Resol VBus-apparaten",
-            "fr": "Connectez vos appareils Resol VBus",
-            "it": "Collega i tuoi dispositivi Resol VBus",
-            "es": "Conecte sus dispositivos Resol VBus",
-            "pl": "Podłącz urządzenia Resol VBus",
-            "zh-cn": "将您的Resol VBus设备连接",
-            "uk": "Підключіть свої пристрої Resol VBus"
-        },
-        "desc": {
-            "en": "Connects to various Resol-VBus-based devices",
-            "de": "Verbindet sich mit verschiedenen Resol-VBus-basierten Geräten",
-            "ru": "Подключается к различным устройствам на базе Resol-VBus",
-            "pt": "Conecta-se a vários dispositivos baseados em Resol-VBus",
-            "nl": "Maakt verbinding met verschillende op Resol-VBus gebaseerde apparaten",
-            "fr": "Se connecte à divers appareils basés sur Resol-VBus",
-            "it": "Si collega a vari dispositivi basati su Resol-VBus",
-            "es": "Se conecta a varios dispositivos basados ​​en Resol-VBus",
-            "pl": "Łączy się z różnymi urządzeniami opartymi na Resol-VBus",
-            "zh-cn": "连接到各种基于 Resol-VBus 的设备",
-            "uk": "Підключається до різних пристроїв на основі Resol-VBus"
-        },
-        "authors": [
-            "grizzelbee <open.source@hingsen.de>"
-        ],
-        "keywords": [
-            "ioBroker",
-            "resol",
-            "Smart Home",
-            "home automation",
-            "VBus",
-            "Resol"
-        ],
-        "platform": "Javascript/Node.js",
-        "main": "main.js",
-        "icon": "resol.svg",
-        "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/grizzelbee/ioBroker.resol/master/admin/resol.svg",
-        "readme": "https://github.com/grizzelbee/ioBroker.resol/blob/master/README.md",
-        "loglevel": "info",
-        "mode": "daemon",
-        "type": "energy",
-        "tier": 2,
-        "compact": true,
-        "materialize": true,
-        "supportCustoms": false,
-        "connectionType": "local",
-        "dataSource": "push",
-        "messagebox": true,
-        "adminUI": {
-            "config": "json"
-        },
-        "globalDependencies": [
-            {
-                "admin": ">=5.1.13"
-            }
-        ],
-        "dependencies": [
-            {
-                "js-controller": ">=3.3.22",
-                "admin": ">=4.0.9"
-            }
-        ],
-        "plugins": {
-            "sentry": {
-                "dsn": "https://352824c6326042b38d31ab0a6fa24fc8@o505019.ingest.sentry.io/5758903"
-            }
-        },
-        "licenseInformation": {
-            "license": "MIT",
-            "link": "https://github.com/grizzelbee/ioBroker.resol/blob/master/README.md",
-            "type": "free"
-        }
+  "common": {
+    "name": "resol",
+    "version": "1.4.2",
+    "news": {
+      "1.4.2": {
+        "en": "Upd: Internal update",
+        "de": "Aktualisierung: Internes Update",
+        "ru": "Upd: внутреннее обновление",
+        "pt": "Upd: Atualização interna",
+        "nl": "Upd: interne update",
+        "fr": "Mise à jour : mise à jour interne",
+        "it": "Aggiornamento interno",
+        "es": "Actualización interna",
+        "pl": "Upd: Aktualizacja wewnętrzna",
+        "uk": "Оновлення: Внутрішнє оновлення",
+        "zh-cn": "Upd: 内部更新"
+      },
+      "1.4.0": {
+        "en": "Upd: Dependencies got updated*Upd: Translations got updated*Fix: Finished work on new jsonConfig admin-UI*New: Added new option for MX-Controllers to admin-UI*New: Admin-UI now hides options which are invalid for the selected device.*New: Integrated Actions for MX-Controller (V1 and V2)\t ",
+        "de": "Upd: Abhängigkeiten wurden aktualisiert*Upd: Übersetzungen wurden aktualisiert*Fix: Arbeit an der neuen jsonConfig Admin-UI abgeschlossen*Neu: Neue Option für MX-Controller zur Admin-UI hinzugefügt*Neu: Admin-UI verbirgt jetzt Optionen, die für ungültig sind ausgewähltes Gerät.*Neu: Integrierte Aktionen für MX-Controller (V1 und V2)",
+        "ru": "Обновление: обновлены зависимости * Обновление: обновлены переводы * Исправлено: завершена работа над новым пользовательским интерфейсом администратора jsonConfig * Новое: добавлена ​​новая опция для MX-контроллеров в пользовательский интерфейс администратора * Новое: пользовательский интерфейс администратора теперь скрывает параметры, которые недействительны для выбранное устройство.*Новое: интегрированные действия для MX-контроллера (V1 и V2).",
+        "pt": "Upd: Dependências foram atualizadas*Upd: Traduções foram atualizadas*Fix: Trabalho concluído no novo jsonConfig admin-UI*Novo: Adicionada nova opção para MX-Controllers para admin-UI*Novo: Admin-UI agora oculta opções que são inválidas para o dispositivo selecionado.*Novo: Ações integradas para MX-Controller (V1 e V2)",
+        "nl": "Upd: Afhankelijkheden zijn bijgewerkt*Upd: Vertalingen zijn bijgewerkt*Fix: Voltooid werk aan nieuwe jsonConfig admin-UI*Nieuw: Nieuwe optie voor MX-controllers toegevoegd aan admin-UI*Nieuw: Admin-UI verbergt nu opties die ongeldig zijn voor de geselecteerd apparaat.*Nieuw: geïntegreerde acties voor MX-Controller (V1 en V2)",
+        "fr": "Mise à jour : les dépendances ont été mises à jour*Mise à jour : les traductions ont été mises à jour*Correction : travail terminé sur la nouvelle interface utilisateur d'administration jsonConfig*Nouveau : ajout d'une nouvelle option pour les contrôleurs MX à l'interface utilisateur d'administration*Nouveau : l'interface utilisateur d'administration masque désormais les options qui ne sont pas valides pour le périphérique sélectionné.*Nouveau : actions intégrées pour MX-Controller (V1 et V2)",
+        "it": "Aggiornamento: le dipendenze sono state aggiornate*Aggiornamento: le traduzioni sono state aggiornate*Correzione: lavoro terminato sulla nuova interfaccia utente di amministrazione jsonConfig*Novità: aggiunta una nuova opzione per i controller MX all'interfaccia utente di amministrazione*Novità: l'interfaccia utente di amministrazione ora nasconde le opzioni che non sono valide per dispositivo selezionato.*Novità: azioni integrate per controller MX (V1 e V2)",
+        "es": "Actualización: Se actualizaron las dependencias* Actualización: Se actualizaron las traducciones* Solución: Trabajo finalizado en la nueva interfaz de usuario de administrador jsonConfig* Nuevo: se agregó una nueva opción para controladores MX a la interfaz de usuario de administrador* Nuevo: la interfaz de usuario de administrador ahora oculta opciones que no son válidas para dispositivo seleccionado.*Nuevo: Acciones integradas para MX-Controller (V1 y V2)",
+        "pl": "Aktualizacja: Zależności zostały zaktualizowane*Aktualizacja: Tłumaczenia zostały zaktualizowane*Poprawka: Zakończono prace nad nowym interfejsem administratora jsonConfig*Nowość: Dodano nową opcję dla kontrolerów MX do interfejsu administratora*Nowość: Interfejs administratora ukrywa teraz opcje, które są nieprawidłowe dla wybrane urządzenie.*Nowość: Zintegrowane akcje dla kontrolera MX (V1 i V2)",
+        "uk": "Оновлено: залежності оновлено*Оновлено: оновлено переклади*Виправлення: завершено роботу над новим інтерфейсом адміністратора jsonConfig*Нове: додано нову опцію для MX-контролерів до інтерфейсу адміністратора*Нове: тепер інтерфейс адміністратора приховує параметри, недійсні для вибраний пристрій.*Нове: інтегровані дії для MX-Controller (V1 і V2)",
+        "zh-cn": "更新：依赖项已更新*更新：翻译已更新*修复：完成了新 jsonConfig admin-UI 的工作*新功能：向 admin-UI 添加了 MX 控制器的新选项*新功能：Admin-UI 现在隐藏了对选定的设备。*新功能：MX 控制器（V1 和 V2）的集成操作"
+      },
+      "1.3.0": {
+        "en": "Fixed log errors for some controllers\nMoved Admin interface to jsonConfig\nsome maintenance",
+        "de": "Protokollfehler für einige Controller behoben \n Admin-Schnittstelle zu jsonConfig umgebaut \n einige Wartungsarbeiten",
+        "ru": "Исправлены ошибки журнала для некоторых контроллеров \n Интерфейс администратора перенесен в jsonConfig \n некоторое техническое обслуживание",
+        "pt": "Erros de log corrigidos para alguns controladores \n Interface de administração movida para jsonConfig \n alguma manutenção",
+        "nl": "Vaste logfouten voor sommige controllers \n Beheerdersinterface verplaatst naar jsonConfig \n enig onderhoud",
+        "fr": "Correction des erreurs de journal pour certains contrôleurs \n Interface d'administration déplacée vers jsonConfig \n certaines opérations de maintenance",
+        "it": "Risolti errori di registro per alcuni controller\nInterfaccia di amministrazione spostata in jsonConfig\nalcuni interventi di manutenzione",
+        "es": "Errores de registro fijos para algunos controladores \n Interfaz de administración movida a jsonConfig \n algo de mantenimiento",
+        "pl": "Naprawiono błędy logów dla niektórych kontrolerów\nPrzeniesiono interfejs administratora do jsonConfig\nniektóre prace konserwacyjne",
+        "uk": "Виправлено помилки журналу для деяких контролерів\nінтерфейс адміністратора переміщено до jsonConfig\nдеяке обслуговування",
+        "zh-cn": "修复了一些控制器的日志错误\n将管理界面移至 jsonConfig\n一些维护"
+      },
+      "1.2.0": {
+        "en": "New: Added support for DeltaSol BX",
+        "de": "Neu: Unterstützung für DeltaSol BX hinzugefügt",
+        "ru": "Новое: добавлена ​​поддержка DeltaSol BX.",
+        "pt": "Novo: Adicionado suporte para DeltaSol BX",
+        "nl": "Nieuw: ondersteuning toegevoegd voor DeltaSol BX",
+        "fr": "Nouveau : Ajout de la prise en charge de DeltaSol BX",
+        "it": "Novità: Aggiunto supporto per DeltaSol BX",
+        "es": "Nuevo: soporte agregado para DeltaSol BX",
+        "pl": "Nowość: Dodano obsługę DeltaSol BX",
+        "zh-cn": "新增：增加了对 DeltaSol BX 的支持",
+        "uk": "Нове: додано підтримку DeltaSol BX"
+      },
+      "1.1.5": {
+        "en": "Fixed support for Cosmo Multi 2 controllers",
+        "de": "Die Unterstützung für Cosmo Multi 2-Controller wurde korrigiert",
+        "ru": "Исправлена ​​поддержка контроллеров Cosmo Multi 2.",
+        "pt": "Suporte fixo para controladores Cosmo Multi 2",
+        "nl": "Vaste ondersteuning voor Cosmo Multi 2-controllers",
+        "fr": "Prise en charge fixe des contrôleurs Cosmo Multi 2",
+        "it": "Corretto il supporto per i controller Cosmo Multi 2",
+        "es": "Soporte fijo para controladores Cosmo Multi 2",
+        "pl": "Naprawiono obsługę kontrolerów Cosmo Multi 2",
+        "zh-cn": "修复了对 Cosmo Multi 2 控制器的支持",
+        "uk": "Виправлена ​​підтримка контролерів Cosmo Multi 2"
+      },
+      "1.1.0": {
+        "en": "New: Added support for DeltaSol E and improved support for Cosmo Multi 2 controllers",
+        "de": "Neu: Unterstützung für DeltaSol E und verbesserte Unterstützung für Cosmo Multi 2 Controller hinzugefügt",
+        "ru": "Новое: добавлена ​​поддержка DeltaSol E и улучшена поддержка контроллеров Cosmo Multi 2.",
+        "pt": "Novo: Adicionado suporte para DeltaSol E e suporte aprimorado para controladores Cosmo Multi 2",
+        "nl": "Nieuw: ondersteuning toegevoegd voor DeltaSol E en verbeterde ondersteuning voor Cosmo Multi 2-controllers",
+        "fr": "Nouveau : Ajout de la prise en charge de DeltaSol E et amélioration de la prise en charge des contrôleurs Cosmo Multi 2",
+        "it": "Novità: Aggiunto il supporto per DeltaSol E e migliorato il supporto per i controller Cosmo Multi 2",
+        "es": "Nuevo: soporte agregado para DeltaSol E y soporte mejorado para controladores Cosmo Multi 2",
+        "pl": "Nowość: Dodano obsługę DeltaSol E i ulepszoną obsługę kontrolerów Cosmo Multi 2",
+        "zh-cn": "新增内容：增加了对 DeltaSol E 的支持并改进了对 Cosmo Multi 2 控制器的支持",
+        "uk": "Нове: додано підтримку DeltaSol E та покращено підтримку контролерів Cosmo Multi 2"
+      },
+      "1.0.0": {
+        "en": "New: Added support for Cosmo controllers (No Sensor connected = 888°C)\nUpd: Pushed version from 0.4.4 to v1.0.0 to be compliant to semver\nDependencies got updated",
+        "de": "Neu: Unterstützung für Cosmo-Controller hinzugefügt (Kein Sensor angeschlossen = 888°C)\nUpd: Version von 0.4.4 auf v1.0.0 gepusht, um semver-konform zu sein\nAbhängigkeiten wurden aktualisiert",
+        "ru": "Новое: добавлена ​​поддержка контроллеров Cosmo (датчик не подключен = 888°C)\nUpd: обновлена ​​версия с 0.4.4 до v1.0.0 для совместимости с semver\nОбновлены зависимости",
+        "pt": "Novo: Adicionado suporte para controladores Cosmo (Sem Sensor conectado = 888°C)\nAtualização: Versão empurrada de 0.4.4 para v1.0.0 para ser compatível com semver\nAs dependências foram atualizadas",
+        "nl": "Nieuw: ondersteuning toegevoegd voor Cosmo-controllers (geen sensor aangesloten = 888°C)\nUpd: versie gepusht van 0.4.4 naar v1.0.0 om te voldoen aan semver\nAfhankelijkheden zijn bijgewerkt",
+        "fr": "Nouveau : Ajout de la prise en charge des contrôleurs Cosmo (Aucun capteur connecté = 888°C)\nMise à jour : Version poussée de 0.4.4 à v1.0.0 pour être conforme à semver\nLes dépendances ont été mises à jour",
+        "it": "Novità: Aggiunto supporto per i controller Cosmo (nessun sensore connesso = 888°C)\nAggiornamento: Versione pushata da 0.4.4 a v1.0.0 per essere conforme a semver\nLe dipendenze sono state aggiornate",
+        "es": "Nuevo: Compatibilidad agregada para los controladores Cosmo (sin sensor conectado = 888 ° C) \n Actualización: versión impulsada de 0.4.4 a v1.0.0 para cumplir con semver \n Se actualizaron las dependencias",
+        "pl": "Nowość: Dodano obsługę kontrolerów Cosmo (brak podłączonego czujnika = 888°C)\nAktualizacja: Przesunięto wersję z 0.4.4 do v1.0.0, aby była zgodna z serwerem\nZależności zostały zaktualizowane",
+        "zh-cn": "新增内容：增加了对 Cosmo 控制器的支持（未连接传感器 = 888°C）\n更新：将版本从 0.4.4 推送到 v1.0.0 以符合 semver\n更新依赖项",
+        "uk": "Нове: додано підтримку контролерів Cosmo (без підключеного датчика = 888°C)\nОновлено: версію 0.4.4 перенесено на v1.0.0 для сумісності з semver\nЗалежності оновлено"
+      }
     },
-    "native": {
-        "connectionDevice": "",
-        "connectionIdentifier": "",
-        "connectionPort": 7053,
-        "vbusPassword": "",
-        "vbusChannel": 7,
-        "vbusViaTag": "",
-        "vbusInterval": 30,
-        "controller": "Other",
-        "controllerMajorVersion": 1
+    "title": "Resol VBus",
+    "titleLang": {
+      "en": "Connect your Resol VBus Devices",
+      "de": "Verbinden Sie Ihre Resol VBus-Geräte",
+      "ru": "Подключите свои устройства Resol VBus",
+      "pt": "Conecte seus dispositivos Resol VBus",
+      "nl": "Verbind uw Resol VBus-apparaten",
+      "fr": "Connectez vos appareils Resol VBus",
+      "it": "Collega i tuoi dispositivi Resol VBus",
+      "es": "Conecte sus dispositivos Resol VBus",
+      "pl": "Podłącz urządzenia Resol VBus",
+      "zh-cn": "将您的Resol VBus设备连接",
+      "uk": "Підключіть свої пристрої Resol VBus"
     },
-    "encryptedNative": [
-        "vbusPassword"
+    "desc": {
+      "en": "Connects to various Resol-VBus-based devices",
+      "de": "Verbindet sich mit verschiedenen Resol-VBus-basierten Geräten",
+      "ru": "Подключается к различным устройствам на базе Resol-VBus",
+      "pt": "Conecta-se a vários dispositivos baseados em Resol-VBus",
+      "nl": "Maakt verbinding met verschillende op Resol-VBus gebaseerde apparaten",
+      "fr": "Se connecte à divers appareils basés sur Resol-VBus",
+      "it": "Si collega a vari dispositivi basati su Resol-VBus",
+      "es": "Se conecta a varios dispositivos basados ​​en Resol-VBus",
+      "pl": "Łączy się z różnymi urządzeniami opartymi na Resol-VBus",
+      "zh-cn": "连接到各种基于 Resol-VBus 的设备",
+      "uk": "Підключається до різних пристроїв на основі Resol-VBus"
+    },
+    "authors": [
+      "grizzelbee <open.source@hingsen.de>"
     ],
-    "protectedNative": [
-        "vbusPassword"
+    "keywords": [
+      "ioBroker",
+      "resol",
+      "Smart Home",
+      "home automation",
+      "VBus",
+      "Resol"
     ],
-    "objects": [],
-    "instanceObjects": [
-        {
-            "_id": "info",
-            "type": "channel",
-            "common": {
-                "name": "Information"
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.connection",
-            "type": "state",
-            "common": {
-                "role": "indicator.connected",
-                "name": "VBus device connected",
-                "type": "boolean",
-                "read": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        }
-    ]
+    "platform": "Javascript/Node.js",
+    "main": "main.js",
+    "icon": "resol.svg",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/grizzelbee/ioBroker.resol/master/admin/resol.svg",
+    "readme": "https://github.com/grizzelbee/ioBroker.resol/blob/master/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "energy",
+    "tier": 2,
+    "compact": true,
+    "materialize": true,
+    "supportCustoms": false,
+    "connectionType": "local",
+    "dataSource": "push",
+    "messagebox": true,
+    "adminUI": {
+      "config": "json"
+    },
+    "globalDependencies": [
+      {
+        "admin": ">=5.1.13"
+      }
+    ],
+    "dependencies": [
+      {
+        "js-controller": ">=3.3.22",
+        "admin": ">=4.0.9"
+      }
+    ],
+    "plugins": {
+      "sentry": {
+        "dsn": "https://352824c6326042b38d31ab0a6fa24fc8@o505019.ingest.sentry.io/5758903"
+      }
+    },
+    "licenseInformation": {
+      "license": "MIT",
+      "link": "https://github.com/grizzelbee/ioBroker.resol/blob/master/README.md",
+      "type": "free"
+    }
+  },
+  "native": {
+    "connectionDevice": "",
+    "connectionIdentifier": "",
+    "connectionPort": 7053,
+    "vbusPassword": "",
+    "vbusChannel": 7,
+    "vbusViaTag": "",
+    "vbusInterval": 30,
+    "controller": "Other",
+    "controllerMajorVersion": 1
+  },
+  "encryptedNative": [
+    "vbusPassword"
+  ],
+  "protectedNative": [
+    "vbusPassword"
+  ],
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": "Information"
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": "VBus device connected",
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    }
+  ]
 }
