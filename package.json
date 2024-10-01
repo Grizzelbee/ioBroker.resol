@@ -1,6 +1,6 @@
 {
   "name": "iobroker.resol",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Support for Resol VBus devices",
   "author": {
     "name": "grizzelbee",
