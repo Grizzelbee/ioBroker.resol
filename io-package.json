@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "resol",
-    "version": "1.4.2",
+    "version": "1.5.0",
     "news": {
+      "1.5.0": {
+        "en": "Upd: Fixed some issues mentioned by adapter-checker",
+        "de": "Upd: Behoben einige Probleme von Adapter-Checker",
+        "ru": "Upd: Исправлены некоторые вопросы, упомянутые адаптером-проверщиком",
+        "pt": "Upd: Corrigido alguns problemas mencionados pelo verificador do adaptador",
+        "nl": "Upd: Enkele problemen opgelost die door adapter-checker worden genoemd",
+        "fr": "Mise à jour: Correction de certains problèmes mentionnés par adaptateur-vérificateur",
+        "it": "Upd: Risolto alcuni problemi menzionati da adattatore-chicker",
+        "es": "Subir: Arreglar algunos problemas mencionados por el adaptador",
+        "pl": "Upd: Naprawiono niektóre problemy wymienione przez adapter- checker",
+        "uk": "Увімкнено: Виправлено деякі проблеми, зазначені адаптером",
+        "zh-cn": "Upd: 解决适配器-检查器提到的一些问题"
+      },
       "1.4.2": {
         "en": "Upd: Internal update",
         "de": "Aktualisierung: Internes Update",

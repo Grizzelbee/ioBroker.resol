@@ -146,8 +146,7 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 ## Todo
 
 ## Changelog
-
-### **WORK IN PROGRESS**
+### 1.5.0 (2024-10-01)
 * (grizzelbee) Upd: Fixed some issues mentioned by adapter-checker
 
 ### 1.4.2 (2024-10-01)
