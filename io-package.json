@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "resol",
-    "version": "1.5.0",
+    "version": "1.5.1",
     "news": {
+      "1.5.1": {
+        "en": "Fix: Fixed minor issues in Admin-UI",
+        "de": "Fix: Behobene kleinere Probleme in Admin-UI",
+        "ru": "Fix: Исправлены незначительные проблемы в Admin-UI",
+        "pt": "Corrigir: problemas menores fixos no Admin-UI",
+        "nl": "Fix: Vaste kleine problemen in Admin-UI",
+        "fr": "Correction: Correction de problèmes mineurs dans Admin-UI",
+        "it": "Fix: Risolto problemi minori in Admin-UI",
+        "es": "Corrección: Problemas menores fijos en Admin-UI",
+        "pl": "Fix: Naprawiono drobne problemy w Administrat- UI",
+        "uk": "Виправлення: Виправлено незначні питання в Admin-UI",
+        "zh-cn": "纠正:行政上小问题"
+      },
       "1.5.0": {
         "en": "Upd: Fixed some issues mentioned by adapter-checker",
         "de": "Upd: Behoben einige Probleme von Adapter-Checker",
