@@ -1,11 +1,8 @@
 {
   "common": {
     "name": "resol",
-    "version": "1.5.1",
+    "version": "1.5.0",
     "news": {
-      "1.5.1": {
-        "en": "Fix: Fixed minor issues in Admin-UI"
-      },
       "1.5.0": {
         "en": "Upd: Fixed some issues mentioned by adapter-checker",
         "de": "Upd: Behoben einige Probleme von Adapter-Checker",
