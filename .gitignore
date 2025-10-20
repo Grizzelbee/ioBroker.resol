@@ -17,3 +17,6 @@ admin/Sicherungskopie*
 # some typescript config files
 tsconfig.json
 *.ts
+
+#ignore .commitinfo created by ioBroker release script
+.commitinfo
