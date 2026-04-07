@@ -146,6 +146,9 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 ## Todo
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+- (iobroker-bot) Adapter requires node.js >= 20 now.
 ### 1.5.1 (2024-10-18)
 * (grizzelbee) Fix: Fixed minor issues in Admin-UI
 
