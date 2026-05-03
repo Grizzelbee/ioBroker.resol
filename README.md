@@ -277,6 +277,8 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 ### v0.0.1
 * (pdbjjens) initial release tested only with VBus/USB (Serial) and DeltaSol(R) BS2009 (0x427B)
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## Legal Notices
 
 RESOL, VBus, VBus.net, DeltaSol and others are trademarks or registered trademarks of RESOL - Elektronische Regelungen GmbH
