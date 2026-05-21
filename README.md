@@ -146,6 +146,10 @@ Save the file and restart the adapter, you will find now a new object Rueckkuehl
 ## Todo
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+- (ioBroker-Bot) Adapter requires js-controller >= 6.0.11 now.
+
 ### 1.5.1 (2024-10-18)
 * (grizzelbee) Fix: Fixed minor issues in Admin-UI
 
